@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9446B562
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialization.Arguments.Tests", "tests\test.serialization.arguments\Serialization.Arguments.Tests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{AD07BEBF-0804-480B-9736-49464AD7AC8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD07BEBF-0804-480B-9736-49464AD7AC8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD07BEBF-0804-480B-9736-49464AD7AC8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD07BEBF-0804-480B-9736-49464AD7AC8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD07BEBF-0804-480B-9736-49464AD7AC8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
