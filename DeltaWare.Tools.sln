@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialization.Csv", "src\se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialization.Arguments", "src\serialization.arguments\Serialization.Arguments.csproj", "{71A2D671-1338-4A73-8A4C-4ACE7A8D6DB9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9446B562-9590-4AA7-881F-E1201E0B8C91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialization.Arguments.Tests", "tests\test.serialization.arguments\Serialization.Arguments.Tests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,9 +31,16 @@ Global
 		{71A2D671-1338-4A73-8A4C-4ACE7A8D6DB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71A2D671-1338-4A73-8A4C-4ACE7A8D6DB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71A2D671-1338-4A73-8A4C-4ACE7A8D6DB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8EDF4429-251A-416D-BB68-93F227191BCF} = {9446B562-9590-4AA7-881F-E1201E0B8C91}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {50B4E601-DB97-49D8-B10F-A6B644078C32}
