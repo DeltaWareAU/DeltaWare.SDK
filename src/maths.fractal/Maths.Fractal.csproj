@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Hilbert\HilbertArray.cs" />
-    <Compile Include="Hilbert\HilbertDirection.cs" />
+    <Compile Include="Hilbert\HilbertArrayBuilder.cs" />
     <Compile Include="Hilbert\HilbertVector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

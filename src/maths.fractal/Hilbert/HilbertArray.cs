@@ -8,14 +8,6 @@ namespace DeltaWare.Tools.Maths.Fractal.Hilbert
 {
     public struct HilbertArray<T>
     {
-        private static Dictionary<HilbertDirection, HilbertDirection[]> Order = new Dictionary<HilbertDirection, HilbertDirection[]>
-        {
-            {HilbertDirection.Up, new []{HilbertDirection.Left, HilbertDirection.Left, HilbertDirection.Down} },
-            {HilbertDirection.Left, new []{HilbertDirection.Up, HilbertDirection.Up, HilbertDirection.Right} },
-            {HilbertDirection.Down, new []{HilbertDirection.Right, HilbertDirection.Right, HilbertDirection.Up} },
-            {HilbertDirection.Right, new []{HilbertDirection.Down, HilbertDirection.Down, HilbertDirection.Left} }
-        };
-
         public readonly HilbertVector<T>[] Vectors;
 
         public HilbertVector<T> this[long index] => Vectors[index];
