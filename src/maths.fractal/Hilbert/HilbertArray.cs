@@ -49,13 +49,6 @@ namespace DeltaWare.Tools.Maths.Fractal.Hilbert
                 vectors[index] = new HilbertVector<T>(items[index], x, y, index);
             });
 
-            //for (int i = 0; i < length; i++)
-            //{
-                //d2xy(length, i, out long x, out long y);
-
-                //vectors[i] = new HilbertVector<T>(items[i], x, y, i);
-            //}
-
             return new HilbertArray<T>(vectors, depth, length);
         }
 
