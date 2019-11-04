@@ -17,7 +17,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            string filePath = @"C:\Projects\Final\hs_alt_HuRef_chr1.fa";
+            string filePath = @"C:\Projects\Final\hs_alt_HuRef_chr19.fa";
 
             List<char> characters= new List<char>();
 
@@ -26,14 +26,15 @@ namespace ConsoleApp1
                 do
                 {
                     characters.Add((char)stream.Read());
-                } while (!stream.EndOfStream);
+                }
+                while (!stream.EndOfStream);
             }
 
             HilbertArray<char> hilbertCharacters = HilbertArray<char>.Generate(characters.ToArray());
 
             int resolution = (int) Math.Pow(2, hilbertCharacters.Depth);
 
-            using (Bitmap bitmap = new Bitmap(resolution,resolution))
+            using (DirectBitmap bitmap = new DirectBitmap(resolution,resolution))
             {
                 Color color;
                 HilbertVector<char> vector;
@@ -64,7 +65,7 @@ namespace ConsoleApp1
                     bitmap.SetPixel((int)vector.X, (int)vector.Y, color);
                 }
 
-                bitmap.Save(@"C:\Users\Bradl\OneDrive\Pictures\HilbertColors.png", ImageFormat.Png);
+                bitmap.Save(@"C:\Projects\Final\hs_alt_HuRef_chr19.png", ImageFormat.Png);
             }
         }
 

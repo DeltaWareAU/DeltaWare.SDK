@@ -10,11 +10,11 @@ namespace DeltaWare.Tools.Maths.Fractal.Hilbert
     {
         public readonly T Value;
 
-        public readonly long X;
-        public readonly long Y;
+        public readonly int X;
+        public readonly int Y;
         public readonly long Index;
 
-        internal HilbertVector(T value, long x, long y, long index)
+        internal HilbertVector(T value, int x, int y, long index)
         {
             Value = value;
             X = x;

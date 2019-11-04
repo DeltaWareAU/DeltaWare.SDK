@@ -14,9 +14,10 @@ namespace DeltaWare.Tools.Serialization.Csv
     /// <summary>
     /// A set of tools for working with Csv Files.
     /// </summary>
-    public static class CsvSerializer
+    public class CsvSerializer
     {
         #region Constant Values
+
         /// <summary>
         /// The <see cref="char"/> used to separate columns.
         /// </summary>
@@ -36,18 +37,13 @@ namespace DeltaWare.Tools.Serialization.Csv
         /// The <see cref="char"/> used to represent new line.
         /// </summary>
         private const char NewLine = '\n';
+
         #endregion Constant Values
-        #region Private Variables
-        /// <summary>
-        /// Gets or sets a <see cref="bool"/> value specifying if the first row of a Csv should be ignored.
-        /// </summary>
-        private static bool ignoreFirstRow = true;
-        #endregion Private Fields
         #region Public Fields
         /// <summary>
         /// Gets or sets a <see cref="bool"/> value specifying if the first row of a Csv should be ignored.
         /// </summary>
-        public static bool IgnoreFirstRow => ignoreFirstRow;
+        public bool IgnoreFirstRow { get; set; }
         #endregion Public Fields
         #region Public Methods
         /// <summary>
@@ -56,7 +52,7 @@ namespace DeltaWare.Tools.Serialization.Csv
         /// <typeparam name="T">The <see cref="object"/> type to deserialize too.</typeparam>
         /// <param name="content">The Csv formatted <see cref="string"/> to deserialize from.</param>
         /// <returns>The specified <see cref="object"/> containing the deserialized Csv data.</returns>
-        public static T[] Deserialize<T>(string content)
+        public T[] Deserialize<T>(string content)
         {
             bool carriageReturnHit = false;
             bool doubleQuoteHit = false;
@@ -78,7 +74,7 @@ namespace DeltaWare.Tools.Serialization.Csv
 
             string itemBuilder = string.Empty;
 
-            if (ignoreFirstRow)
+            if (IgnoreFirstRow)
             {
                 rowIndex = -1;
             }
@@ -163,7 +159,12 @@ namespace DeltaWare.Tools.Serialization.Csv
             return csvBuilder.ToArray();
         }
 
-        public static string SerialToString<T>(T[] content)
+        public string SerialToString<T>(IEnumerable<T> content)
+        {
+            return SerialToString(content.ToArray());
+        }
+
+        public string SerialToString<T>(T[] content)
         {
             throw new NotImplementedException();
 
@@ -187,7 +188,7 @@ namespace DeltaWare.Tools.Serialization.Csv
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            if (ignoreFirstRow)
+            if (IgnoreFirstRow)
             {
                 foreach (FieldInfo fieldInfo in fieldInfoArray)
                 {
@@ -203,17 +204,17 @@ namespace DeltaWare.Tools.Serialization.Csv
         /// <param name="fieldinfoarray">An array of <see cref="FieldInfo"/>.</param>
         /// <param name="content">The <see cref="string"/> value that is compared with the <see cref="FieldInfo"/> name.</param>
         /// <returns>An <see cref="int"/> value specifying the index found.</returns>
-        private static int FindColumnOverride(FieldInfo[] fieldinfoarray, string content)
+        private int FindColumnOverride(FieldInfo[] fieldinfoarray, string content)
         {
             return Array.FindIndex(
                 fieldinfoarray,
-                fieldInfo =>
+            fieldInfo =>
                 {
                     if (Attribute.IsDefined(fieldInfo, typeof(ColumnName)))
                     {
                         if (((ColumnName)fieldInfo.GetCustomAttributes(typeof(ColumnName), false).First()).Name.Equals(content))
                         {
-                            if (!ignoreFirstRow)
+                            if (!IgnoreFirstRow)
                             {
                                 throw new ArgumentException("Cannot use First Row of CSV in Conjunction with Column Names.");
                             }
@@ -234,7 +235,7 @@ namespace DeltaWare.Tools.Serialization.Csv
                 });
         }
 
-        private static void NextColumn<T>(string itembuilder, FieldInfo[] fieldinfoarray, List<T> csvbuilder, Dictionary<int, int> columnindexoverrides, int columnindex, int rowindex)
+        private void NextColumn<T>(string itembuilder, FieldInfo[] fieldinfoarray, List<T> csvbuilder, Dictionary<int, int> columnindexoverrides, int columnindex, int rowindex)
         {
             if (rowindex == -1)
             {

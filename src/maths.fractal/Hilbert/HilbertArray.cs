@@ -29,6 +29,11 @@ namespace DeltaWare.Tools.Maths.Fractal.Hilbert
             return Vectors.Select(v => v.Value).ToArray();
         }
 
+        public IList<T> ToList()
+        {
+            return Vectors.Select(v => v.Value).ToList();
+        }
+
         public static HilbertArray<T> Generate(T[] items)
         {
             long length = items.LongCount();
@@ -44,50 +49,47 @@ namespace DeltaWare.Tools.Maths.Fractal.Hilbert
 
             Parallel.For(0, length, index =>
             {
-                d2xy(length, index, out long x, out long y);
+                GetIndexCoordinates(length, index, out long x, out long y);
 
-                vectors[index] = new HilbertVector<T>(items[index], x, y, index);
+                vectors[index] = new HilbertVector<T>(items[index], (int)x, (int)y, index);
             });
 
             return new HilbertArray<T>(vectors, depth, length);
         }
 
-        //convert d to (x,y)
-        public static void d2xy(long depth, long currentIndex, out long x, out long y)
+        private static void GetIndexCoordinates(long length, long currentIndex, out long x, out long y)
         {
             x = 0;
             y = 0;
 
-            long rx;
-            long ry;
-            long t = currentIndex;
-            
-            for (int s = 1; s < depth; s *= 2)
+            for (long index = 1; index < length; index *= 2)
             {
-                rx = 1 & (t / 2);
-                ry = 1 & (t ^ rx);
+                long flipX = 1 & (currentIndex / 2);
+                long flipY = 1 & (currentIndex ^ flipX);
 
-                rot(s, ref x, ref y, rx, ry);
+                Rotate(index, ref x, ref y, flipX, flipY);
 
-                x += s * rx;
-                y += s * ry;
-                t /= 4;
+                x += index * flipX;
+                y += index * flipY;
+
+                currentIndex /= 4;
             }
         }
-        private static void rot(long n, ref long x, ref long y, long rx, long ry)
-        {
-            if (ry == 0)
-            {
-                if (rx == 1)
-                {
-                    x = n - 1 - x;
-                    y = n - 1 - y;
-                }
 
-                long tempX = x;
-                x = y;
-                y = tempX;
+        private static void Rotate(long index, ref long x, ref long y, long flipX, long flipY)
+        {
+            if (flipY != 0) 
+                return;
+
+            if (flipX == 1)
+            {
+                x = index - 1 - x;
+                y = index - 1 - y;
             }
+
+            long tempX = x;
+            x = y;
+            y = tempX;
         }
     }
 }
