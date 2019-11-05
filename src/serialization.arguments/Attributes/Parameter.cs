@@ -1,5 +1,5 @@
 ﻿
-namespace DeltaWare.Tools.Serialization.Arguments.Attributes
+namespace DeltaWare.SDK.Serialization.Arguments.Attributes
 {
     public sealed class Parameter : ArgumentBase
     {

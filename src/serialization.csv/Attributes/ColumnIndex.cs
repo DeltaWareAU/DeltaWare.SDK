@@ -1,5 +1,5 @@
 ﻿
-namespace DeltaWare.Tools.Serialization.Csv.Attributes
+namespace DeltaWare.SDK.Serialization.Csv.Attributes
 {
     using System;
 

@@ -8,9 +8,9 @@
     <ProjectGuid>{8EDF4429-251A-416D-BB68-93F227191BCF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DeltaWare.Tools.Serialization.Arguments.Tests</RootNamespace>
-    <AssemblyName>DeltaWare.Tools.Serialization.Arguments.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <RootNamespace>DeltaWare.SDK.Tests.Serialization.Arguments</RootNamespace>
+    <AssemblyName>DeltaWare.SDK.Tests.Serialization.Arguments</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
@@ -51,13 +51,13 @@
     <Compile Include="TestClassA.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Serialization.Arguments\Serialization.Arguments.csproj">
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\serialization.arguments\Serialization.Arguments.csproj">
       <Project>{71a2d671-1338-4a73-8a4c-4ace7a8d6db9}</Project>
       <Name>Serialization.Arguments</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

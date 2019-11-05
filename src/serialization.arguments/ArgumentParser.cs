@@ -1,18 +1,17 @@
-﻿
-namespace DeltaWare.Tools.Serialization.Arguments
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+
+using DeltaWare.SDK.Serialization.Arguments.Attributes;
+using DeltaWare.SDK.Serialization.Arguments.Exceptions;
+
+namespace DeltaWare.SDK.Serialization.Arguments
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
-
-    using Attributes;
-    using Exceptions;
-
     /// <summary>
     /// Parses arguments assigning converting and assigning them to .net objects.
     /// </summary>
-    public static class Arguments
+    public static class ArgumentParser
     {
         /// <summary>
         /// Parses command lines arguments. Assigning them to static properties.
@@ -80,15 +79,14 @@ namespace DeltaWare.Tools.Serialization.Arguments
                         currentArgument.Property.SetValue(null, true);
                     }
                 }
-                else if (string.IsNullOrEmpty(argumentBuilder))
-                {
-                    argumentBuilder += argument;
-
-                    expectingParameter = false;
-                }
                 else
                 {
-                    argumentBuilder += ' ' + argument;
+                    if (!string.IsNullOrEmpty(argumentBuilder))
+                    {
+                        argumentBuilder += ' ';
+                    }
+
+                    argumentBuilder += argument;
 
                     expectingParameter = false;
                 }

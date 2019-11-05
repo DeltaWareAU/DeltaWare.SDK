@@ -1,16 +1,16 @@
 ﻿using System;
-using DeltaWare.Tools.Serialization.Arguments.Exceptions;
+using DeltaWare.SDK.Serialization.Arguments;
+using DeltaWare.SDK.Serialization.Arguments.Exceptions;
 using NUnit.Framework;
-using DeltaWare.Tools.Serialization.Arguments.Tests;
 using Shouldly;
 
-namespace DeltaWare.Tools.Serialization.Arguments.Tests
+namespace DeltaWare.SDK.Tests.Serialization.Arguments
 {
     [TestFixture]
     public class Tests
     {
         [Test]
-        public void SuccessfulAutoNameParseTest()
+        public void SuccessfulAutoNameParse()
         {
             string[] args =
             {
@@ -22,7 +22,7 @@ namespace DeltaWare.Tools.Serialization.Arguments.Tests
                 "16",
             };
 
-            Arguments.Parse<TestClassA>(args);
+            ArgumentParser.Parse<TestClassA>(args);
 
             TestClassA.ValueA.ShouldBe("Hello A");
             TestClassA.ValueB.ShouldBe(16);
@@ -30,7 +30,7 @@ namespace DeltaWare.Tools.Serialization.Arguments.Tests
         }
 
         [Test]
-        public void SuccessfulParseSetNamesTest()
+        public void SuccessfulParseSetNames()
         {
             string[] args =
             {
@@ -40,21 +40,21 @@ namespace DeltaWare.Tools.Serialization.Arguments.Tests
                 "-ValueSetB"
             };
 
-            Arguments.Parse<TestClassC>(args);
+            ArgumentParser.Parse<TestClassC>(args);
 
             TestClassC.ValueA.ShouldBe("Hello A");
             TestClassC.ValueB.ShouldBe(true);
         }
 
         [Test]
-        public void FlagNotBoolTypeTest()
+        public void FlagNotBoolType()
         {
             string[] args =
             {
                 "-ValueA"
             };
 
-            Should.Throw<ArgumentException>(() => { Arguments.Parse<TestClassB>(args); });
+            Should.Throw<ArgumentException>(() => { ArgumentParser.Parse<TestClassB>(args); });
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace DeltaWare.Tools.Serialization.Arguments.Tests
                 "-ValueC:"
             };
 
-            Should.Throw<ArgumentException>(() => { Arguments.Parse<TestClassA>(args); });
+            Should.Throw<ArgumentException>(() => { ArgumentParser.Parse<TestClassA>(args); });
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace DeltaWare.Tools.Serialization.Arguments.Tests
                 "-ValueA"
             };
 
-            Should.Throw<ArgumentException>(() => { Arguments.Parse<TestClassA>(args); });
+            Should.Throw<ArgumentException>(() => { ArgumentParser.Parse<TestClassA>(args); });
         }
 
         [Test]
@@ -87,7 +87,7 @@ namespace DeltaWare.Tools.Serialization.Arguments.Tests
                 "-ValueD:"
             };
 
-            Should.Throw<ArgumentNotFoundException>(() => { Arguments.Parse<TestClassA>(args); });
+            Should.Throw<ArgumentNotFoundException>(() => { ArgumentParser.Parse<TestClassA>(args); });
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace DeltaWare.Tools.Serialization.Arguments.Tests
                 "-ValueD"
             };
 
-            Should.Throw<ArgumentNotFoundException>(() => { Arguments.Parse<TestClassA>(args); });
+            Should.Throw<ArgumentNotFoundException>(() => { ArgumentParser.Parse<TestClassA>(args); });
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace DeltaWare.Tools.Serialization.Arguments.Tests
                 "Hello"
             };
 
-            Should.Throw<ArgumentException>(() => { Arguments.Parse<TestClassA>(args); });
+            Should.Throw<ArgumentException>(() => { ArgumentParser.Parse<TestClassA>(args); });
         }
 
         [Test]
@@ -124,7 +124,7 @@ namespace DeltaWare.Tools.Serialization.Arguments.Tests
                 "Hello",
             };
 
-            Should.Throw<ArgumentException>(() => { Arguments.Parse<TestClassA>(args); });
+            Should.Throw<ArgumentException>(() => { ArgumentParser.Parse<TestClassA>(args); });
         }
     }
 }

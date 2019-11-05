@@ -7,8 +7,8 @@
     <ProjectGuid>{C4047B8B-E6C4-41DF-B236-3FCA3AAD29B8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DeltaWare.Tools.Maths.Fractal</RootNamespace>
-    <AssemblyName>DeltaWare.Tools.Maths.Fractal</AssemblyName>
+    <RootNamespace>DeltaWare.SDK.Maths.Fractal</RootNamespace>
+    <AssemblyName>DeltaWare.SDK.Maths.Fractal</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

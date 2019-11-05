@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ConsoleApp1
+namespace DeltaWare.SDK.Drawing
 {
-    public class DirectBitmap : IDisposable
+    public class Bitmap : IDisposable
     {
-        public Bitmap Bitmap { get; }
+        public System.Drawing.Bitmap InnerBitmap { get; }
 
-        public Int32[] Bits { get; }
+        public int[] Bits { get; }
 
         public bool Disposed { get; private set; }
 
@@ -23,13 +19,13 @@ namespace ConsoleApp1
         
         protected GCHandle BitsHandle { get; }
 
-        public DirectBitmap(int width, int height)
+        public Bitmap(int width, int height)
         {
             Width = width;
             Height = height;
-            Bits = new Int32[width * height];
+            Bits = new int[width * height];
             BitsHandle = GCHandle.Alloc(Bits, GCHandleType.Pinned);
-            Bitmap = new Bitmap(width, height, width * 4, PixelFormat.Format32bppPArgb, BitsHandle.AddrOfPinnedObject());
+            InnerBitmap = new System.Drawing.Bitmap(width, height, width * 4, PixelFormat.Format32bppPArgb, BitsHandle.AddrOfPinnedObject());
         }
 
         public void SetPixel(int x, int y, Color color)
@@ -44,6 +40,7 @@ namespace ConsoleApp1
         {
             int index = x + (y * Width);
             int col = Bits[index];
+
             Color result = Color.FromArgb(col);
 
             return result;
@@ -51,14 +48,17 @@ namespace ConsoleApp1
 
         public void Save(string fileName, ImageFormat imageFormat)
         {
-            Bitmap.Save(fileName, imageFormat);
+            InnerBitmap.Save(fileName, imageFormat);
         }
 
         public void Dispose()
         {
             if (Disposed) return;
+
             Disposed = true;
-            Bitmap.Dispose();
+
+            InnerBitmap.Dispose();
+
             BitsHandle.Free();
         }
     }

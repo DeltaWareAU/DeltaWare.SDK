@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DeltaWare.Tools.Serialization.Arguments")]
+[assembly: AssemblyTitle("DeltaWare.SDK.Serialization.ArgumentProcessor")]
 [assembly: AssemblyDescription("Deserializes command line arguments into .net objects")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("DeltaWare")]
-[assembly: AssemblyProduct("DeltaWare.Tools.Serialization.Arguments")]
+[assembly: AssemblyProduct("DeltaWare.SDK.Serialization.ArgumentProcessor")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

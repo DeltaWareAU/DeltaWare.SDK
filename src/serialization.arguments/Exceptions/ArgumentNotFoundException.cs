@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DeltaWare.Tools.Serialization.Arguments.Exceptions
+namespace DeltaWare.SDK.Serialization.Arguments.Exceptions
 {
     public sealed class ArgumentNotFoundException : Exception
     {

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DeltaWare.Tools.Maths.Fractal")]
+[assembly: AssemblyTitle("DeltaWare.SDK.Maths.Fractal")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DeltaWare.Tools.Maths.Fractal")]
+[assembly: AssemblyProduct("DeltaWare.SDK.Maths.Fractal")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

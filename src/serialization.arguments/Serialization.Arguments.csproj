@@ -7,10 +7,11 @@
     <ProjectGuid>{71A2D671-1338-4A73-8A4C-4ACE7A8D6DB9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DeltaWare.Tools.Serialization.Arguments</RootNamespace>
-    <AssemblyName>DeltaWare.Tools.Serialization.Arguments</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <RootNamespace>DeltaWare.SDK.Serialization.Arguments</RootNamespace>
+    <AssemblyName>DeltaWare.SDK.Serialization.Arguments</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Argument.cs" />
-    <Compile Include="Arguments.cs" />
+    <Compile Include="ArgumentParser.cs" />
     <Compile Include="Attributes\ArgumentBase.cs" />
     <Compile Include="Attributes\Flag.cs" />
     <Compile Include="Attributes\Parameter.cs" />

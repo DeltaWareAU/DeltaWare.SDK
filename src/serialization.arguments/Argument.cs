@@ -1,10 +1,10 @@
 ﻿
-namespace DeltaWare.Tools.Serialization.Arguments
+using System.Reflection;
+
+using DeltaWare.SDK.Serialization.Arguments.Attributes;
+
+namespace DeltaWare.SDK.Serialization.Arguments
 {
-    using System.Reflection;
-
-    using DeltaWare.Tools.Serialization.Arguments.Attributes;
-
     internal struct Argument
     {
         public readonly ArgumentBase ArgumentType;
@@ -13,8 +13,8 @@ namespace DeltaWare.Tools.Serialization.Arguments
 
         public Argument(ArgumentBase argumentType, PropertyInfo property)
         {
-            this.ArgumentType = argumentType;
-            this.Property = property;
+            ArgumentType = argumentType;
+            Property = property;
         }
     }
 }

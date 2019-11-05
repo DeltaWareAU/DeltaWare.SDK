@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DeltaWare.Tools.Maths.Fractal.Hilbert
+namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 {
     public abstract class HilbertArrayBase
     {

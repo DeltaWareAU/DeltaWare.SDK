@@ -1,6 +1,6 @@
 ﻿
 
-namespace DeltaWare.Tools.Serialization.Csv
+namespace DeltaWare.SDK.Serialization.Csv
 {
     using System;
     using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace DeltaWare.Tools.Serialization.Csv
     using Exceptions;
 
     /// <summary>
-    /// A set of tools for working with Csv Files.
+    /// A set of SDK for working with Csv Files.
     /// </summary>
     public class CsvSerializer
     {
