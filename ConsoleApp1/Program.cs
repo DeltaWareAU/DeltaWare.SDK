@@ -19,53 +19,48 @@ namespace ConsoleApp1
         {
             string filePath = @"C:\Projects\Final\hs_alt_HuRef_chr19.fa";
 
-            List<char> characters= new List<char>();
-
-            using (StreamReader stream = new StreamReader(filePath))
+            using (FragmentedHilbertArray hilbertArray = new FragmentedHilbertArray(new StreamReader(filePath)))
             {
-                do
+                int resolution = (int)Math.Pow(2, hilbertArray.Depth);
+
+                using (DirectBitmap bitmap = new DirectBitmap(resolution, resolution))
                 {
-                    characters.Add((char)stream.Read());
-                }
-                while (!stream.EndOfStream);
-            }
-
-            HilbertArray<char> hilbertCharacters = HilbertArray<char>.Generate(characters.ToArray());
-
-            int resolution = (int) Math.Pow(2, hilbertCharacters.Depth);
-
-            using (DirectBitmap bitmap = new DirectBitmap(resolution,resolution))
-            {
-                Color color;
-                HilbertVector<char> vector;
-
-                for (int i = 0; i < hilbertCharacters.Length; i++)
-                {
-                    vector = hilbertCharacters[i];
-
-                    switch (vector.Value)
+                    do
                     {
-                        case 'A':
-                            color = Color.Red;
-                            break;
-                        case 'C':
-                            color = Color.Yellow;
-                            break;
-                        case 'T':
-                            color = Color.Green;
-                            break;
-                        case 'G':
-                            color = Color.Blue;
-                            break;
-                        default:
-                            color = Color.Black;
-                            break;
+                        HilbertVector<char>[] vectors = hilbertArray.NextFragment();
+
+                        for (int i = 0; i < vectors.Length; i++)
+                        {
+                            Color color;
+
+                            HilbertVector<char>  vector = vectors[i];
+
+                            switch (vector.Value)
+                            {
+                                case 'A':
+                                    color = Color.Red;
+                                    break;
+                                case 'C':
+                                    color = Color.Yellow;
+                                    break;
+                                case 'T':
+                                    color = Color.Green;
+                                    break;
+                                case 'G':
+                                    color = Color.Blue;
+                                    break;
+                                default:
+                                    color = Color.Black;
+                                    break;
+                            }
+
+                            bitmap.SetPixel((int)vector.X, (int)vector.Y, color);
+                        }
                     }
+                    while (!hilbertArray.EndOfStream);
 
-                    bitmap.SetPixel((int)vector.X, (int)vector.Y, color);
+                    bitmap.Save(@"C:\Projects\Final\hs_alt_HuRef_chr19.png", ImageFormat.Png);
                 }
-
-                bitmap.Save(@"C:\Projects\Final\hs_alt_HuRef_chr19.png", ImageFormat.Png);
             }
         }
 

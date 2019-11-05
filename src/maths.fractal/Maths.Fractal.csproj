@@ -41,7 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Hilbert\FragmentedHilbertArray.cs" />
     <Compile Include="Hilbert\HilbertArray.cs" />
+    <Compile Include="Hilbert\HilbertArrayBase.cs" />
     <Compile Include="Hilbert\HilbertArrayBuilder.cs" />
     <Compile Include="Hilbert\HilbertVector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
