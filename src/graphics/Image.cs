@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 
 namespace DeltaWare.SDK.Drawing
 {
-    public class Bitmap : IDisposable
+    public class Image : IDisposable
     {
-        public System.Drawing.Bitmap InnerBitmap { get; }
+        public System.Drawing.Bitmap Bitmap { get; }
 
         public int[] Bits { get; }
 
@@ -19,13 +19,13 @@ namespace DeltaWare.SDK.Drawing
         
         protected GCHandle BitsHandle { get; }
 
-        public Bitmap(int width, int height)
+        public Image(int width, int height)
         {
             Width = width;
             Height = height;
             Bits = new int[width * height];
             BitsHandle = GCHandle.Alloc(Bits, GCHandleType.Pinned);
-            InnerBitmap = new System.Drawing.Bitmap(width, height, width * 4, PixelFormat.Format32bppPArgb, BitsHandle.AddrOfPinnedObject());
+            Bitmap = new System.Drawing.Bitmap(width, height, width * 4, PixelFormat.Format32bppPArgb, BitsHandle.AddrOfPinnedObject());
         }
 
         public void SetPixel(int x, int y, Color color)
@@ -48,7 +48,7 @@ namespace DeltaWare.SDK.Drawing
 
         public void Save(string fileName, ImageFormat imageFormat)
         {
-            InnerBitmap.Save(fileName, imageFormat);
+            Bitmap.Save(fileName, imageFormat);
         }
 
         public void Dispose()
@@ -57,7 +57,7 @@ namespace DeltaWare.SDK.Drawing
 
             Disposed = true;
 
-            InnerBitmap.Dispose();
+            Bitmap.Dispose();
 
             BitsHandle.Free();
         }
