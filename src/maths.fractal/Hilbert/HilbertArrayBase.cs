@@ -8,7 +8,25 @@ namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 {
     public abstract class HilbertArrayBase
     {
-        public static void GetIndexCoordinates(long length, long currentIndex, out long x, out long y)
+        public int Depth { get; protected set; }
+
+        public long Length { get; protected set; }
+
+        public HilbertVector<T> GenerateVector<T>(T value, long index)
+        {
+            GetIndexCoordinates(Length, index, out long x, out long y);
+
+            return new HilbertVector<T>(value, (int)x, (int)y, index);
+        }
+
+        public Task<HilbertVector<T>> GenerateVectorAsync<T>(T value, long index)
+        {
+            GetIndexCoordinates(Length, index, out long x, out long y);
+
+            return Task.FromResult(new HilbertVector<T>(value, (int) x, (int) y, index));
+        }
+
+        protected static void GetIndexCoordinates(long length, long currentIndex, out long x, out long y)
         {
             x = 0;
             y = 0;

@@ -9,23 +9,27 @@ namespace DeltaWare.SDK.Drawing
     {
         public System.Drawing.Bitmap Bitmap { get; }
 
-        public int[] Bits { get; }
+        public Int32[] Bits { get; }
 
         public bool Disposed { get; private set; }
 
         public int Height { get; }
 
         public int Width { get; }
-        
+
         protected GCHandle BitsHandle { get; }
 
         public Image(int width, int height)
         {
             Width = width;
             Height = height;
-            Bits = new int[width * height];
+            Bits = new Int32[width * height];
             BitsHandle = GCHandle.Alloc(Bits, GCHandleType.Pinned);
             Bitmap = new System.Drawing.Bitmap(width, height, width * 4, PixelFormat.Format32bppPArgb, BitsHandle.AddrOfPinnedObject());
+        }
+
+        public Image(int size) : this(size, size)
+        {
         }
 
         public void SetPixel(int x, int y, Color color)

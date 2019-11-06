@@ -9,23 +9,20 @@ namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 {
     public class FragmentedHilbertArray : HilbertArrayBase, IDisposable
     {
-        private const int FragmentSize = 1024;
+        private int _fragmentSize;
 
-        private long _currentIndex;
+        private int _currentIndex = 0;
 
         private readonly StreamReader _stream;
-
-        public readonly long Depth;
-
-        public readonly long Length;
 
         public bool EndOfStream { get; private set; }
 
         public bool Disposed { get; private set; }
 
-        public FragmentedHilbertArray(StreamReader stream)
+        public FragmentedHilbertArray(StreamReader stream, int fragmentSize = 4096)
         {
             _stream = stream;
+            _fragmentSize = fragmentSize;
 
             Length = stream.BaseStream.Length;
 
@@ -43,7 +40,7 @@ namespace DeltaWare.SDK.Maths.Fractal.Hilbert
         {   
             List<HilbertVector<char>> vectors = new List<HilbertVector<char>>();
 
-            for (int i = 0; i < FragmentSize; i++)
+            for (int i = 0; i < _fragmentSize; i++)
             {
                 if (_stream.EndOfStream)
                 {
