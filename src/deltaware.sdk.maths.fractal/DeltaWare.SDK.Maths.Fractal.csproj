@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DeltaWare.SDK.Maths.Fractal</RootNamespace>
-    <AssemblyName>DeltaWare.SDK.Maths.Fractal</AssemblyName>
+    <AssemblyName>deltaware.sdk.maths.fractal</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

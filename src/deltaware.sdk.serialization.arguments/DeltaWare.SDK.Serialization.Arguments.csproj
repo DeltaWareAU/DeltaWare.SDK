@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DeltaWare.SDK.Serialization.Arguments</RootNamespace>
-    <AssemblyName>DeltaWare.SDK.Serialization.Arguments</AssemblyName>
+    <AssemblyName>deltaware.sdk.serialization.arguments</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

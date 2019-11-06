@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DeltaWare.SDK.Tests.Serialization.Arguments</RootNamespace>
-    <AssemblyName>DeltaWare.SDK.Tests.Serialization.Arguments</AssemblyName>
+    <AssemblyName>deltaware.sdk.tests.serialization.arguments</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -54,9 +54,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\serialization.arguments\Serialization.Arguments.csproj">
+    <ProjectReference Include="..\..\src\deltaware.sdk.serialization.arguments\DeltaWare.SDK.Serialization.Arguments.csproj">
       <Project>{71a2d671-1338-4a73-8a4c-4ace7a8d6db9}</Project>
-      <Name>Serialization.Arguments</Name>
+      <Name>DeltaWare.SDK.Serialization.Arguments</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
