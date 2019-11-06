@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C4047B8B-E6C4-41DF-B236-3FCA3AAD29B8}</ProjectGuid>
+    <ProjectGuid>{C606AFAD-ECE3-4BE7-BEA3-F71BF6534826}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DeltaWare.SDK.Maths.Fractal</RootNamespace>
-    <AssemblyName>deltaware.sdk.maths.fractal</AssemblyName>
+    <RootNamespace>DeltaWare.SDK.Maths</RootNamespace>
+    <AssemblyName>deltaware.sdk.maths</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,12 +24,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -41,11 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Hilbert\FragmentedHilbertArray.cs" />
-    <Compile Include="Hilbert\HilbertArray.cs" />
-    <Compile Include="Hilbert\HilbertArrayBase.cs" />
-    <Compile Include="Hilbert\HilbertArrayBuilder.cs" />
-    <Compile Include="Hilbert\HilbertVector.cs" />
+    <Compile Include="Base2\Binary.cs" />
+    <Compile Include="Base2\BinaryDebugView.cs" />
+    <Compile Include="Base2\BinaryOperatorResult.cs" />
+    <Compile Include="Base2\BinaryState.cs" />
+    <Compile Include="Base2\BitLength.cs" />
+    <Compile Include="Fractal\Hilbert\FragmentedHilbertArray.cs" />
+    <Compile Include="Fractal\Hilbert\HilbertArray.cs" />
+    <Compile Include="Fractal\Hilbert\HilbertArrayBase.cs" />
+    <Compile Include="Fractal\Hilbert\HilbertArrayBuilder.cs" />
+    <Compile Include="Fractal\Hilbert\HilbertVector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

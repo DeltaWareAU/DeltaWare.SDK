@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("DeltaWare.SDK.Maths.Fractal")]
+[assembly: AssemblyTitle("DeltaWare.SDK.Maths")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DeltaWare.SDK.Maths.Fractal")]
+[assembly: AssemblyProduct("DeltaWare.SDK.Maths")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c4047b8b-e6c4-41df-b236-3fca3aad29b8")]
+[assembly: Guid("c606afad-ece3-4be7-bea3-f71bf6534826")]
 
 // Version information for an assembly consists of the following four values:
 //
