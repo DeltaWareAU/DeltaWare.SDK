@@ -1,9 +1,9 @@
 ﻿
 using DeltaWare.SDK.Serialization.Arguments.Attributes;
 
-namespace DeltaWare.SDK.Tests.Serialization.Arguments
+namespace DeltaWare.SDK.Tests.Serialization.Arguments.Models
 {
-    class TestClassC
+    class ModelC
     {
         [Parameter("ValueSetA")]
         public static string ValueA { get; set; }

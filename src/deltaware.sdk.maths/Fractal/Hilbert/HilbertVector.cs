@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DeltaWare.SDK.Core;
 
 namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 {
@@ -10,15 +11,21 @@ namespace DeltaWare.SDK.Maths.Fractal.Hilbert
     {
         public readonly T Value;
 
-        public readonly int X;
-        public readonly int Y;
+        public readonly Coordinate Coordinates;
+
         public readonly long Index;
 
         internal HilbertVector(T value, int x, int y, long index)
         {
             Value = value;
-            X = x;
-            Y = y;
+            Coordinates = new Coordinate(x, y);
+            Index = index;
+        }
+        
+        internal HilbertVector(T value, Coordinate coordinates, long index)
+        {
+            Value = value;
+            Coordinates = coordinates;
             Index = index;
         }
     }

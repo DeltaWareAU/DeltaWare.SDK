@@ -57,7 +57,10 @@ namespace DeltaWare.SDK.Drawing
 
         public void Dispose()
         {
-            if (Disposed) return;
+            if (Disposed)
+            {
+                return;
+            }
 
             Disposed = true;
 

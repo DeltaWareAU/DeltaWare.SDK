@@ -44,19 +44,21 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestClassB.cs" />
-    <Compile Include="TestClassC.cs" />
-    <Compile Include="Tests.cs" />
+    <Compile Include="Arguments\Models\ModelB.cs" />
+    <Compile Include="Arguments\Models\ModelC.cs" />
+    <Compile Include="Arguments\Tests.cs" />
+    <Compile Include="CSV\Models\ModelA.cs" />
+    <Compile Include="CSV\Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestClassA.cs" />
+    <Compile Include="Arguments\Models\ModelA.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\deltaware.sdk.serialization.arguments\DeltaWare.SDK.Serialization.Arguments.csproj">
-      <Project>{71a2d671-1338-4a73-8a4c-4ace7a8d6db9}</Project>
-      <Name>DeltaWare.SDK.Serialization.Arguments</Name>
+    <ProjectReference Include="..\..\src\deltaware.sdk.serialization\DeltaWare.SDK.Serialization.csproj">
+      <Project>{bc51dc57-d14c-47a5-899b-c9e3495621d1}</Project>
+      <Name>DeltaWare.SDK.Serialization</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

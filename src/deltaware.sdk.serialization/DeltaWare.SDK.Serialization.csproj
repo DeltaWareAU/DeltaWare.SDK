@@ -4,17 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C606AFAD-ECE3-4BE7-BEA3-F71BF6534826}</ProjectGuid>
+    <ProjectGuid>{BC51DC57-D14C-47A5-899B-C9E3495621D1}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>DeltaWare.SDK.Maths</RootNamespace>
-    <AssemblyName>deltaware.sdk.maths</AssemblyName>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DeltaWare.SDK.Serialization</RootNamespace>
+    <AssemblyName>deltaware.sdk.serialization</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,16 +24,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,16 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Base2\Binary.cs" />
-    <Compile Include="Base2\BinaryDebugView.cs" />
-    <Compile Include="Base2\BinaryOperatorResult.cs" />
-    <Compile Include="Base2\BinaryState.cs" />
-    <Compile Include="Base2\BitLength.cs" />
-    <Compile Include="Fractal\Hilbert\FragmentedHilbertArray.cs" />
-    <Compile Include="Fractal\Hilbert\HilbertArray.cs" />
-    <Compile Include="Fractal\Hilbert\HilbertArrayBase.cs" />
-    <Compile Include="Fractal\Hilbert\HilbertArrayBuilder.cs" />
-    <Compile Include="Fractal\Hilbert\HilbertVector.cs" />
+    <Compile Include="Arguments\Argument.cs" />
+    <Compile Include="Arguments\ArgumentParser.cs" />
+    <Compile Include="Arguments\Attributes\ArgumentBase.cs" />
+    <Compile Include="Arguments\Attributes\Flag.cs" />
+    <Compile Include="Arguments\Attributes\Parameter.cs" />
+    <Compile Include="Arguments\Exceptions\ArgumentNotFoundException.cs" />
+    <Compile Include="CSV\Attributes\ColumnIndexOverrideAttribute.cs" />
+    <Compile Include="CSV\Attributes\ColumnNameOverrideAttribute.cs" />
+    <Compile Include="CSV\CsvSerializer.cs" />
+    <Compile Include="CSV\Exceptions\CsvFormatException.cs" />
+    <Compile Include="CSV\Exceptions\DuplicateColumnException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

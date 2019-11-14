@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DeltaWare.SDK.Core;
 
 namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 {
@@ -49,9 +50,9 @@ namespace DeltaWare.SDK.Maths.Fractal.Hilbert
                     return vectors.ToArray();
                 }
 
-                GetIndexCoordinates(Length, _currentIndex++, out long x, out long y);
+                GetIndexCoordinates(Length, _currentIndex++, out LongCoordinate coordinates);
 
-                vectors.Add(new HilbertVector<char>((char)_stream.Read(), (int)x, (int)y, _currentIndex));
+                vectors.Add(new HilbertVector<char>((char)_stream.Read(), coordinates.ToCoordinate(), _currentIndex));
             }
 
             return vectors.ToArray();

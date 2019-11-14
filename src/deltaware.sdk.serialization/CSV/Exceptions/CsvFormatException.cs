@@ -1,5 +1,5 @@
 ﻿
-namespace DeltaWare.SDK.Serialization.Csv.Exceptions
+namespace DeltaWare.SDK.Serialization.CSV.Exceptions
 {
     using System;
 

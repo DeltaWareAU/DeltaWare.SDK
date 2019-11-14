@@ -1,14 +1,14 @@
 ﻿
-namespace DeltaWare.SDK.Serialization.Csv.Attributes
+namespace DeltaWare.SDK.Serialization.CSV.Attributes
 {
     using System;
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
-    public class ColumnName : Attribute
+    public class ColumnNameOverrideAttribute : Attribute
     {
         internal string Name;
 
-        public ColumnName(string name)
+        public ColumnNameOverrideAttribute(string name)
         {
             Name = name;
         }
