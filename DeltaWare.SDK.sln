@@ -7,13 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9446B562
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Graphics", "src\deltaware.sdk.graphics\DeltaWare.SDK.Graphics.csproj", "{E01A349B-0035-42CF-B973-FBCB90FE5D1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Maths", "src\DeltaWare.SDK.Maths\DeltaWare.SDK.Maths.csproj", "{C606AFAD-ECE3-4BE7-BEA3-F71BF6534826}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Maths", "src\deltaware.sdk.maths\DeltaWare.SDK.Maths.csproj", "{C606AFAD-ECE3-4BE7-BEA3-F71BF6534826}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Tests.Serialization", "tests\deltaware.sdk.test.serialization\DeltaWare.SDK.Tests.Serialization.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Serialization", "src\deltaware.sdk.serialization\DeltaWare.SDK.Serialization.csproj", "{BC51DC57-D14C-47A5-899B-C9E3495621D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Core", "src\DeltaWare.SDK.Core\DeltaWare.SDK.Core.csproj", "{50942530-A588-4C21-A701-13F25177B04A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Core", "src\deltaware.sdk.core\DeltaWare.SDK.Core.csproj", "{50942530-A588-4C21-A701-13F25177B04A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
