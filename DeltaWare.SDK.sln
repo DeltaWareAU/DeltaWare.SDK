@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9446B562-9590-4AA7-881F-E1201E0B8C91}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{9446B562-9590-4AA7-881F-E1201E0B8C91}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Logging", "src\DeltaWare.SDK.Logging\DeltaWare.SDK.Logging.csproj", "{619722A3-CFF4-495C-A5BC-2213991CF15B}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Serialization", "src\DeltaWare.SDK.Serialization\DeltaWare.SDK.Serialization.csproj", "{5A2F145F-7B3D-44CE-8BAD-E70C86CB7EE3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Graphics", "src\deltaware.sdk.graphics\DeltaWare.SDK.Graphics.csproj", "{E01A349B-0035-42CF-B973-FBCB90FE5D1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Test.Serialization", "test\deltaware.sdk.test.serialization\DeltaWare.SDK.Test.Serialization.csproj", "{4B72C7F8-1442-44A7-A0AC-A9F14D6023BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,9 +65,20 @@ Global
 		{E01A349B-0035-42CF-B973-FBCB90FE5D1A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E01A349B-0035-42CF-B973-FBCB90FE5D1A}.Release|x64.ActiveCfg = Release|Any CPU
 		{E01A349B-0035-42CF-B973-FBCB90FE5D1A}.Release|x64.Build.0 = Release|Any CPU
+		{4B72C7F8-1442-44A7-A0AC-A9F14D6023BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B72C7F8-1442-44A7-A0AC-A9F14D6023BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B72C7F8-1442-44A7-A0AC-A9F14D6023BB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4B72C7F8-1442-44A7-A0AC-A9F14D6023BB}.Debug|x64.Build.0 = Debug|Any CPU
+		{4B72C7F8-1442-44A7-A0AC-A9F14D6023BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B72C7F8-1442-44A7-A0AC-A9F14D6023BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B72C7F8-1442-44A7-A0AC-A9F14D6023BB}.Release|x64.ActiveCfg = Release|Any CPU
+		{4B72C7F8-1442-44A7-A0AC-A9F14D6023BB}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4B72C7F8-1442-44A7-A0AC-A9F14D6023BB} = {9446B562-9590-4AA7-881F-E1201E0B8C91}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {50B4E601-DB97-49D8-B10F-A6B644078C32}

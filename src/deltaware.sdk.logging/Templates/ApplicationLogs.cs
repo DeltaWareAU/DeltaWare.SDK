@@ -6,7 +6,7 @@ using DeltaWare.SDK.Core.Interfaces;
 
 namespace DeltaWare.SDK.Logging.Templates
 {
-    public class ApplicationLogTemplates : ILogTemplate
+    public class ApplicationLogs : ILogTemplate
     {
         public LogCategory Category { get; }
 
@@ -16,7 +16,7 @@ namespace DeltaWare.SDK.Logging.Templates
 
         public DateTime TimeStamp { get; }
 
-        private ApplicationLogTemplates(LogCategory category, string summary)
+        private ApplicationLogs(LogCategory category, string summary)
         {
             Category = category;
             Summary = summary;
@@ -24,7 +24,7 @@ namespace DeltaWare.SDK.Logging.Templates
             TimeStamp = DateTime.UtcNow;
         }
 
-        private ApplicationLogTemplates(LogCategory category, string summary, string message)
+        private ApplicationLogs(LogCategory category, string summary, string message)
         {
             Category = category;
             Summary = summary;
@@ -32,9 +32,14 @@ namespace DeltaWare.SDK.Logging.Templates
             TimeStamp = DateTime.UtcNow;
         }
 
-        public static ILogTemplate AppStartup()
+        public static ILogTemplate AppStarted()
         {
-            return new ApplicationLogTemplates(LogCategory.Status, "Application Startup");
+            return new ApplicationLogs(LogCategory.Status, "Application Startup");
+        }
+
+        public static ILogTemplate AppTerminated()
+        {
+            return new ApplicationLogs(LogCategory.Status, "Application Terminated");
         }
     }
 }

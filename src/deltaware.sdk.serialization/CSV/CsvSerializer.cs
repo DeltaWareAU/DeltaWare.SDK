@@ -196,18 +196,10 @@ namespace DeltaWare.SDK.Serialization.CSV
         }
         public void Serialize<T>(TextWriter textWriter, T[] values, bool includeHeaders = true)
         {
-            bool carriageReturnHit = false;
-            bool doubleQuoteHit = false;
-
             FieldInfo[] fieldInfoArray = typeof(T).GetFields();
 
-            int columnIndex = 0;
-            int rowIndex = 0;
             int csvWidth = fieldInfoArray.Length;
             
-            int fileLine = -1;
-            int fileRow = 0;
-
             List<T> csvBuilder = new List<T>();
 
             string itemBuilder = string.Empty;

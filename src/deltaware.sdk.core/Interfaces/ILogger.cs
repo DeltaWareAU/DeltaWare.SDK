@@ -10,7 +10,5 @@ namespace DeltaWare.SDK.Core.Interfaces
     public interface ILogger
     {
         void AddLog(ILogTemplate logTemplate);
-
-        void LogInformation(string message);
     }
 }
