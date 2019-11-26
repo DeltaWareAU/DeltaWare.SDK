@@ -1,7 +1,8 @@
-﻿using System;
+﻿
+using System;
 using System.Diagnostics;
 
-namespace DeltaWare.SDK.Core
+namespace DeltaWare.SDK.Core.Types
 {
 /// <summary>
     /// X:Y Coordinates.

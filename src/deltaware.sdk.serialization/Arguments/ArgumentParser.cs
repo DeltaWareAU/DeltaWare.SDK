@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 
 using DeltaWare.SDK.Serialization.Arguments.Attributes;
-using DeltaWare.SDK.Serialization.Arguments.Exceptions;
 
 namespace DeltaWare.SDK.Serialization.Arguments
 {
@@ -52,12 +51,12 @@ namespace DeltaWare.SDK.Serialization.Arguments
 
                         if (!nameToArgumentMap.TryGetValue(argumentName, out currentArgument))
                         {
-                            throw new ArgumentNotFoundException($"The parameter [-{argumentName}:] cannot be found in [{typeof(T).Name}].");
+                            throw new ArgumentNullException( $"The parameter [-{argumentName}:] cannot be found in [{typeof(T).Name}].");
                         }
 
                         if (!(currentArgument.ArgumentType is Parameter))
                         {
-                            throw new ArgumentException("The flag [{currentArgument.ArgumentType.Name}] ends with [:]. Only parameters can end with [:].");
+                            throw new ArgumentException($"The flag [{currentArgument.ArgumentType.Name}] ends with [:]. Only parameters can end with [:].");
                         }
 
                         expectingParameter = true;
@@ -68,7 +67,7 @@ namespace DeltaWare.SDK.Serialization.Arguments
 
                         if (!nameToArgumentMap.TryGetValue(argumentName, out currentArgument))
                         {
-                            throw new ArgumentNotFoundException($"The flag [-{argumentName}] cannot be found in [{typeof(T).Name}].");
+                            throw new ArgumentNullException($"The flag [-{argumentName}] cannot be found in [{typeof(T).Name}].");
                         }
 
                         if (!(currentArgument.ArgumentType is Flag))

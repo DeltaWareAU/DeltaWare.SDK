@@ -1,8 +1,10 @@
 ﻿using System;
+
 using DeltaWare.SDK.Serialization.Arguments;
-using DeltaWare.SDK.Serialization.Arguments.Exceptions;
 using DeltaWare.SDK.Tests.Serialization.Arguments.Models;
+
 using NUnit.Framework;
+
 using Shouldly;
 
 namespace DeltaWare.SDK.Tests.Serialization.Arguments
@@ -88,7 +90,7 @@ namespace DeltaWare.SDK.Tests.Serialization.Arguments
                 "-ValueD:"
             };
 
-            Should.Throw<ArgumentNotFoundException>(() => { ArgumentParser.Parse<ModelA>(args); });
+            Should.Throw<ArgumentNullException>(() => { ArgumentParser.Parse<ModelA>(args); });
         }
 
         [Test]
@@ -99,7 +101,7 @@ namespace DeltaWare.SDK.Tests.Serialization.Arguments
                 "-ValueD"
             };
 
-            Should.Throw<ArgumentNotFoundException>(() => { ArgumentParser.Parse<ModelA>(args); });
+            Should.Throw<ArgumentNullException>(() => { ArgumentParser.Parse<ModelA>(args); });
         }
 
         [Test]

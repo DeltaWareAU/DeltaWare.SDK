@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <AssemblyName>deltaware.sdk.maths</AssemblyName>
+    <AssemblyName>deltaware.sdk.logging</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DeltaWare.SDK.Core\DeltaWare.SDK.Core.csproj" />
+    <ProjectReference Include="..\deltaware.sdk.core\DeltaWare.SDK.Core.csproj" />
   </ItemGroup>
 
 </Project>

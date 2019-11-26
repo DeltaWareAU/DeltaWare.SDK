@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DeltaWare.SDK.Core;
+using DeltaWare.SDK.Core.Types;
 
 namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 {

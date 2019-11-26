@@ -1,13 +1,13 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
 using DeltaWare.SDK.Serialization.CSV.Attributes;
-using DeltaWare.SDK.Serialization.CSV.Exceptions;
 
 namespace DeltaWare.SDK.Serialization.CSV
 {
@@ -90,7 +90,7 @@ namespace DeltaWare.SDK.Serialization.CSV
 
                     if (columnIndex != csvWidth || carriageReturnHit)
                     {
-                        throw new CsvFormatException($"An Unexpected Carriage Return was hit at Row: {fileRow} Line: {fileLine}.");
+                        throw new FormatException($"An Unexpected Carriage Return was hit at Row: {fileRow} Line: {fileLine}.");
                     }
 
                     carriageReturnHit = true;
@@ -101,7 +101,7 @@ namespace DeltaWare.SDK.Serialization.CSV
                     {
                         if (columnIndex != csvWidth)
                         {
-                            throw new CsvFormatException($"An Unexpected New Line was hit at Row: {fileRow} Line: {fileLine}.");
+                            throw new FormatException($"An Unexpected New Line was hit at Row: {fileRow} Line: {fileLine}.");
                         }
 
                         NextColumn(objectBuilder, objectFields, objects, columnIndexOverrides, columnIndex, rowIndex, containsHeaders);
@@ -116,7 +116,7 @@ namespace DeltaWare.SDK.Serialization.CSV
                     }
                     else
                     {
-                        throw new CsvFormatException($"An Error was found at Row: {fileRow} Line: {fileLine}");
+                        throw new FormatException($"An Error was found at Row: {fileRow} Line: {fileLine}");
                     }
 
                     objectBuilder = string.Empty;
@@ -288,7 +288,7 @@ namespace DeltaWare.SDK.Serialization.CSV
 
                 if (columnIndexOverrides.ContainsValue(columnIndexOverride))
                 {
-                    throw new DuplicateColumnException();
+                    throw new DuplicateNameException("A duplicate column was found.");
                 }
 
                 columnIndexOverrides.Add(columnIndex, columnIndexOverride);
