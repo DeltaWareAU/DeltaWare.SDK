@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DeltaWare.SDK.Core.Interfaces
+namespace DeltaWare.SDK.Base.Interfaces
 {
     public interface IRecyclingQueue<T>
     {

@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 
-namespace DeltaWare.SDK.Core.Types
+namespace DeltaWare.SDK.Base.Types
 {
 /// <summary>
     /// X:Y Coordinates.

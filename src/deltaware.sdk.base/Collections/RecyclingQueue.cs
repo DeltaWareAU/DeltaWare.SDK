@@ -1,9 +1,9 @@
 ﻿
 using System;
 
-using DeltaWare.SDK.Core.Interfaces;
+using DeltaWare.SDK.Base.Interfaces;
 
-namespace DeltaWare.SDK.Core.Collections
+namespace DeltaWare.SDK.Base.Collections
 {
     public class RecyclingQueue<T> : IRecyclingQueue<T>
     {
