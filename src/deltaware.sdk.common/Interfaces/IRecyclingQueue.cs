@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using DeltaWare.SDK.Common.Enums;
 
 namespace DeltaWare.SDK.Common.Interfaces
 {
@@ -16,6 +17,6 @@ namespace DeltaWare.SDK.Common.Interfaces
 
         void Clear();
 
-        T[] GetRange(int index, int count);
+        T[] GetRange(int index, int count, SortDirection sortDirection = SortDirection.Ascending);
     }
 }

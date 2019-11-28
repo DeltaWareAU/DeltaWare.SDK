@@ -1,9 +1,9 @@
 ﻿
 using System;
+using DeltaWare.SDK.Common.Enums;
+using DeltaWare.SDK.Common.Interfaces;
 
-using DeltaWare.SDK.Base.Interfaces;
-
-namespace DeltaWare.SDK.Base.Collections
+namespace DeltaWare.SDK.Common.Collections
 {
     public class RecyclingQueue<T> : IRecyclingQueue<T>
     {
@@ -54,9 +54,38 @@ namespace DeltaWare.SDK.Base.Collections
             _index = 0;
         }
 
-        public T[] GetRange(int index, int count)
+        public T[] GetRange(int index, int count , SortDirection sortDirection = SortDirection.Ascending)
         {
-            throw new NotImplementedException();
+            if (count > Capacity)
+            {
+                throw new ArgumentException("Count must be less than or equal to Capacity");
+            }
+
+            T[] values = new T[count];
+
+            switch (sortDirection)
+            {
+                case SortDirection.Ascending:
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        values[i] = this[i];
+                    }
+
+                    break;
+                }
+                case SortDirection.Descending:
+                {
+                    for (int i = 0; i < count; i--)
+                    {
+                        values[i] = this[i];
+                    }
+
+                    break;
+                }
+            }
+
+            return values;
         }
 
         private int GetIndexOffset(int index)
