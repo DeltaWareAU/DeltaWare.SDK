@@ -1,8 +1,8 @@
 ﻿
 using System;
 
-using DeltaWare.SDK.Base.Enums;
-using DeltaWare.SDK.Base.Interfaces;
+using DeltaWare.SDK.Common.Enums;
+using DeltaWare.SDK.Common.Interfaces;
 
 namespace DeltaWare.SDK.Logging.Templates
 {

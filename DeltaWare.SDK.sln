@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Serialization
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Graphics", "src\deltaware.sdk.graphics\DeltaWare.SDK.Graphics.csproj", "{E01A349B-0035-42CF-B973-FBCB90FE5D1A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Base", "src\deltaware.sdk.base\DeltaWare.SDK.Base.csproj", "{A9CBEED1-85C4-433A-A5CB-5A6ED29105B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Common", "src\deltaware.sdk.common\DeltaWare.SDK.Common.csproj", "{A9CBEED1-85C4-433A-A5CB-5A6ED29105B4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Logging", "src\deltaware.sdk.logging\DeltaWare.SDK.Logging.csproj", "{5CC3B614-A449-4004-853D-5BABF020AEBD}"
 EndProject

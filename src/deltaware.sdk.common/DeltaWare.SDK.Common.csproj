@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <AssemblyName>deltaware.sdk.base</AssemblyName>
+    <AssemblyName>deltaware.sdk.common</AssemblyName>
   </PropertyGroup>
 
 </Project>

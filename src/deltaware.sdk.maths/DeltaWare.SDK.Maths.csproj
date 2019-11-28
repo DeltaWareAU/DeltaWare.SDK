@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\deltaware.sdk.base\DeltaWare.SDK.Base.csproj" />
+    <ProjectReference Include="..\DeltaWare.SDK.Common\DeltaWare.SDK.Common.csproj" />
   </ItemGroup>
 
 </Project>

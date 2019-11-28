@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DeltaWare.SDK.Base;
-using DeltaWare.SDK.Base.Types;
+using DeltaWare.SDK.Common;
+using DeltaWare.SDK.Common.Types;
 
 namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 {

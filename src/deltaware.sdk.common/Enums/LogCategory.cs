@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DeltaWare.SDK.Base.Enums
+namespace DeltaWare.SDK.Common.Enums
 {
     /// <summary>
     /// Log Category.
