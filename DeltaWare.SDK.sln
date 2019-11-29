@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Logging", "sr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Test.Serialization", "test\deltaware.sdk.test.serialization\DeltaWare.SDK.Test.Serialization.csproj", "{E6915B3F-185F-4C23-A7C6-EBB60B25DE40}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Test.Common", "test\deltaware.sdk.test.common\DeltaWare.SDK.Test.Common.csproj", "{F49D388A-489A-407D-AA8C-7B02D1F353D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,12 +75,21 @@ Global
 		{E6915B3F-185F-4C23-A7C6-EBB60B25DE40}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E6915B3F-185F-4C23-A7C6-EBB60B25DE40}.Release|x64.ActiveCfg = Release|Any CPU
 		{E6915B3F-185F-4C23-A7C6-EBB60B25DE40}.Release|x64.Build.0 = Release|Any CPU
+		{F49D388A-489A-407D-AA8C-7B02D1F353D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F49D388A-489A-407D-AA8C-7B02D1F353D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F49D388A-489A-407D-AA8C-7B02D1F353D7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F49D388A-489A-407D-AA8C-7B02D1F353D7}.Debug|x64.Build.0 = Debug|Any CPU
+		{F49D388A-489A-407D-AA8C-7B02D1F353D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F49D388A-489A-407D-AA8C-7B02D1F353D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F49D388A-489A-407D-AA8C-7B02D1F353D7}.Release|x64.ActiveCfg = Release|Any CPU
+		{F49D388A-489A-407D-AA8C-7B02D1F353D7}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E6915B3F-185F-4C23-A7C6-EBB60B25DE40} = {9446B562-9590-4AA7-881F-E1201E0B8C91}
+		{F49D388A-489A-407D-AA8C-7B02D1F353D7} = {9446B562-9590-4AA7-881F-E1201E0B8C91}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {50B4E601-DB97-49D8-B10F-A6B644078C32}
