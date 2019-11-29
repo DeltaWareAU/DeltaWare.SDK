@@ -21,8 +21,8 @@ namespace DeltaWare.SDK.Common.GenericCollections
 
         public T this[int index]
         {
-            get => _queue[GetIndexOffset(index)];
-            set => _queue[GetIndexOffset(index)] = value;
+            get => _queue[GetOffsetIndex(index)];
+            set => _queue[GetOffsetIndex(index)] = value;
         } 
 
         public RecyclingQueue(int capacity)

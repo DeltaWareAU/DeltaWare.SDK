@@ -9,9 +9,6 @@ namespace DeltaWare.SDK.Common.Interfaces
 {
     public interface ILogTemplate
     {
-        /// <summary>
-        /// 
-        /// </summary>
         LogCategory Category { get; }
 
         string Summary { get; }
