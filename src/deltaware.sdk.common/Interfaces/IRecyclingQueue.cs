@@ -9,6 +9,8 @@ namespace DeltaWare.SDK.Common.Interfaces
     {
         int Capacity { get; }
 
+        int Count { get; }
+
         T this[int index] { get; set; }
 
         void Add(T item);
@@ -18,5 +20,7 @@ namespace DeltaWare.SDK.Common.Interfaces
         void Clear();
 
         T[] GetRange(int index, int count, SortDirection sortDirection = SortDirection.Ascending);
+
+        IRecyclingQueue<T> Expand(int newCapacity);
     }
 }

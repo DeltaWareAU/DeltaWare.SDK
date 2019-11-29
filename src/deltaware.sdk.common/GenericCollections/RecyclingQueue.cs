@@ -1,17 +1,23 @@
 ﻿
 using System;
+using System.Linq;
+
 using DeltaWare.SDK.Common.Enums;
 using DeltaWare.SDK.Common.Interfaces;
 
-namespace DeltaWare.SDK.Common.Collections
+namespace DeltaWare.SDK.Common.GenericCollections
 {
     public class RecyclingQueue<T> : IRecyclingQueue<T>
     {
+        private const int InitialIndex = 0;
+
         private readonly T[] _queue;
 
-        private int _index;
+        private int _index = InitialIndex;
 
         public int Capacity => _queue.Length;
+
+        public int Count => _queue.Count(q => !(q is null));
 
         public T this[int index]
         {
@@ -30,9 +36,9 @@ namespace DeltaWare.SDK.Common.Collections
 
             _index++;
 
-            if (_index >= Capacity - 1)
+            if (_index >= Capacity)
             {
-                _index = 0;
+                _index = InitialIndex;
             }
         }
 
@@ -51,7 +57,7 @@ namespace DeltaWare.SDK.Common.Collections
                 _queue[i] = default;
             }
 
-            _index = 0;
+            _index = InitialIndex;
         }
 
         public T[] GetRange(int index, int count , SortDirection sortDirection = SortDirection.Ascending)
@@ -88,7 +94,24 @@ namespace DeltaWare.SDK.Common.Collections
             return values;
         }
 
-        private int GetIndexOffset(int index)
+        public IRecyclingQueue<T> Expand(int newCapacity)
+        {
+            if (Capacity <= newCapacity)
+            {
+                throw new ArgumentException("The new Capacity must be greater than the existing.");
+            }
+
+            IRecyclingQueue<T> recyclingQueue = new RecyclingQueue<T>(newCapacity);
+
+            for (int i = 0; i < Count; i++)
+            {
+                recyclingQueue.Add(this[i]);
+            }
+
+            return recyclingQueue;
+        }
+
+        private int GetOffsetIndex(int index)
         {
             index += _index;
 
