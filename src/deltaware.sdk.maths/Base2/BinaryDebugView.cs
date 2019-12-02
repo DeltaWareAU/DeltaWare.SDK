@@ -10,10 +10,10 @@ namespace DeltaWare.SDK.Maths.Base2
             _binary = binary;
         }
 
-        public int BitLength => _binary.BitLength.Length;
+        public int BitLength => _binary.Length;
 
         public string BinaryValue => _binary.ToString();
 
-        public object DecimalValue => _binary.ToInt64();
+        public long DecimalValue => _binary;
     }
 }
