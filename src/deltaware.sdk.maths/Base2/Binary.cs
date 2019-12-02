@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Diagnostics;
+using Microsoft.Win32.SafeHandles;
 
 namespace DeltaWare.SDK.Maths.Base2
 {
@@ -37,6 +38,10 @@ namespace DeltaWare.SDK.Maths.Base2
 
         public BinaryLength Length { get; }
         
+        public static Binary Zero = new Binary(0, 1);
+
+        public static Binary One = new Binary(1, 1);
+
         public Binary(long longValue, int length)
         {
             Length = new BinaryLength(length);
