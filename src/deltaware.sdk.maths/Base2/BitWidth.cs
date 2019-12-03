@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace DeltaWare.SDK.Maths.Base2
 {
-    public partial struct BinaryLength
+    public partial struct BitWidth
     {
         private static readonly long[] MaxSizePositive =
         {
@@ -30,11 +30,16 @@ namespace DeltaWare.SDK.Maths.Base2
             -4611686018427387904, -9223372036854775808
         };
 
-        private int _length { get; }
+        private int _width { get; }
 
-        internal BinaryLength(int length)
+        internal BitWidth(int width)
         {
-            _length = length;
+            _width = width;
+        }
+
+        public bool DoesBinaryFit(Binary binary)
+        {
+            return DoesValueFit(binary);
         }
 
         internal bool DoesValueFit(long value)
@@ -61,10 +66,10 @@ namespace DeltaWare.SDK.Maths.Base2
         {
             if (value >= 0)
             {
-                return value - MaxSizePositive[_length];
+                return value - MaxSizePositive[_width];
             }
 
-            return value + MaxSizeNegative[_length];
+            return value + MaxSizeNegative[_width];
         }
     }
 }

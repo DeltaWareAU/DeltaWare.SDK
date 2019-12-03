@@ -9,15 +9,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Maths", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Serialization", "src\DeltaWare.SDK.Serialization\DeltaWare.SDK.Serialization.csproj", "{5A2F145F-7B3D-44CE-8BAD-E70C86CB7EE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Graphics", "src\deltaware.sdk.graphics\DeltaWare.SDK.Graphics.csproj", "{E01A349B-0035-42CF-B973-FBCB90FE5D1A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Common", "src\deltaware.sdk.common\DeltaWare.SDK.Common.csproj", "{A9CBEED1-85C4-433A-A5CB-5A6ED29105B4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Logging", "src\deltaware.sdk.logging\DeltaWare.SDK.Logging.csproj", "{5CC3B614-A449-4004-853D-5BABF020AEBD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Test.Serialization", "test\deltaware.sdk.test.serialization\DeltaWare.SDK.Test.Serialization.csproj", "{E6915B3F-185F-4C23-A7C6-EBB60B25DE40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Test.Common", "test\deltaware.sdk.test.common\DeltaWare.SDK.Test.Common.csproj", "{F49D388A-489A-407D-AA8C-7B02D1F353D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Test.Common", "test\deltaware.sdk.test.common\DeltaWare.SDK.Test.Common.csproj", "{F49D388A-489A-407D-AA8C-7B02D1F353D7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Test.Maths", "test\DeltaWare.SDK.Test.Maths\DeltaWare.SDK.Test.Maths.csproj", "{90F98C0D-EF66-4357-812B-3D6CA631AF71}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{087B8BD7-978A-4DAF-AF57-1169919104F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Common", "src\framework\DeltaWare.SDK.Common\DeltaWare.SDK.Common.csproj", "{00A19723-43B6-403C-AF8D-90DD08302752}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Serialization", "src\framework\DeltaWare.SDK.Serialization\DeltaWare.SDK.Serialization.csproj", "{C2441E73-5514-44F6-B8A0-D8BD270B039C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Graphics", "src\framework\DeltaWare.SDK.Graphics\DeltaWare.SDK.Graphics.csproj", "{E6387C7A-0222-4CD5-AFEE-7FF94D2A61EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Maths", "src\framework\DeltaWare.SDK.Maths\DeltaWare.SDK.Maths.csproj", "{F0DFF95F-36BC-40B1-9B2B-206DE0BC455E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,14 +53,6 @@ Global
 		{5A2F145F-7B3D-44CE-8BAD-E70C86CB7EE3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5A2F145F-7B3D-44CE-8BAD-E70C86CB7EE3}.Release|x64.ActiveCfg = Release|Any CPU
 		{5A2F145F-7B3D-44CE-8BAD-E70C86CB7EE3}.Release|x64.Build.0 = Release|Any CPU
-		{E01A349B-0035-42CF-B973-FBCB90FE5D1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E01A349B-0035-42CF-B973-FBCB90FE5D1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E01A349B-0035-42CF-B973-FBCB90FE5D1A}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{E01A349B-0035-42CF-B973-FBCB90FE5D1A}.Debug|x64.Build.0 = Debug|Any CPU
-		{E01A349B-0035-42CF-B973-FBCB90FE5D1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E01A349B-0035-42CF-B973-FBCB90FE5D1A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E01A349B-0035-42CF-B973-FBCB90FE5D1A}.Release|x64.ActiveCfg = Release|Any CPU
-		{E01A349B-0035-42CF-B973-FBCB90FE5D1A}.Release|x64.Build.0 = Release|Any CPU
 		{A9CBEED1-85C4-433A-A5CB-5A6ED29105B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A9CBEED1-85C4-433A-A5CB-5A6ED29105B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9CBEED1-85C4-433A-A5CB-5A6ED29105B4}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -83,6 +85,46 @@ Global
 		{F49D388A-489A-407D-AA8C-7B02D1F353D7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F49D388A-489A-407D-AA8C-7B02D1F353D7}.Release|x64.ActiveCfg = Release|Any CPU
 		{F49D388A-489A-407D-AA8C-7B02D1F353D7}.Release|x64.Build.0 = Release|Any CPU
+		{90F98C0D-EF66-4357-812B-3D6CA631AF71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90F98C0D-EF66-4357-812B-3D6CA631AF71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90F98C0D-EF66-4357-812B-3D6CA631AF71}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{90F98C0D-EF66-4357-812B-3D6CA631AF71}.Debug|x64.Build.0 = Debug|Any CPU
+		{90F98C0D-EF66-4357-812B-3D6CA631AF71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90F98C0D-EF66-4357-812B-3D6CA631AF71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90F98C0D-EF66-4357-812B-3D6CA631AF71}.Release|x64.ActiveCfg = Release|Any CPU
+		{90F98C0D-EF66-4357-812B-3D6CA631AF71}.Release|x64.Build.0 = Release|Any CPU
+		{00A19723-43B6-403C-AF8D-90DD08302752}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00A19723-43B6-403C-AF8D-90DD08302752}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00A19723-43B6-403C-AF8D-90DD08302752}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{00A19723-43B6-403C-AF8D-90DD08302752}.Debug|x64.Build.0 = Debug|Any CPU
+		{00A19723-43B6-403C-AF8D-90DD08302752}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00A19723-43B6-403C-AF8D-90DD08302752}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00A19723-43B6-403C-AF8D-90DD08302752}.Release|x64.ActiveCfg = Release|Any CPU
+		{00A19723-43B6-403C-AF8D-90DD08302752}.Release|x64.Build.0 = Release|Any CPU
+		{C2441E73-5514-44F6-B8A0-D8BD270B039C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2441E73-5514-44F6-B8A0-D8BD270B039C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2441E73-5514-44F6-B8A0-D8BD270B039C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C2441E73-5514-44F6-B8A0-D8BD270B039C}.Debug|x64.Build.0 = Debug|Any CPU
+		{C2441E73-5514-44F6-B8A0-D8BD270B039C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2441E73-5514-44F6-B8A0-D8BD270B039C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2441E73-5514-44F6-B8A0-D8BD270B039C}.Release|x64.ActiveCfg = Release|Any CPU
+		{C2441E73-5514-44F6-B8A0-D8BD270B039C}.Release|x64.Build.0 = Release|Any CPU
+		{E6387C7A-0222-4CD5-AFEE-7FF94D2A61EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6387C7A-0222-4CD5-AFEE-7FF94D2A61EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6387C7A-0222-4CD5-AFEE-7FF94D2A61EF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E6387C7A-0222-4CD5-AFEE-7FF94D2A61EF}.Debug|x64.Build.0 = Debug|Any CPU
+		{E6387C7A-0222-4CD5-AFEE-7FF94D2A61EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6387C7A-0222-4CD5-AFEE-7FF94D2A61EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6387C7A-0222-4CD5-AFEE-7FF94D2A61EF}.Release|x64.ActiveCfg = Release|Any CPU
+		{E6387C7A-0222-4CD5-AFEE-7FF94D2A61EF}.Release|x64.Build.0 = Release|Any CPU
+		{F0DFF95F-36BC-40B1-9B2B-206DE0BC455E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0DFF95F-36BC-40B1-9B2B-206DE0BC455E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0DFF95F-36BC-40B1-9B2B-206DE0BC455E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F0DFF95F-36BC-40B1-9B2B-206DE0BC455E}.Debug|x64.Build.0 = Debug|Any CPU
+		{F0DFF95F-36BC-40B1-9B2B-206DE0BC455E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0DFF95F-36BC-40B1-9B2B-206DE0BC455E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0DFF95F-36BC-40B1-9B2B-206DE0BC455E}.Release|x64.ActiveCfg = Release|Any CPU
+		{F0DFF95F-36BC-40B1-9B2B-206DE0BC455E}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +132,11 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E6915B3F-185F-4C23-A7C6-EBB60B25DE40} = {9446B562-9590-4AA7-881F-E1201E0B8C91}
 		{F49D388A-489A-407D-AA8C-7B02D1F353D7} = {9446B562-9590-4AA7-881F-E1201E0B8C91}
+		{90F98C0D-EF66-4357-812B-3D6CA631AF71} = {9446B562-9590-4AA7-881F-E1201E0B8C91}
+		{00A19723-43B6-403C-AF8D-90DD08302752} = {087B8BD7-978A-4DAF-AF57-1169919104F1}
+		{C2441E73-5514-44F6-B8A0-D8BD270B039C} = {087B8BD7-978A-4DAF-AF57-1169919104F1}
+		{E6387C7A-0222-4CD5-AFEE-7FF94D2A61EF} = {087B8BD7-978A-4DAF-AF57-1169919104F1}
+		{F0DFF95F-36BC-40B1-9B2B-206DE0BC455E} = {087B8BD7-978A-4DAF-AF57-1169919104F1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {50B4E601-DB97-49D8-B10F-A6B644078C32}
