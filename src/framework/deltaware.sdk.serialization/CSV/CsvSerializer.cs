@@ -325,7 +325,7 @@ namespace DeltaWare.SDK.Serialization.CSV
 
         private string GetStringValue(FieldInfo fieldInfo, object value, bool endOfRow = false)
         {
-            string stringValue = fieldInfo.GetValue(value).ToString();
+            string stringValue = fieldInfo.GetValue(value)?.ToString() ?? string.Empty;
 
             StringBuilder stringBuilder = new StringBuilder();
 
