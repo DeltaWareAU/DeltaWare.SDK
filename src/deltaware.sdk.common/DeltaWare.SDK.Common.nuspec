@@ -10,6 +10,6 @@
     <description>Source Development Kit for Common Components.</description>
   </metadata>
   <files>
-    <file src="bin\Release\netcoreapp3.0\deltaware.sdk.common.dll" target="lib\netcoreapp3.0\deltaware.sdk.common.dll" />
+    <file src="bin\Release\netcoreapp3.0\DeltaWare.SDK.Common.dll" target="lib\netcoreapp3.0\DeltaWare.SDK.Common.dll" />
   </files>
 </package>

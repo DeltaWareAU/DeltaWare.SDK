@@ -5,7 +5,7 @@
 
     <IsPackable>false</IsPackable>
 
-    <AssemblyName>deltaware.sdk.test.serialization</AssemblyName>
+    <AssemblyName>DeltaWare.SDK.Test.Serialization</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <AssemblyName>deltaware.sdk.serialization</AssemblyName>
+    <AssemblyName>DeltaWare.SDK.Serialization</AssemblyName>
   </PropertyGroup>
 
 </Project>

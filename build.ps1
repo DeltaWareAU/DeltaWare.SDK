@@ -1,4 +1,5 @@
-nuget pack src\deltaware.sdk.common\DeltaWare.SDK.Common.nuspec
-nuget pack src\deltaware.sdk.logging\DeltaWare.SDK.Logging.nuspec
-nuget pack src\deltaware.sdk.maths\DeltaWare.SDK.Maths.nuspec
-nuget pack src\deltaware.sdk.serialization\DeltaWare.SDK.Serialization.nuspec
+nuget pack src\DeltaWare.SDK.Common\DeltaWare.SDK.Common.nuspec
+nuget pack src\DeltaWare.SDK.DAL\DeltaWare.SDK.DAL.nuspec
+nuget pack src\DeltaWare.SDK.Logging\DeltaWare.SDK.Logging.nuspec
+nuget pack src\DeltaWare.SDK.Maths\DeltaWare.SDK.Maths.nuspec
+nuget pack src\DeltaWare.SDK.Serialization\DeltaWare.SDK.Serialization.nuspec

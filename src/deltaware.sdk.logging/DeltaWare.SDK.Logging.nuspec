@@ -13,6 +13,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="bin\Release\netcoreapp3.0\deltaware.sdk.logging.dll" target="lib\netcoreapp3.0\deltaware.sdk.logging.dll" />
+    <file src="bin\Release\netcoreapp3.0\DeltaWare.SDK.Logging.dll" target="lib\netcoreapp3.0\DeltaWare.SDK.Logging.dll" />
   </files>
 </package>

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <AssemblyName>deltaware.sdk.logging</AssemblyName>
+    <AssemblyName>DeltaWare.SDK.Logging</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
