@@ -1,5 +1,11 @@
-nuget pack src\DeltaWare.SDK.Common\DeltaWare.SDK.Common.nuspec
-nuget pack src\DeltaWare.SDK.DAL\DeltaWare.SDK.DAL.nuspec
-nuget pack src\DeltaWare.SDK.Logging\DeltaWare.SDK.Logging.nuspec
-nuget pack src\DeltaWare.SDK.Maths\DeltaWare.SDK.Maths.nuspec
-nuget pack src\DeltaWare.SDK.Serialization\DeltaWare.SDK.Serialization.nuspec
+$projectsDir = "C:\Projects"
+$nugetDir = "C:\#Stuff\nuget"
+$solution = "DeltaWare.SDK"
+
+if(-Not (Test-Path -Path "$nugetDir\$solution")){
+    New-Item -Path "$nugetDir" -Name $solution -ItemType directory
+}
+
+Get-ChildItem -Path "$projectsDir\$solution\src\*.nupkg" -Recurse | Move-Item -Destination "$nugetDir\$solution\"
+
+

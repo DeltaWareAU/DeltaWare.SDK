@@ -1,8 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>DeltaWare.SDK.Maths</AssemblyName>
+    <Version>1.1.0.1</Version>
+    <PackageIconUrl>https://purepng.com/public/uploads/medium/purepng.com-sdk-iconsymbolsiconsapple-iosiosios-8-iconsios-8-721522596112fm2v5.png</PackageIconUrl>
+    <Authors>DeltaWare</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
