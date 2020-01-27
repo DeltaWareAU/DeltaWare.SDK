@@ -9,10 +9,10 @@ namespace DeltaWare.SDK.DataAccess.Interfaces
 
         Task<IEnumerable<TEntity>> GetAllAsync();
 
-        Task AddAsync(TEntity entity);
+        Task<TEntity> AddAsync(TEntity entity);
 
-        Task AddManyAsync(IEnumerable<TEntity> entities);
+        Task<IEnumerable<TEntity>> AddManyAsync(IEnumerable<TEntity> entities);
 
-        Task RemoveAsync(long id);
+        Task<TEntity> RemoveAsync(long id);
     }
 }
