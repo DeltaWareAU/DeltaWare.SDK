@@ -8,6 +8,8 @@
     <Company>DeltaWare</Company>
     <Authors>DeltaWare</Authors>
     <PackageIconUrl>http://careteam.club/wp-content/uploads/sites/4/2018/07/Blog-Multisource-SDK-SAP-BusinessObjects-Design-Studio-main.png</PackageIconUrl>
+    <Product>DeltaWare.SDK</Product>
+    <Description>Source Development Kit</Description>
   </PropertyGroup>
 
 </Project>
