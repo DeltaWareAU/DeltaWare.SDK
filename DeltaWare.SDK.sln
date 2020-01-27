@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.DataAccess", "src\DeltaWare.SDK.DataAccess\DeltaWare.SDK.DataAccess.csproj", "{7D7F7A6C-600F-4962-819E-254B09D1553E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Web", "src\DeltaWare.SDK.Web\DeltaWare.SDK.Web.csproj", "{45817737-2B17-4E1D-B256-DFF28018A4AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +90,14 @@ Global
 		{7D7F7A6C-600F-4962-819E-254B09D1553E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7D7F7A6C-600F-4962-819E-254B09D1553E}.Release|x64.ActiveCfg = Release|Any CPU
 		{7D7F7A6C-600F-4962-819E-254B09D1553E}.Release|x64.Build.0 = Release|Any CPU
+		{45817737-2B17-4E1D-B256-DFF28018A4AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45817737-2B17-4E1D-B256-DFF28018A4AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45817737-2B17-4E1D-B256-DFF28018A4AA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{45817737-2B17-4E1D-B256-DFF28018A4AA}.Debug|x64.Build.0 = Debug|Any CPU
+		{45817737-2B17-4E1D-B256-DFF28018A4AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45817737-2B17-4E1D-B256-DFF28018A4AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45817737-2B17-4E1D-B256-DFF28018A4AA}.Release|x64.ActiveCfg = Release|Any CPU
+		{45817737-2B17-4E1D-B256-DFF28018A4AA}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

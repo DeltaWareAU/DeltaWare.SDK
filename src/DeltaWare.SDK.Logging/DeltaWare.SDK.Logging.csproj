@@ -4,15 +4,24 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>DeltaWare.SDK.Logging</AssemblyName>
     <Version>1.1.1.1</Version>
-    <PackageIconUrl>http://careteam.club/wp-content/uploads/sites/4/2018/07/Blog-Multisource-SDK-SAP-BusinessObjects-Design-Studio-main.png</PackageIconUrl>
+    <PackageIconUrl></PackageIconUrl>
     <Authors>DeltaWare</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Product>DeltaWare.SDK</Product>
     <Description>Source Development Kit for Logging</Description>
+    <PackageIcon>SDK_icon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/armorall171/DeltaWare.SDK</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DeltaWare.SDK.Common\DeltaWare.SDK.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\SDK_icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

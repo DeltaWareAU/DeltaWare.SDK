@@ -1,16 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <AssemblyName>DeltaWare.SDK.Serialization</AssemblyName>
-    <Version>1.1.1.1</Version>
-    <PackageIconUrl></PackageIconUrl>
+    <Version>1.1.6.4</Version>
     <Authors>DeltaWare</Authors>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Product>DeltaWare.SDK</Product>
-    <Description>Source Development Kit for Serialization</Description>
+    <Description>Source Development Kit for Web</Description>
     <PackageIcon>SDK_icon.png</PackageIcon>
+    <PackageIconUrl />
     <RepositoryUrl>https://github.com/armorall171/DeltaWare.SDK</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,6 +17,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
 </Project>
