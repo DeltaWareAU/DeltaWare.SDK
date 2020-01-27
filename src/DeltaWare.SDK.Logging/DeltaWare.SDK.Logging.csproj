@@ -7,6 +7,8 @@
     <PackageIconUrl>http://careteam.club/wp-content/uploads/sites/4/2018/07/Blog-Multisource-SDK-SAP-BusinessObjects-Design-Studio-main.png</PackageIconUrl>
     <Authors>DeltaWare</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Product>DeltaWare.SDK</Product>
+    <Description>Source Development Kit for Logging</Description>
   </PropertyGroup>
 
   <ItemGroup>

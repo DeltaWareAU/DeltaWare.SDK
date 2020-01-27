@@ -7,8 +7,8 @@
     <Company>DeltaWare</Company>
     <Authors>DeltaWare</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>1.1.2.1</AssemblyVersion>
-    <FileVersion>1.1.2.1</FileVersion>
+    <Product>DeltaWare.SDK</Product>
+    <Description>Source Development Kit for Data Access</Description>
   </PropertyGroup>
 
 </Project>
