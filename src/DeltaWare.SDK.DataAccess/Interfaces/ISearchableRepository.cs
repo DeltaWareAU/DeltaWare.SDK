@@ -5,6 +5,6 @@ namespace DeltaWare.SDK.DataAccess.Interfaces
 {
     public interface ISearchableRepository<TEntity> where TEntity : class
     {
-        Task<IList<TEntity>> SearchAsync(TEntity searchEntity);
+        Task<IEnumerable<TEntity>> SearchAsync(TEntity searchEntity);
     }
 }

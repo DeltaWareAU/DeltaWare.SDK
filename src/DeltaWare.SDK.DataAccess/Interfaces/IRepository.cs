@@ -5,10 +5,10 @@ namespace DeltaWare.SDK.DataAccess.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : class
     {
+        Task<IEnumerable<TEntity>> GetAsync();
+
         Task<TEntity> GetAsync(long id);
-
-        Task<IEnumerable<TEntity>> GetAllAsync();
-
+        
         Task<TEntity> AddAsync(TEntity entity);
 
         Task<IEnumerable<TEntity>> AddManyAsync(IEnumerable<TEntity> entities);
