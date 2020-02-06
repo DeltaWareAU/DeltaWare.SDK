@@ -4,16 +4,16 @@ using System.Threading.Tasks;
 
 namespace DeltaWare.SDK.Web.Interfaces
 {
-    public interface IApiHandler<TEntity>
+    public interface IApiHandler<TEntity, in TVersion> where TEntity : class where TVersion : IApiVersion
     {
-        Task<IApiResponse<IEnumerable<TEntity>>> GetAsync(IApiVersion version);
+        Task<IApiResponse<IEnumerable<TEntity>>> GetAsync(TVersion version);
 
-        Task<IApiResponse<TEntity>> GetAsync(IApiVersion version, Guid identity);
+        Task<IApiResponse<TEntity>> GetAsync(TVersion version, Guid identity);
 
-        Task<IApiResponse<TEntity>> CreateAsync(IApiVersion version, TEntity entity);
+        Task<IApiResponse<TEntity>> CreateAsync(TVersion version, TEntity entity);
 
-        Task<IApiResponse<TEntity>> DeleteAsync(IApiVersion version, Guid identity);
+        Task<IApiResponse<TEntity>> DeleteAsync(TVersion version, Guid identity);
 
-        Task<IApiResponse<TEntity>> UpdateAsync(IApiVersion version, TEntity entity);
+        Task<IApiResponse<TEntity>> UpdateAsync(TVersion version, TEntity entity);
     }
 }

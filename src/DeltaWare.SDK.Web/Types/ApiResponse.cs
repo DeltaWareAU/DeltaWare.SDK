@@ -1,10 +1,15 @@
-﻿using DeltaWare.SDK.Web.Interfaces;
+﻿using System;
+using DeltaWare.SDK.Web.Interfaces;
 
 namespace DeltaWare.SDK.Web.Types
 {
     public class ApiResponse<TResult> : IApiResponse<TResult>
     {
         public bool WasSuccessful { get; }
+
+        public string Message { get; }
+
+        public Exception Exception { get; }
 
         public TResult Result { get; }
 
@@ -15,15 +20,17 @@ namespace DeltaWare.SDK.Web.Types
             WasSuccessful = true;
         }
 
-        private ApiResponse()
+        private ApiResponse(string message, Exception exception)
         {
-            Result = default;
+            Message = message;
+
+            Exception = exception;
 
             WasSuccessful = false;
         }
 
         public static IApiResponse<TResult> Success(TResult result) => new ApiResponse<TResult>(result);
 
-        public static IApiResponse<TResult> Failure() => new ApiResponse<TResult>();
+        public static IApiResponse<TResult> Failure(string message, Exception exception = null) => new ApiResponse<TResult>(message, exception);
     }
 }
