@@ -11,17 +11,11 @@ namespace DeltaWare.SDK.Web
 {
     public abstract class BaseApiHandler<TVersion> where TVersion : IApiVersion
     {
-        protected string BaseEndPoint { get; }
+        protected abstract string BaseEndPoint { get; }
 
-        protected Uri BaseUri { get; }
+        protected abstract Uri BaseUri { get; }
 
         public TimeSpan Timeout { get; set; } = new TimeSpan(0, 5, 0);
-
-        protected BaseApiHandler(Uri baseUri, string baseEndPoint)
-        {
-            BaseUri = baseUri;
-            BaseEndPoint = baseEndPoint;
-        }
 
         protected virtual async Task<IApiResponse<TResponse>> PerformHttpActionAsync<TContent, TResponse>(ApiAction action, IApiVersion version, string endPoint, TContent content)
         {
