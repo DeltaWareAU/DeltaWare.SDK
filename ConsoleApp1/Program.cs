@@ -9,7 +9,7 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            IApiHandler<CountryDto, SiteApiVersion> apiHandler = new Api<CountryDto, SiteApiVersion>();
+            IApiHandler<CountryDto, SiteApiVersion> apiHandler = new BaseApi<CountryDto, SiteApiVersion>();
 
             CountryDto country = new CountryDto
             {
@@ -43,7 +43,7 @@ namespace ConsoleApp1
             public static SiteApiVersion V1 => new SiteApiVersion("1.0");
         }
 
-        public class Api<TEntity, TVersion> : ApiHandler<TEntity, TVersion> where TEntity : class where TVersion : IApiVersion
+        public class BaseApi<TEntity, TVersion> : BaseApiHandler<TEntity, TVersion> where TEntity : class where TVersion : IApiVersion
         {
             public override string BaseEndPoint { get; } = "Countries";
             public override Uri BaseUri { get; } = new Uri("http://localhost:55001/api/");

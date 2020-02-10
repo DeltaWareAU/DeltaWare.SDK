@@ -1,4 +1,4 @@
-$projectsDir = "C:\Projects"
+$projectsDir = "C:\Projects\DeltaWare"
 $nugetDir = "C:\#Stuff\nuget"
 $solution = "DeltaWare.SDK"
 

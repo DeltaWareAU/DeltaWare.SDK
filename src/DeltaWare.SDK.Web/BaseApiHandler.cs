@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DeltaWare.SDK.Web
 {
-    public abstract class ApiHandler<TEntity, TVersion> : IApiHandler<TEntity, TVersion> where TEntity : class where TVersion : IApiVersion
+    public abstract class BaseApiHandler<TEntity, TVersion> : IApiHandler<TEntity, TVersion> where TEntity : class where TVersion : IApiVersion
     {
         public abstract string BaseEndPoint { get; }
 
@@ -18,34 +18,56 @@ namespace DeltaWare.SDK.Web
 
         public TimeSpan Timeout { get; set; } = new TimeSpan(0, 5, 0);
 
-        public async Task<IApiResponse<IEnumerable<TEntity>>> GetAsync(TVersion version)
+        public virtual async Task<IApiResponse<IEnumerable<TEntity>>> GetAsync(TVersion version)
         {
             return await PerformHttpActionAsync<string, IEnumerable<TEntity>>(ApiAction.Get, version, null);
         }
 
-        public async Task<IApiResponse<TEntity>> GetAsync(TVersion version, Guid identity)
+        public virtual async Task<IApiResponse<TEntity>> GetAsync(TVersion version, Guid identity)
         {
             return await PerformHttpActionAsync<Guid, TEntity>(ApiAction.Get, version, identity);
         }
 
-        public async Task<IApiResponse<TEntity>> CreateAsync(TVersion version, TEntity entity)
+        public virtual async Task<IApiResponse<TEntity>> CreateAsync(TVersion version, TEntity entity)
         {
             return await PerformHttpActionAsync<TEntity, TEntity>(ApiAction.Post, version, entity);
         }
 
-        public async Task<IApiResponse<TEntity>> DeleteAsync(TVersion version, Guid identity)
+        public virtual async Task<IApiResponse<TEntity>> DeleteAsync(TVersion version, Guid identity)
         {
             return await PerformHttpActionAsync<Guid, TEntity>(ApiAction.Delete, version, identity);
         }
 
-        public async Task<IApiResponse<TEntity>> UpdateAsync(TVersion version, TEntity entity)
+        public virtual async Task<IApiResponse<TEntity>> UpdateAsync(TVersion version, TEntity entity)
         {
             return await PerformHttpActionAsync<TEntity, TEntity>(ApiAction.Put, version, entity);
         }
 
+        protected virtual Task<HttpClient> GetHttpClientAsync()
+        {
+            return Task.Run(() =>
+            {
+                HttpClientHandler handler = new HttpClientHandler
+                {
+                    UseDefaultCredentials = true
+                };
+
+                HttpClient client = new HttpClient(handler)
+                {
+                    BaseAddress = BaseUri,
+                    Timeout = Timeout
+                };
+
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                return client;
+            });
+        }
+
         protected virtual async Task<IApiResponse<TResponse>> PerformHttpActionAsync<TContent, TResponse>(ApiAction action, TVersion version, string endPoint, TContent content)
         {
-            using HttpClient client = GetHttpClient();
+            using HttpClient client = await GetHttpClientAsync();
 
             if (client is null)
             {
@@ -75,7 +97,7 @@ namespace DeltaWare.SDK.Web
 
         protected virtual async Task<IApiResponse<TResponse>> PerformHttpActionAsync<TContent, TResponse>(ApiAction action, TVersion version, TContent content)
         {
-            using HttpClient client = GetHttpClient();
+            using HttpClient client = await GetHttpClientAsync();
 
             if (client is null)
             {
@@ -118,7 +140,7 @@ namespace DeltaWare.SDK.Web
             try
             {
                 TResponse response = await responseMessage.ReadAsJsonAsync<TResponse>();
-                
+
                 return ApiResponse<TResponse>.Success(response);
             }
             catch (Exception exception)
@@ -142,25 +164,6 @@ namespace DeltaWare.SDK.Web
         protected virtual Uri GetRoute(IApiVersion version, string endPoint, string content)
         {
             return GetRoute(version, $"{endPoint}/{content}");
-        }
-
-        protected virtual HttpClient GetHttpClient()
-        {
-            HttpClientHandler handler = new HttpClientHandler
-            {
-                UseDefaultCredentials = true
-            };
-
-            HttpClient client = new HttpClient(handler)
-            {
-                BaseAddress = BaseUri,
-                Timeout = Timeout
-            };
-
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            return client;
         }
     }
 }
