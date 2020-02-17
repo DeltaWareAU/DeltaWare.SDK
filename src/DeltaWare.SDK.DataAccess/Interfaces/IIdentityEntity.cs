@@ -2,7 +2,7 @@
 
 namespace DeltaWare.SDK.DataAccess.Interfaces
 {
-    public interface IIdentity
+    public interface IIdentityEntity
     {
         Guid Identity { get; }
     }
