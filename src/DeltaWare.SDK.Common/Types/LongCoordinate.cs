@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace DeltaWare.SDK.Common.Types
 {
-/// <summary>
+    /// <summary>
     /// X:Y Coordinates.
     /// </summary>
     [DebuggerDisplay("(X: {X}; Y: {Y})")]
@@ -173,7 +173,7 @@ namespace DeltaWare.SDK.Common.Types
 
         public Coordinate ToCoordinate()
         {
-            if (X > Int32.MaxValue || Y > Int32.MaxValue)
+            if(X > Int32.MaxValue || Y > Int32.MaxValue)
                 throw new InvalidCastException();
 
             return new Coordinate((int)X, (int)Y);
@@ -187,18 +187,18 @@ namespace DeltaWare.SDK.Common.Types
         /// <returns>An <see cref="int"/> value specifying if the <see cref="object"/> is equal to the <see cref="Coordinate"/>.</returns>
         public override bool Equals(object obj)
         {
-            if (obj == null)
+            if(obj == null)
             {
-				return false;
+                return false;
             }
 
-			if (GetType() != obj.GetType())
-			{
-				return false;
-			}
+            if(GetType() != obj.GetType())
+            {
+                return false;
+            }
 
-			return this == (LongCoordinate)obj;
+            return this == (LongCoordinate)obj;
 
-		}
+        }
     }
 }

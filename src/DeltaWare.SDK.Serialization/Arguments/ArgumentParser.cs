@@ -1,9 +1,8 @@
-﻿using System;
+﻿using DeltaWare.SDK.Serialization.Arguments.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
-using DeltaWare.SDK.Serialization.Arguments.Attributes;
 
 namespace DeltaWare.SDK.Serialization.Arguments
 {
@@ -27,16 +26,16 @@ namespace DeltaWare.SDK.Serialization.Arguments
 
             string argumentBuilder = string.Empty;
 
-            foreach (string argument in arguments)
+            foreach(string argument in arguments)
             {
-                if (!expectingParameter && argument[0] == '-')
+                if(!expectingParameter && argument[0] == '-')
                 {
-                    if (!string.IsNullOrEmpty(argumentBuilder))
+                    if(!string.IsNullOrEmpty(argumentBuilder))
                     {
-                        if (currentArgument.ArgumentType is Parameter)
+                        if(currentArgument.ArgumentType is Parameter)
                         {
                             currentArgument.Property.SetValue(null, Convert.ChangeType(argumentBuilder, currentArgument.Property.PropertyType));
-                            
+
                             argumentBuilder = string.Empty;
                         }
                         else
@@ -45,16 +44,16 @@ namespace DeltaWare.SDK.Serialization.Arguments
                         }
                     }
 
-                    if (argument[argument.Length - 1] == ':')
+                    if(argument[argument.Length - 1] == ':')
                     {
                         string argumentName = argument.Substring(1, argument.Length - 2);
 
-                        if (!nameToArgumentMap.TryGetValue(argumentName, out currentArgument))
+                        if(!nameToArgumentMap.TryGetValue(argumentName, out currentArgument))
                         {
-                            throw new ArgumentNullException( $"The parameter [-{argumentName}:] cannot be found in [{typeof(T).Name}].");
+                            throw new ArgumentNullException($"The parameter [-{argumentName}:] cannot be found in [{typeof(T).Name}].");
                         }
 
-                        if (!(currentArgument.ArgumentType is Parameter))
+                        if(!(currentArgument.ArgumentType is Parameter))
                         {
                             throw new ArgumentException($"The flag [{currentArgument.ArgumentType.Name}] ends with [:]. Only parameters can end with [:].");
                         }
@@ -65,12 +64,12 @@ namespace DeltaWare.SDK.Serialization.Arguments
                     {
                         string argumentName = argument.Substring(1);
 
-                        if (!nameToArgumentMap.TryGetValue(argumentName, out currentArgument))
+                        if(!nameToArgumentMap.TryGetValue(argumentName, out currentArgument))
                         {
                             throw new ArgumentNullException($"The flag [-{argumentName}] cannot be found in [{typeof(T).Name}].");
                         }
 
-                        if (!(currentArgument.ArgumentType is Flag))
+                        if(!(currentArgument.ArgumentType is Flag))
                         {
                             throw new ArgumentException("The parameter [{currentArgument.ArgumentType.Name}] doesn't end with [:].");
                         }
@@ -80,7 +79,7 @@ namespace DeltaWare.SDK.Serialization.Arguments
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(argumentBuilder))
+                    if(!string.IsNullOrEmpty(argumentBuilder))
                     {
                         argumentBuilder += ' ';
                     }
@@ -91,9 +90,9 @@ namespace DeltaWare.SDK.Serialization.Arguments
                 }
             }
 
-            if (!string.IsNullOrEmpty(argumentBuilder))
+            if(!string.IsNullOrEmpty(argumentBuilder))
             {
-                if (currentArgument.ArgumentType is Flag)
+                if(currentArgument.ArgumentType is Flag)
                 {
                     throw new ArgumentException($"You can't assign a parameter to the flag [{currentArgument.ArgumentType.Name}].");
                 }
@@ -111,21 +110,21 @@ namespace DeltaWare.SDK.Serialization.Arguments
         {
             Dictionary<string, Argument> nameToArgumentMap = new Dictionary<string, Argument>();
 
-            foreach (PropertyInfo property in properties)
+            foreach(PropertyInfo property in properties)
             {
-                if (Attribute.IsDefined(property, typeof(ArgumentBase)))
+                if(Attribute.IsDefined(property, typeof(ArgumentBase)))
                 {
                     ArgumentBase argument = (ArgumentBase)property.GetCustomAttributes(typeof(ArgumentBase), false).First();
 
-                    if (argument is Flag)
+                    if(argument is Flag)
                     {
-                        if (property.PropertyType != typeof(bool))
+                        if(property.PropertyType != typeof(bool))
                         {
                             throw new ArgumentException($"The flag [{argument.Name}] is not a boolean type.");
                         }
                     }
 
-                    if (string.IsNullOrEmpty(argument.Name))
+                    if(string.IsNullOrEmpty(argument.Name))
                     {
                         argument.Name = property.Name;
                     }

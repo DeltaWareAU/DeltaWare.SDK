@@ -1,7 +1,4 @@
-﻿
-using System.Runtime.CompilerServices;
-
-namespace DeltaWare.SDK.Maths.Base2
+﻿namespace DeltaWare.SDK.Maths.Base2
 {
     public partial struct BitWidth
     {
@@ -44,7 +41,7 @@ namespace DeltaWare.SDK.Maths.Base2
 
         internal bool DoesValueFit(long value)
         {
-            if (value >= 0 && value <= MaxSizePositive[this])
+            if(value >= 0 && value <= MaxSizePositive[this])
             {
                 return true;
             }
@@ -54,7 +51,7 @@ namespace DeltaWare.SDK.Maths.Base2
 
         internal Binary CreateBinary(long value)
         {
-            if (DoesValueFit(value))
+            if(DoesValueFit(value))
             {
                 return new Binary(value, this);
             }
@@ -64,7 +61,7 @@ namespace DeltaWare.SDK.Maths.Base2
 
         private long TruncateValue(long value)
         {
-            if (value >= 0)
+            if(value >= 0)
             {
                 return value - MaxSizePositive[_width];
             }

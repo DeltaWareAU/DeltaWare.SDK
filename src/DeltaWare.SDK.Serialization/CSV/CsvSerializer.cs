@@ -1,4 +1,5 @@
 ﻿
+using DeltaWare.SDK.Serialization.CSV.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,8 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-
-using DeltaWare.SDK.Serialization.CSV.Attributes;
 
 namespace DeltaWare.SDK.Serialization.CSV
 {
@@ -65,41 +64,41 @@ namespace DeltaWare.SDK.Serialization.CSV
 
             string objectBuilder = string.Empty;
 
-            if (containsHeaders)
+            if(containsHeaders)
             {
                 rowIndex = -1;
             }
-            
-            for (int index = 0; index < content.Length; index++)
+
+            for(int index = 0; index < content.Length; index++)
             {
                 char currentChar = content[index];
 
-                if (currentChar == ColumnSeparator && !doubleQuoteHit)
+                if(currentChar == ColumnSeparator && !doubleQuoteHit)
                 {
                     NextColumn(objectBuilder, objectFields, objects, columnIndexOverrides, columnIndex, rowIndex, containsHeaders);
 
                     columnIndex++;
                     objectBuilder = string.Empty;
                 }
-                else if (currentChar == CarriageReturn && !doubleQuoteHit)
+                else if(currentChar == CarriageReturn && !doubleQuoteHit)
                 {
-                    if (csvWidth == 0)
+                    if(csvWidth == 0)
                     {
                         csvWidth = columnIndex;
                     }
 
-                    if (columnIndex != csvWidth || carriageReturnHit)
+                    if(columnIndex != csvWidth || carriageReturnHit)
                     {
                         throw new FormatException($"An Unexpected Carriage Return was hit at Row: {fileRow} Line: {fileLine}.");
                     }
 
                     carriageReturnHit = true;
                 }
-                else if (carriageReturnHit && !doubleQuoteHit)
+                else if(carriageReturnHit && !doubleQuoteHit)
                 {
-                    if (currentChar == NewLine)
+                    if(currentChar == NewLine)
                     {
-                        if (columnIndex != csvWidth)
+                        if(columnIndex != csvWidth)
                         {
                             throw new FormatException($"An Unexpected New Line was hit at Row: {fileRow} Line: {fileLine}.");
                         }
@@ -121,11 +120,11 @@ namespace DeltaWare.SDK.Serialization.CSV
 
                     objectBuilder = string.Empty;
                 }
-                else if (currentChar == DoubleQuote)
+                else if(currentChar == DoubleQuote)
                 {
-                    if (doubleQuoteHit)
+                    if(doubleQuoteHit)
                     {
-                        if (content.Length == index + 1 || content[index + 1] == ColumnSeparator || content[index + 1] == CarriageReturn)
+                        if(content.Length == index + 1 || content[index + 1] == ColumnSeparator || content[index + 1] == CarriageReturn)
                         {
                             doubleQuoteHit = false;
                         }
@@ -160,7 +159,7 @@ namespace DeltaWare.SDK.Serialization.CSV
             int columnIndex = 0;
             int rowIndex = 0;
             int csvWidth = fieldInfoArray.Length;
-            
+
             int fileLine = -1;
             int fileRow = 0;
 
@@ -170,9 +169,9 @@ namespace DeltaWare.SDK.Serialization.CSV
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            if (includeHeaders)
+            if(includeHeaders)
             {
-                for (int i = 0; i < fieldInfoArray.Length - 1; i++)
+                for(int i = 0; i < fieldInfoArray.Length - 1; i++)
                 {
                     stringBuilder.Append(fieldInfoArray[i].Name);
                     stringBuilder.Append(ColumnSeparator);
@@ -182,9 +181,9 @@ namespace DeltaWare.SDK.Serialization.CSV
                 stringBuilder.Append($"{CarriageReturn}{NewLine}");
             }
 
-            foreach (T value in values)
+            foreach(T value in values)
             {
-                for (int i = 0; i < fieldInfoArray.Length - 1; i++)
+                for(int i = 0; i < fieldInfoArray.Length - 1; i++)
                 {
                     stringBuilder.Append(GetStringValue(fieldInfoArray[i], value));
                 }
@@ -199,14 +198,14 @@ namespace DeltaWare.SDK.Serialization.CSV
             FieldInfo[] fieldInfoArray = typeof(T).GetFields();
 
             int csvWidth = fieldInfoArray.Length;
-            
+
             List<T> csvBuilder = new List<T>();
 
             string itemBuilder = string.Empty;
 
-            if (includeHeaders)
+            if(includeHeaders)
             {
-                for (int i = 0; i < fieldInfoArray.Length - 1; i++)
+                for(int i = 0; i < fieldInfoArray.Length - 1; i++)
                 {
                     textWriter.Write(fieldInfoArray[i].Name);
                     textWriter.Write(ColumnSeparator);
@@ -216,9 +215,9 @@ namespace DeltaWare.SDK.Serialization.CSV
                 textWriter.Write($"{CarriageReturn}{NewLine}");
             }
 
-            foreach (T value in values)
+            foreach(T value in values)
             {
-                for (int i = 0; i < fieldInfoArray.Length - 1; i++)
+                for(int i = 0; i < fieldInfoArray.Length - 1; i++)
                 {
                     textWriter.Write(GetStringValue(fieldInfoArray[i], value));
                 }
@@ -241,23 +240,23 @@ namespace DeltaWare.SDK.Serialization.CSV
                 objectFields,
             fieldInfo =>
                 {
-                    if (Attribute.IsDefined(fieldInfo, typeof(ColumnNameOverrideAttribute)))
+                    if(Attribute.IsDefined(fieldInfo, typeof(ColumnNameOverrideAttribute)))
                     {
-                        if (!((ColumnNameOverrideAttribute) fieldInfo.GetCustomAttributes(typeof(ColumnNameOverrideAttribute), false).First()).Name.Equals(content))
+                        if(!((ColumnNameOverrideAttribute)fieldInfo.GetCustomAttributes(typeof(ColumnNameOverrideAttribute), false).First()).Name.Equals(content))
                         {
                             return false;
                         }
 
-                        if (!containsHeaders)
+                        if(!containsHeaders)
                         {
                             throw new ArgumentException("Cannot use First Row of CSV in Conjunction with Column Names.");
                         }
-                        
+
                         return true;
                     }
-                    else if (Attribute.IsDefined(fieldInfo, typeof(ColumnIndexOverrideAttribute)))
+                    else if(Attribute.IsDefined(fieldInfo, typeof(ColumnIndexOverrideAttribute)))
                     {
-                        if (((ColumnIndexOverrideAttribute)fieldInfo.GetCustomAttributes(typeof(ColumnIndexOverrideAttribute), false).First()).Id.Equals(Convert.ToInt32(content)))
+                        if(((ColumnIndexOverrideAttribute)fieldInfo.GetCustomAttributes(typeof(ColumnIndexOverrideAttribute), false).First()).Id.Equals(Convert.ToInt32(content)))
                         {
                             return true;
                         }
@@ -269,16 +268,16 @@ namespace DeltaWare.SDK.Serialization.CSV
 
         private static void NextColumn<T>(string objectBuilder, FieldInfo[] objectFields, List<T> objects, Dictionary<int, int> columnIndexOverrides, int columnIndex, int rowIndex, bool containsHeaders)
         {
-            if (rowIndex == -1)
+            if(rowIndex == -1)
             {
                 int columnIndexOverride = FindColumnOverride(objectFields, objectBuilder, containsHeaders);
 
-                if (columnIndexOverride == -1)
+                if(columnIndexOverride == -1)
                 {
                     return;
                 }
 
-                if (columnIndexOverrides.ContainsValue(columnIndexOverride))
+                if(columnIndexOverrides.ContainsValue(columnIndexOverride))
                 {
                     throw new DuplicateNameException("A duplicate column was found.");
                 }
@@ -287,18 +286,18 @@ namespace DeltaWare.SDK.Serialization.CSV
             }
             else
             {
-                if (columnIndex == 0)
+                if(columnIndex == 0)
                 {
                     objects.Add((T)Activator.CreateInstance(typeof(T)));
                 }
 
                 try
                 {
-                    if (columnIndexOverrides.ContainsKey(columnIndex))
+                    if(columnIndexOverrides.ContainsKey(columnIndex))
                     {
                         objectFields[columnIndexOverrides[columnIndex]].SetValue(
                             objects[rowIndex],
-                            Convert.ChangeType(objectBuilder,objectFields[columnIndexOverrides[columnIndex]].FieldType));
+                            Convert.ChangeType(objectBuilder, objectFields[columnIndexOverrides[columnIndex]].FieldType));
                     }
                     else
                     {
@@ -313,7 +312,7 @@ namespace DeltaWare.SDK.Serialization.CSV
                         );
                     }
                 }
-                catch (InvalidCastException invalidCastException)
+                catch(InvalidCastException invalidCastException)
                 {
                     throw new InvalidCastException(
                         $"Could not Convert CSV Field [{rowIndex}:{columnIndexOverrides[columnIndex]}] to Specified Type " +
@@ -329,7 +328,7 @@ namespace DeltaWare.SDK.Serialization.CSV
 
             StringBuilder stringBuilder = new StringBuilder();
 
-            if (stringValue.Contains(ColumnSeparator))
+            if(stringValue.Contains(ColumnSeparator))
             {
                 stringBuilder.Append($"\"{stringValue}\"");
             }
@@ -338,7 +337,7 @@ namespace DeltaWare.SDK.Serialization.CSV
                 stringBuilder.Append(stringValue);
             }
 
-            if (endOfRow)
+            if(endOfRow)
             {
                 stringBuilder.Append($"{CarriageReturn}{NewLine}");
             }

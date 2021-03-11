@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DeltaWare.SDK.Web
 {
-    public abstract class BaseApiHandler<TEntity, TVersion> : IApiHandler<TEntity, TVersion> where TEntity : class where TVersion : IApiVersion
+    public abstract class BaseApiHandler<TEntity, TVersion>: IApiHandler<TEntity, TVersion> where TEntity : class where TVersion : IApiVersion
     {
         public abstract string BaseEndPoint { get; }
 
@@ -69,7 +69,7 @@ namespace DeltaWare.SDK.Web
         {
             using HttpClient client = await GetHttpClientAsync();
 
-            if (client is null)
+            if(client is null)
             {
                 return ApiResponse<TResponse>.Failure("Could not Create an instance of the HttpClient");
             }
@@ -87,7 +87,7 @@ namespace DeltaWare.SDK.Web
                     _ => throw new ArgumentOutOfRangeException(nameof(action), action, null)
                 };
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 return ApiResponse<TResponse>.Failure("Http Action Failed, see exception", exception);
             }
@@ -99,7 +99,7 @@ namespace DeltaWare.SDK.Web
         {
             using HttpClient client = await GetHttpClientAsync();
 
-            if (client is null)
+            if(client is null)
             {
                 return ApiResponse<TResponse>.Failure("Could not Create an instance of the HttpClient");
             }
@@ -117,7 +117,7 @@ namespace DeltaWare.SDK.Web
                     _ => throw new ArgumentOutOfRangeException(nameof(action), action, null)
                 };
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 return ApiResponse<TResponse>.Failure("Http Action Failed, see exception", exception);
             }
@@ -127,12 +127,12 @@ namespace DeltaWare.SDK.Web
 
         protected virtual async Task<IApiResponse<TResponse>> GetResponseAsync<TResponse>(HttpResponseMessage responseMessage)
         {
-            if (responseMessage == null)
+            if(responseMessage == null)
             {
                 return ApiResponse<TResponse>.Failure("No Response was returned.");
             }
 
-            if (!responseMessage.IsSuccessStatusCode)
+            if(!responseMessage.IsSuccessStatusCode)
             {
                 return ApiResponse<TResponse>.Failure(responseMessage.ReasonPhrase);
             }
@@ -143,7 +143,7 @@ namespace DeltaWare.SDK.Web
 
                 return ApiResponse<TResponse>.Success(response);
             }
-            catch (Exception exception)
+            catch(Exception exception)
             {
                 return ApiResponse<TResponse>.Failure("Could not deserialize returned value.", exception);
 
@@ -152,7 +152,7 @@ namespace DeltaWare.SDK.Web
 
         protected virtual Uri GetRoute(IApiVersion version, string content = null)
         {
-            if (string.IsNullOrEmpty(content))
+            if(string.IsNullOrEmpty(content))
             {
                 return new Uri($"v{version.VersionString}/{BaseEndPoint}", UriKind.Relative);
             }

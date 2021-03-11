@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DeltaWare.SDK.Common;
-using DeltaWare.SDK.Common.Types;
+﻿using DeltaWare.SDK.Common.Types;
 
 namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 {
@@ -22,7 +16,7 @@ namespace DeltaWare.SDK.Maths.Fractal.Hilbert
             Coordinates = new Coordinate(x, y);
             Index = index;
         }
-        
+
         internal HilbertVector(T value, Coordinate coordinates, long index)
         {
             Value = value;

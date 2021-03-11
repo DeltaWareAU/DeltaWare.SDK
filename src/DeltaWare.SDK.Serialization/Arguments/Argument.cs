@@ -1,7 +1,6 @@
 ﻿
-using System.Reflection;
-
 using DeltaWare.SDK.Serialization.Arguments.Attributes;
+using System.Reflection;
 
 namespace DeltaWare.SDK.Serialization.Arguments
 {

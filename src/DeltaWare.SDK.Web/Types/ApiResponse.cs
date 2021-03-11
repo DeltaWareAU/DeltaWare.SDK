@@ -1,9 +1,9 @@
-﻿using System;
-using DeltaWare.SDK.Web.Interfaces;
+﻿using DeltaWare.SDK.Web.Interfaces;
+using System;
 
 namespace DeltaWare.SDK.Web.Types
 {
-    public class ApiResponse<TResult> : IApiResponse<TResult>
+    public class ApiResponse<TResult>: IApiResponse<TResult>
     {
         public bool WasSuccessful { get; }
 

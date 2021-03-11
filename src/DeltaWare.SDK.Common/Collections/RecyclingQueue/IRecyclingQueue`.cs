@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DeltaWare.SDK.Common.Enums;
-
-namespace DeltaWare.SDK.Common.Interfaces
+﻿namespace DeltaWare.SDK.Common.Collections.RecyclingQueue
 {
     public interface IRecyclingQueue<T>
     {
@@ -19,7 +14,7 @@ namespace DeltaWare.SDK.Common.Interfaces
 
         void Clear();
 
-        T[] GetRange(int index, int count, SortDirection sortDirection = SortDirection.Ascending);
+        T[] GetRange(int index, int count, SortDirection direction = SortDirection.Ascending);
 
         IRecyclingQueue<T> Expand(int newCapacity);
     }

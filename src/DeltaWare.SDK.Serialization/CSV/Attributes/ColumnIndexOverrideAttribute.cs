@@ -3,7 +3,7 @@ namespace DeltaWare.SDK.Serialization.CSV.Attributes
 {
     using System;
 
-    public class ColumnIndexOverrideAttribute : Attribute
+    public class ColumnIndexOverrideAttribute: Attribute
     {
         internal int Id;
 

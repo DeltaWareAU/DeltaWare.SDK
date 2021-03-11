@@ -9,7 +9,7 @@ namespace DeltaWare.SDK.Maths.Base2
         }
 
         #region Binary Operators
-        
+
         public static Binary operator +(Binary valueLeft, Binary valueRight)
         {
             return valueLeft.Length.CreateBinary(valueLeft + valueRight);

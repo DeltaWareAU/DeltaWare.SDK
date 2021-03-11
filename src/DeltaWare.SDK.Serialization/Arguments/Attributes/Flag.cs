@@ -1,7 +1,7 @@
 ﻿
 namespace DeltaWare.SDK.Serialization.Arguments.Attributes
 {
-    public sealed class Flag : ArgumentBase
+    public sealed class Flag: ArgumentBase
     {
         public Flag() : base()
         {

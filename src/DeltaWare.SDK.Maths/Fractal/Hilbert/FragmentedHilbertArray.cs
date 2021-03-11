@@ -1,13 +1,12 @@
 ﻿
+using DeltaWare.SDK.Common.Types;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
-using DeltaWare.SDK.Common.Types;
-
 namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 {
-    public class FragmentedHilbertArray : HilbertArrayBase, IDisposable
+    public class FragmentedHilbertArray: HilbertArrayBase, IDisposable
     {
         private int _fragmentSize;
 
@@ -28,7 +27,7 @@ namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 
             int depth = 1;
 
-            while (Length > Math.Pow(4, depth))
+            while(Length > Math.Pow(4, depth))
             {
                 depth++;
             }
@@ -37,12 +36,12 @@ namespace DeltaWare.SDK.Maths.Fractal.Hilbert
         }
 
         public HilbertVector<char>[] NextFragment()
-        {   
+        {
             List<HilbertVector<char>> vectors = new List<HilbertVector<char>>();
 
-            for (int i = 0; i < _fragmentSize; i++)
+            for(int i = 0; i < _fragmentSize; i++)
             {
-                if (_stream.EndOfStream)
+                if(_stream.EndOfStream)
                 {
                     EndOfStream = true;
 
@@ -66,10 +65,10 @@ namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 
         private void Dispose(bool disposing)
         {
-            if (Disposed)
+            if(Disposed)
                 return;
 
-            if (disposing)
+            if(disposing)
             {
                 _stream.Dispose();
             }

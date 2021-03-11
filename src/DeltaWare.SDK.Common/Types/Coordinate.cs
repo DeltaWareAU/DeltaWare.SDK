@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace DeltaWare.SDK.Common.Types
 {
-/// <summary>
+    /// <summary>
     /// X:Y Coordinates.
     /// </summary>
     [DebuggerDisplay("(X: {X}; Y: {Y})")]
@@ -182,18 +182,18 @@ namespace DeltaWare.SDK.Common.Types
         /// <returns>An <see cref="int"/> value specifying if the <see cref="object"/> is equal to the <see cref="Coordinate"/>.</returns>
         public override bool Equals(object obj)
         {
-            if (obj == null)
+            if(obj == null)
             {
-				return false;
+                return false;
             }
 
-			if (GetType() != obj.GetType())
-			{
-				return false;
-			}
+            if(GetType() != obj.GetType())
+            {
+                return false;
+            }
 
-			return this == (Coordinate)obj;
+            return this == (Coordinate)obj;
 
-		}
+        }
     }
 }
