@@ -2,12 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 {
-    public class HilbertArray<T> : HilbertArrayBase, IEnumerable
+    public class HilbertArray<T>: HilbertArrayBase, IEnumerable
     {
         private HilbertVector<T>[] _vectors;
 
@@ -35,7 +34,7 @@ namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 
             int depth = 1;
 
-            while (length > Math.Pow(4, depth))
+            while(length > Math.Pow(4, depth))
             {
                 depth++;
             }
@@ -59,7 +58,7 @@ namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 
             int depth = 1;
 
-            while (length > Math.Pow(4, depth))
+            while(length > Math.Pow(4, depth))
             {
                 depth++;
             }

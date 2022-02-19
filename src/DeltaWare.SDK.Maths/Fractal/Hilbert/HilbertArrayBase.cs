@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DeltaWare.SDK.Common;
-using DeltaWare.SDK.Common.Types;
+﻿using System.Threading.Tasks;
+using DeltaWare.SDK.Maths.Types;
 
 namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 {
@@ -16,19 +11,19 @@ namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 
         public HilbertVector<T> GenerateVector<T>(T value, long index)
         {
-            GetIndexCoordinates(Length, index, out LongCoordinate coordinates);
+            GetIndexCoordinates(Length, index, out Coordinate coordinates);
 
             return new HilbertVector<T>(value, coordinates.ToCoordinate(), index);
         }
 
         public Task<HilbertVector<T>> GenerateVectorAsync<T>(T value, long index)
         {
-            GetIndexCoordinates(Length, index, out LongCoordinate coordinates);
+            GetIndexCoordinates(Length, index, out Coordinate coordinates);
 
             return Task.FromResult(new HilbertVector<T>(value, coordinates.ToCoordinate(), index));
         }
 
-        protected static void GetIndexCoordinates(long length, long currentIndex, out LongCoordinate coordinates)
+        protected static void GetIndexCoordinates(long length, long currentIndex, out Coordinate coordinates)
         {
             long x = 0;
             long y = 0;
@@ -39,14 +34,14 @@ namespace DeltaWare.SDK.Maths.Fractal.Hilbert
                 long flipY = 1 & (currentIndex ^ flipX);
 
                 Rotate(index, ref x, ref y, flipX, flipY);
-                
+
                 x += index * flipX;
                 y += index * flipY;
 
                 currentIndex /= 4;
             }
 
-            coordinates = new LongCoordinate(x, y);
+            coordinates = new Coordinate(x, y);
         }
 
         private static void Rotate(long index, ref long x, ref long y, long flipX, long flipY)

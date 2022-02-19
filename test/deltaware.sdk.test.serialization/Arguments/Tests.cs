@@ -1,11 +1,8 @@
-﻿using System;
-
-using DeltaWare.SDK.Serialization.Arguments;
+﻿using DeltaWare.SDK.Serialization.Arguments;
 using DeltaWare.SDK.Tests.Serialization.Arguments.Models;
-
 using NUnit.Framework;
-
 using Shouldly;
+using System;
 
 namespace DeltaWare.SDK.Tests.Serialization.Arguments
 {

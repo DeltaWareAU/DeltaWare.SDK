@@ -1,4 +1,4 @@
-﻿using DeltaWare.SDK.Common.GenericCollections;
+﻿using DeltaWare.SDK.Common.Collections.RecyclingQueue;
 using NUnit.Framework;
 using Shouldly;
 
@@ -40,7 +40,7 @@ namespace DeltaWare.SDK.Test.Common.GenericCollections
             recyclingQueue.Add("Two");
             recyclingQueue.Add("Three");
             recyclingQueue.Add("Four");
-            
+
             recyclingQueue[0].ShouldBe("One");
             recyclingQueue[1].ShouldBe("Two");
             recyclingQueue[2].ShouldBe("Three");
