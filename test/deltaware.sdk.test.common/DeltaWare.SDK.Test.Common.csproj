@@ -12,8 +12,4 @@
     <PackageReference Include="Shouldly" Version="3.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\deltaware.sdk.common\DeltaWare.SDK.Common.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -1,24 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>DeltaWare.SDK.Maths</AssemblyName>
-    <Version>1.1.2.0</Version>
+    <Version>5.0.0.1</Version>
     <PackageIconUrl></PackageIconUrl>
-    <Authors>DeltaWare</Authors>
+    <Authors>Bradley Clarke</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Product>DeltaWare.SDK</Product>
-    <Description>Source Development Kit for Mathematics</Description>
-    <PackageIcon>SDK_icon.png</PackageIcon>
-    <RepositoryUrl>https://github.com/armorall171/DeltaWare.SDK</RepositoryUrl>
+    <Description></Description>
+    <PackageIcon>nuget_logo.png</PackageIcon>
+    <RepositoryUrl></RepositoryUrl>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DeltaWare.SDK.Common\DeltaWare.SDK.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\SDK_icon.png">
+    <None Include="..\..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\nuget_logo.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>

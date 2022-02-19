@@ -1,5 +1,5 @@
-﻿using DeltaWare.SDK.Common.Types;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using DeltaWare.SDK.Maths.Types;
 
 namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 {
@@ -11,24 +11,24 @@ namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 
         public HilbertVector<T> GenerateVector<T>(T value, long index)
         {
-            GetIndexCoordinates(Length, index, out LongCoordinate coordinates);
+            GetIndexCoordinates(Length, index, out Coordinate coordinates);
 
             return new HilbertVector<T>(value, coordinates.ToCoordinate(), index);
         }
 
         public Task<HilbertVector<T>> GenerateVectorAsync<T>(T value, long index)
         {
-            GetIndexCoordinates(Length, index, out LongCoordinate coordinates);
+            GetIndexCoordinates(Length, index, out Coordinate coordinates);
 
             return Task.FromResult(new HilbertVector<T>(value, coordinates.ToCoordinate(), index));
         }
 
-        protected static void GetIndexCoordinates(long length, long currentIndex, out LongCoordinate coordinates)
+        protected static void GetIndexCoordinates(long length, long currentIndex, out Coordinate coordinates)
         {
             long x = 0;
             long y = 0;
 
-            for(long index = 1; index < length; index *= 2)
+            for (long index = 1; index < length; index *= 2)
             {
                 long flipX = 1 & (currentIndex / 2);
                 long flipY = 1 & (currentIndex ^ flipX);
@@ -41,15 +41,15 @@ namespace DeltaWare.SDK.Maths.Fractal.Hilbert
                 currentIndex /= 4;
             }
 
-            coordinates = new LongCoordinate(x, y);
+            coordinates = new Coordinate(x, y);
         }
 
         private static void Rotate(long index, ref long x, ref long y, long flipX, long flipY)
         {
-            if(flipY != 0)
+            if (flipY != 0)
                 return;
 
-            if(flipX == 1)
+            if (flipX == 1)
             {
                 x = index - 1 - x;
                 y = index - 1 - y;

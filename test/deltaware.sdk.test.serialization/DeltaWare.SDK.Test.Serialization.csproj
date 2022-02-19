@@ -14,8 +14,4 @@
     <PackageReference Include="Shouldly" Version="3.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\DeltaWare.SDK.Serialization\DeltaWare.SDK.Serialization.csproj" />
-  </ItemGroup>
-
 </Project>
