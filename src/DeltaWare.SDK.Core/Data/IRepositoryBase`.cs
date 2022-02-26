@@ -1,8 +1,7 @@
-﻿using DeltaWare.SDK.EntityFrameworkCore.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DeltaWare.SDK.EntityFrameworkCore.Repositories
+namespace DeltaWare.SDK.Core.Data
 {
     public interface IRepositoryBase<TEntity> where TEntity : class
     {

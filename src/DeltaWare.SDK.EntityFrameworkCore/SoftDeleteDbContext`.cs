@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DeltaWare.SDK.EntityFrameworkCore
 {
     /// <summary>
-    /// When used in conjunction with <see cref="SoftDeletedEntity{TIdentifier}"/> will soft delete
+    /// When used in conjunction with <see cref="SoftDeletedDbEntity{TIdentifier}"/> will soft delete
     /// entities. This is done by marking a Deleted field to true. This means ALL data is kept even
     /// when deleted.
     /// </summary>
@@ -53,14 +53,14 @@ namespace DeltaWare.SDK.EntityFrameworkCore
 
             foreach (EntityEntry entry in ChangeTracker.Entries())
             {
-                if (entry.Entity is SoftDeletedEntity<TIdentifier> softDeletedEntity)
+                if (entry.Entity is SoftDeletedDbEntity<TIdentifier> softDeletedEntity)
                 {
                     UpdateSoftDeletedEntity(entry, softDeletedEntity, username);
                 }
             }
         }
 
-        protected virtual void UpdateSoftDeletedEntity(EntityEntry entry, SoftDeletedEntity<TIdentifier> softDeletedEntity, string username)
+        protected virtual void UpdateSoftDeletedEntity(EntityEntry entry, SoftDeletedDbEntity<TIdentifier> softDeletedEntity, string username)
         {
             DateTime currentDateTime = DateTime.Now;
 

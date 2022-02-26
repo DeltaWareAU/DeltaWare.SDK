@@ -11,15 +11,9 @@
     <Description></Description>
     <PackageIcon>nuget_logo.png</PackageIcon>
     <RepositoryUrl></RepositoryUrl>
-    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\..\LICENSE.md">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
     <None Include="..\..\nuget_logo.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

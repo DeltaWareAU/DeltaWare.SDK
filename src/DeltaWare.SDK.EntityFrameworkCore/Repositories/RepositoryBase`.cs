@@ -1,4 +1,4 @@
-﻿using DeltaWare.SDK.EntityFrameworkCore.Entities;
+﻿using DeltaWare.SDK.Core.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
