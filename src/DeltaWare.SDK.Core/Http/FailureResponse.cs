@@ -14,8 +14,8 @@ namespace DeltaWare.SDK.Core.Http
 
         public FailureResponse(string message, string messageDetail = null)
         {
-            this.Message = !string.IsNullOrWhiteSpace(message) ? message : throw new ArgumentNullException(nameof(message));
-            this.MessageDetail = messageDetail;
+            Message = !string.IsNullOrWhiteSpace(message) ? message : throw new ArgumentNullException(nameof(message));
+            MessageDetail = messageDetail;
         }
     }
 }

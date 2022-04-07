@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using DeltaWare.SDK.Core.Data;
+using DeltaWare.SDK.Data;
+using DeltaWare.SDK.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

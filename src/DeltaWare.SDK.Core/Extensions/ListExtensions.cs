@@ -1,7 +1,5 @@
 ﻿using DeltaWare.SDK.Core.Helpers;
-using DeltaWare.SDK.Core.Paging;
 using System.Linq;
-using System.Linq.Expressions;
 
 // ReSharper disable once CheckNamespace
 namespace System.Collections.Generic
@@ -96,42 +94,6 @@ namespace System.Collections.Generic
             return lists;
         }
 
-        public static IPagedResult<TEntity> ToPaged<TEntity>(this List<TEntity> entities, IPagedQuery query, Expression<Func<TEntity, object>> propertySelector, Expression<Func<TEntity, object>> defaultKeySelector) where TEntity : class
-        {
-            if (!PropertySelectorHelper.GetSelectedProperties(propertySelector).Any())
-            {
-                throw new ArgumentException("Properties must be selected.");
-            }
 
-            Func<TEntity, object> keySelector = query.BuildKeySelectorExpression(defaultKeySelector).Compile();
-            Func<TEntity, bool> predicate = ExpressionFactory.BuildPredicateExpression(propertySelector, query.SearchString).Compile();
-
-            int skippedItems = query.PageIndex * query.PageItems;
-            int totalEntities = entities.Count();
-            int filteredEntities = entities.Count(predicate);
-
-            TEntity[] filterEntities;
-
-            if (query.SortDescending)
-            {
-                filterEntities = entities
-                    .OrderByDescending(keySelector)
-                    .Where(predicate)
-                    .Skip(skippedItems)
-                    .Take(query.PageItems)
-                    .ToArray();
-            }
-            else
-            {
-                filterEntities = entities
-                    .OrderBy(keySelector)
-                    .Where(predicate)
-                    .Skip(skippedItems)
-                    .Take(query.PageItems)
-                    .ToArray();
-            }
-
-            return new PagedResult<TEntity>(filterEntities, totalEntities, filteredEntities);
-        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using DeltaWare.SDK.Core.Data;
+﻿using DeltaWare.SDK.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

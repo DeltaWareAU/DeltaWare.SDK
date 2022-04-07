@@ -1,11 +1,11 @@
-﻿using DeltaWare.SDK.Core.Serialization;
-using DeltaWare.SDK.Core.Validators;
+﻿using DeltaWare.SDK.Core.Validators;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using DeltaWare.SDK.Serialization.Types;
 
 namespace DeltaWare.SDK.EntityFrameworkCore.StoredProcedure
 {

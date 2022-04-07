@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DeltaWare.SDK.AutoMapper\DeltaWare.SDK.AutoMapper.csproj" />
-    <ProjectReference Include="..\DeltaWare.SDK.Core\DeltaWare.SDK.Core.csproj" />
+    <ProjectReference Include="..\DeltaWare.SDK.Data\DeltaWare.SDK.Data.csproj" />
   </ItemGroup>
 
 </Project>
