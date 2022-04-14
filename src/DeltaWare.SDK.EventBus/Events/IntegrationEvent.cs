@@ -2,16 +2,16 @@
 
 namespace DeltaWare.SDK.EventBus.Events
 {
-    public record Event
+    public record IntegrationEvent
     {
-        public Event()
+        public IntegrationEvent()
         {
             Id = Guid.NewGuid();
             CreationDate = DateTime.UtcNow;
         }
 
         [JsonConstructor]
-        public Event(Guid id, DateTime createDate)
+        public IntegrationEvent(Guid id, DateTime createDate)
         {
             Id = id;
             CreationDate = createDate;

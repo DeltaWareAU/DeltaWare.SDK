@@ -21,5 +21,12 @@ namespace System.Threading.Tasks
                 onException?.Invoke(exception);
             }
         }
+
+        public static async Task<TDestination> CastAsync<TDestination>(this ValueTask<object> task)
+        {
+            object source = await task;
+
+            return (TDestination) source;
+        }
     }
 }
