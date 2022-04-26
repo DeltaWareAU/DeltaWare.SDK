@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DeltaWare.SDK.Benchmarking.Results
 {
-    internal class MetricResult : IMetricResult, IMetricTracker
+    internal class MetricResult : IBenchmarkResult
     {
         public string Name { get; }
 
         public string Description { get; }
+
+        public long LastTicks { get; set; }
 
         public long TotalTicks { get; protected set; }
 
@@ -18,6 +22,19 @@ namespace DeltaWare.SDK.Benchmarking.Results
 
         public decimal AverageTicks => Math.Round((decimal)TotalTicks / Iterations, 2);
 
+        protected List<MetricResult> ChildResults { get; } = new();
+
+        public IReadOnlyList<IBenchmarkResult> Results => ChildResults;
+
+        public MetricResult CreateChild(string name, string description = null)
+        {
+            MetricResult result = new MetricResult(name, description);
+
+            ChildResults.Add(result);
+
+            return result;
+        }
+
         public MetricResult(string name, string description = null)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
@@ -26,17 +43,29 @@ namespace DeltaWare.SDK.Benchmarking.Results
 
         public virtual void Update(long ticks)
         {
-            Iterations++;
-            TotalTicks += ticks;
+            LastTicks = ticks;
+        }
 
-            if (ticks > MaximumTicks)
+        protected void Update()
+        {
+            foreach (MetricResult childResult in ChildResults)
             {
-                MaximumTicks = ticks;
+                childResult.Update();
             }
 
-            if (ticks < MaximumTicks)
+            LastTicks += ChildResults.Sum(r => r.LastTicks);
+
+            Iterations++;
+            TotalTicks += LastTicks;
+
+            if (LastTicks > MaximumTicks)
             {
-                MinimumTicks = ticks;
+                MaximumTicks = LastTicks;
+            }
+
+            if (LastTicks < MaximumTicks)
+            {
+                MinimumTicks = LastTicks;
             }
         }
     }

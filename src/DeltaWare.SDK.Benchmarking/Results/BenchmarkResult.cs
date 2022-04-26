@@ -1,21 +1,15 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace DeltaWare.SDK.Benchmarking.Results
+﻿namespace DeltaWare.SDK.Benchmarking.Results
 {
-    internal class BenchmarkResult : MetricResult, IBenchmarkResult
+    internal class BenchmarkResult : MetricResult
     {
-        private readonly List<IMetricResult> _results = new();
-
-        public IReadOnlyList<IMetricResult> Results => _results;
-        
         public BenchmarkResult(string name, string description = null) : base(name, description)
         {
         }
 
-        public void AddResult(IMetricResult result)
+        public override void Update(long ticks)
         {
-            _results.Add(result);
+            base.Update(ticks);
+            base.Update();
         }
     }
 }

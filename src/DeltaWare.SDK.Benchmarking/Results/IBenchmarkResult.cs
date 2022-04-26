@@ -2,8 +2,22 @@
 
 namespace DeltaWare.SDK.Benchmarking.Results
 {
-    public interface IBenchmarkResult : IMetricResult
+    public interface IBenchmarkResult
     {
-        public IReadOnlyList<IMetricResult> Results { get; }
+        string Name { get; }
+
+        string Description { get; }
+
+        long TotalTicks { get; }
+
+        long Iterations { get; }
+        
+        long MaximumTicks { get; }
+
+        long MinimumTicks { get; }
+
+        decimal AverageTicks { get; }
+
+        public IReadOnlyList<IBenchmarkResult> Results { get; }
     }
 }

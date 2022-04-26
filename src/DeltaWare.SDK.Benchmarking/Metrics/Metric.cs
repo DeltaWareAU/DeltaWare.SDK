@@ -1,28 +1,28 @@
-﻿using System;
+﻿using DeltaWare.SDK.Benchmarking.Results;
+using System;
 using System.Diagnostics;
-using DeltaWare.SDK.Benchmarking.Metrics.Builder;
-using DeltaWare.SDK.Benchmarking.Results;
 
 namespace DeltaWare.SDK.Benchmarking.Metrics
 {
-    public class Metric: IMetricMeasure
+    internal class Metric : IMetric
     {
-        public string Name { get; }
+        public string Name { get; init; }
 
-        public string Description { get; }
+        public string Description { get; init; }
 
-        private long _executionTicks = 0;
+        public MetricResult Result { get; init; }
 
-        private readonly MetricResult _metricResult;
+        public Metric()
+        {
 
-        public IMetricResult Result => _metricResult;
+        }
 
         public Metric(string name, string description = null)
         {
             Name = name;
             Description = description;
 
-            _metricResult = new MetricResult(name, description);
+
         }
 
         public void Measure(Action action)
@@ -30,17 +30,10 @@ namespace DeltaWare.SDK.Benchmarking.Metrics
             Stopwatch stopwatch = Stopwatch.StartNew();
 
             action.Invoke();
-            
+
             stopwatch.Stop();
-
-            _executionTicks = stopwatch.ElapsedTicks;
-
-            _metricResult.Update(_executionTicks);
-        }
-
-        internal long GetExecutionTime()
-        {
-            return _executionTicks;
+            
+            Result.LastTicks = stopwatch.ElapsedTicks;
         }
     }
 }

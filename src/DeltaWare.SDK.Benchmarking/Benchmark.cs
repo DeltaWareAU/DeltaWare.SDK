@@ -1,46 +1,34 @@
-﻿using DeltaWare.SDK.Benchmarking.Results;
+﻿using DeltaWare.SDK.Benchmarking.Metrics;
+using DeltaWare.SDK.Benchmarking.Results;
 using System;
-using System.Threading.Tasks;
 
 namespace DeltaWare.SDK.Benchmarking
 {
-    public class Benchmark : IBenchmark
+    public class Benchmark
     {
         public string Name { get; set; } = "Benchmark";
 
         public string Description { get; set; } = string.Empty;
 
-        private readonly Action<IBenchmarkBuilder> _benchmark;
+        private readonly Action<IBenchmarkMetrics<IMetric>> _benchmark;
 
-        public Benchmark(Action<IBenchmarkBuilder> benchmark)
+        public Benchmark(Action<IBenchmarkMetrics<IMetric>> benchmark)
         {
             _benchmark = benchmark;
         }
 
-        public IBenchmarkResult Run(int iterations = 1)
+        public IBenchmarkResult Measure(int iterations = 1)
         {
-            BenchmarkBuilder builder = new BenchmarkBuilder(Name, Description);
+            BenchmarkMetrics<Metric, IMetric> metrics = new BenchmarkMetrics<Metric, IMetric>(Name, Description);
 
             for (int i = 0; i < iterations; i++)
             {
-                _benchmark.Invoke(builder);
+                _benchmark.Invoke(metrics);
 
-                builder.CalculateMetrics();
+                metrics.Measure();
             }
 
-            return builder.Results;
+            return metrics.Result;
         }
-
-        public Task<IBenchmarkResult> RunAsync(int iterations = 1)
-        {
-            return Task.FromResult(Run(iterations));
-        }
-    }
-
-    public interface IBenchmark
-    {
-        IBenchmarkResult Run(int iterations = 1);
-
-        Task<IBenchmarkResult> RunAsync(int iterations = 1);
     }
 }
