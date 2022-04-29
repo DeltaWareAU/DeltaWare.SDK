@@ -1,4 +1,7 @@
-﻿namespace DeltaWare.SDK.EventBus.Events.Handlers
+﻿using System;
+using System.Threading.Tasks;
+
+namespace DeltaWare.SDK.EventBus.Events.Handlers
 {
     public interface IIntegrationEventHandler
     {

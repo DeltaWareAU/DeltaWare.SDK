@@ -6,6 +6,7 @@
     <Authors>Bradley Clarke</Authors>
     <Company>DeltaWare</Company>
     <Product>DeltaWare.SDK</Product>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

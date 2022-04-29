@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using DeltaWare.SDK.Core.Serialization;
-using DeltaWare.SDK.Core.Serialization.Attributes;
+using DeltaWare.SDK.Serialization.Types;
+using DeltaWare.SDK.Serialization.Types.Attributes;
 
 namespace DeltaWare.SDK.Routing.TemplateParameters
 {

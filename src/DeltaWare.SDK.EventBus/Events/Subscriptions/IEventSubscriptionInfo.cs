@@ -1,4 +1,7 @@
-﻿namespace DeltaWare.SDK.EventBus.Events.Subscriptions
+﻿using System;
+using System.Collections.Generic;
+
+namespace DeltaWare.SDK.EventBus.Events.Subscriptions
 {
     public interface IEventSubscriptionInfo
     {

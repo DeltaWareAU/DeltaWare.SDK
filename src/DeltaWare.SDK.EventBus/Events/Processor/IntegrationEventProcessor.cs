@@ -1,10 +1,14 @@
-﻿using System.Text.Json;
-using DeltaWare.SDK.EventBus.Events.Handlers;
+﻿using DeltaWare.SDK.EventBus.Events.Handlers;
 using DeltaWare.SDK.EventBus.Events.Subscriptions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace DeltaWare.SDK.EventBus.Events.Processor
 {
-    internal class IntegrationEventProcessor: IIntegrationEventProcessor
+    internal class IntegrationEventProcessor : IIntegrationEventProcessor
     {
         private readonly IServiceProvider _serviceProvider;
 
