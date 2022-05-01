@@ -33,5 +33,38 @@ namespace DeltaWare.SDK.Serialization.Types.Transformation
         {
             Add(transformer.Type, transformer);
         }
+
+        public new bool ContainsKey(Type type)
+        {
+            Type nullableType = Nullable.GetUnderlyingType(type);
+
+            if (nullableType != null)
+            {
+                return base.ContainsKey(nullableType);
+            }
+
+            return base.ContainsKey(type);
+        }
+
+        public new bool TryGetValue(Type type, out ITransformer transformer)
+        {
+            var found = base.TryGetValue(type, out transformer);
+
+            if (found)
+            {
+                return true;
+            }
+
+            Type nullableType = Nullable.GetUnderlyingType(type);
+
+            if (nullableType == null)
+            {
+                return false;
+            }
+
+            found = base.TryGetValue(nullableType, out transformer);
+
+            return found;
+        }
     }
 }
