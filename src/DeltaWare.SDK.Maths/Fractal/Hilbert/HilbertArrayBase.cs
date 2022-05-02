@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using DeltaWare.SDK.Maths.Types;
+﻿using DeltaWare.SDK.Maths.Types;
+using System.Threading.Tasks;
 
 namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 {

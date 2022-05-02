@@ -1,4 +1,5 @@
-﻿using DeltaWare.SDK.EntityFrameworkCore.Entities;
+﻿using DeltaWare.SDK.Data;
+using DeltaWare.SDK.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
@@ -34,6 +35,11 @@ namespace DeltaWare.SDK.EntityFrameworkCore.Repositories
             return Entities.CountAsync();
         }
 
+        public virtual int Count()
+        {
+            return Entities.Count();
+        }
+
         public virtual List<TEntity> Get()
         {
             return Entities.ToList();
@@ -42,6 +48,32 @@ namespace DeltaWare.SDK.EntityFrameworkCore.Repositories
         public virtual Task<List<TEntity>> GetAsync()
         {
             return Entities.ToListAsync();
+        }
+
+        public virtual Task RemoveAsync(TEntity entity)
+        {
+            Remove(entity);
+
+            return Task.CompletedTask;
+        }
+
+        public virtual Task RemoveRangeAsync(IEnumerable<TEntity> entities)
+        {
+            RemoveRange(entities);
+
+            return Task.CompletedTask;
+        }
+
+        public virtual Task<TEntity> UpdateAsync(TEntity entity)
+        {
+            return Task.FromResult(Update(entity));
+        }
+
+        public virtual Task UpdateRangeAsync(IEnumerable<TEntity> entities)
+        {
+            UpdateRange(entities);
+
+            return Task.CompletedTask;
         }
 
         public virtual void Remove(TEntity entity)
@@ -73,7 +105,12 @@ namespace DeltaWare.SDK.EntityFrameworkCore.Repositories
         {
         }
 
-        public Task<TEntity> GetAsync(TIdentifier identifier)
+        public virtual TEntity Get(TIdentifier identifier)
+        {
+            return Entities.SingleOrDefault(e => e.Id.Equals(identifier));
+        }
+
+        public virtual Task<TEntity> GetAsync(TIdentifier identifier)
         {
             return Entities.SingleOrDefaultAsync(e => e.Id.Equals(identifier));
         }

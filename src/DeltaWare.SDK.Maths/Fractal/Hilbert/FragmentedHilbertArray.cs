@@ -1,7 +1,7 @@
-﻿using System;
+﻿using DeltaWare.SDK.Maths.Types;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using DeltaWare.SDK.Maths.Types;
 
 namespace DeltaWare.SDK.Maths.Fractal.Hilbert
 {
