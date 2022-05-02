@@ -63,6 +63,11 @@ namespace DeltaWare.SDK.Serialization.Types.Transformation
             }
         }
 
+        public virtual bool CanSerialize(Type type)
+        {
+            return type == Type;
+        }
+
         protected abstract T TransformToObject(string value, CultureInfo culture = null);
 
         protected abstract string TransformToString(T value, CultureInfo culture = null);

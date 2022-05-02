@@ -64,7 +64,7 @@ namespace DeltaWare.SDK.Serialization.Types
                 return true;
             }
 
-            return Transformers.ContainsKey(type);
+            return Transformers.ContainsTransformer(type);
         }
 
         public bool CanSerialize(PropertyInfo property)
@@ -79,7 +79,7 @@ namespace DeltaWare.SDK.Serialization.Types
 
         public bool CanSerialize<T>()
         {
-            return Transformers.ContainsKey(typeof(T));
+            return Transformers.ContainsTransformer(typeof(T));
         }
 
         public T Deserialize<T>(string value)
@@ -96,7 +96,7 @@ namespace DeltaWare.SDK.Serialization.Types
                     return transformerOverride.TransformToObject(value, type);
                 }
 
-                if (!Transformers.TryGetValue(type, out ITransformer transformer))
+                if (!Transformers.TryGetTransformer(type, out ITransformer transformer))
                 {
                     throw new InvalidTransformationTypeException(type);
                 }
@@ -123,7 +123,7 @@ namespace DeltaWare.SDK.Serialization.Types
                     return transformerOverride.TransformToObject(value, property.PropertyType);
                 }
 
-                if (!Transformers.TryGetValue(property.PropertyType, out ITransformer transformer))
+                if (!Transformers.TryGetTransformer(property.PropertyType, out ITransformer transformer))
                 {
                     throw new InvalidTransformationTypeException(property.PropertyType);
                 }
@@ -189,7 +189,7 @@ namespace DeltaWare.SDK.Serialization.Types
                     return transformerOverride.TransformToString(value, type);
                 }
 
-                if (!Transformers.TryGetValue(type, out ITransformer transformer))
+                if (!Transformers.TryGetTransformer(type, out ITransformer transformer))
                 {
                     throw new InvalidTransformationTypeException(type);
                 }
@@ -216,7 +216,7 @@ namespace DeltaWare.SDK.Serialization.Types
                     return transformerOverride.TransformToString(value, property.PropertyType);
                 }
 
-                if (!Transformers.TryGetValue(property.PropertyType, out ITransformer transformer))
+                if (!Transformers.TryGetTransformer(property.PropertyType, out ITransformer transformer))
                 {
                     throw new InvalidTransformationTypeException(property.PropertyType);
                 }

@@ -1,10 +1,10 @@
 ﻿using DeltaWare.SDK.Core.Helpers;
+using DeltaWare.SDK.Data.Paging;
 using DeltaWare.SDK.EntityFrameworkCore.StoredProcedure;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using DeltaWare.SDK.Data.Paging;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.EntityFrameworkCore

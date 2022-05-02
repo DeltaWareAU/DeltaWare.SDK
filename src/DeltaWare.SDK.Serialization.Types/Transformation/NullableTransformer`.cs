@@ -6,6 +6,23 @@ namespace DeltaWare.SDK.Serialization.Types.Transformation
 {
     public abstract class NullableTransformer<T> : Transformer<T>, INullableTransformer
     {
+        public override bool CanSerialize(Type type)
+        {
+            if (type == Type)
+            {
+                return true;
+            }
+
+            Type nullableType = Nullable.GetUnderlyingType(type);
+
+            if (nullableType == null)
+            {
+                return false;
+            }
+
+            return type == nullableType;
+        }
+
         public override object TransformToObject(string value, Type toType, CultureInfo culture = null)
         {
             if (toType != Type)

@@ -50,7 +50,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Reading
 
             int lineNumber = 1;
 
-            while (!_reader.EndOfStream)
+            while (!_baseStream.EndOfStream)
             {
                 string[] row = await ReadLineAsync();
 

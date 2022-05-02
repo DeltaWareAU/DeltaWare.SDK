@@ -1,8 +1,8 @@
-﻿using DeltaWare.SDK.EntityFrameworkCore.StoredProcedure;
+﻿using DeltaWare.SDK.Core.Validators;
+using DeltaWare.SDK.EntityFrameworkCore.StoredProcedure;
 using DeltaWare.SDK.EntityFrameworkCore.StoredProcedure.Options;
 using Microsoft.Data.SqlClient;
 using System;
-using DeltaWare.SDK.Core.Validators;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.EntityFrameworkCore

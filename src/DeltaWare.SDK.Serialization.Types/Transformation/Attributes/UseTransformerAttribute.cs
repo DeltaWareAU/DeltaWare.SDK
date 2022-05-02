@@ -31,6 +31,11 @@ namespace DeltaWare.SDK.Serialization.Types.Transformation.Attributes
             Type = Transformer.Type;
         }
 
+        public bool CanSerialize(Type type)
+        {
+            return Transformer.CanSerialize(type);
+        }
+
         /// <inheritdoc cref="ITransformer.TransformToObject"/>
         public object TransformToObject(string value, Type toType, CultureInfo culture = null)
         {

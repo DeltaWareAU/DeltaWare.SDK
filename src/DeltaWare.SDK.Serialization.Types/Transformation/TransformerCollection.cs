@@ -1,11 +1,16 @@
 ﻿using DeltaWare.SDK.Serialization.Types.Transformation.Transformers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DeltaWare.SDK.Serialization.Types.Transformation
 {
-    public class TransformerCollection : Dictionary<Type, ITransformer>
+    public class TransformerCollection
     {
+        private readonly List<ITransformer> _transformers = new();
+
+        private readonly List<INullableTransformer> _nullableTransformers = new();
+
         public static TransformerCollection DefaultCollection { get; } = new
         (
             new StringTransformer(),
@@ -31,40 +36,52 @@ namespace DeltaWare.SDK.Serialization.Types.Transformation
 
         public void Add(ITransformer transformer)
         {
-            Add(transformer.Type, transformer);
+            if (transformer is INullableTransformer nullableTransformer)
+            {
+                _nullableTransformers.Add(nullableTransformer);
+            }
+            else
+            {
+                _transformers.Add(transformer);
+            }
         }
 
-        public new bool ContainsKey(Type type)
+        public bool ContainsTransformer(Type type)
         {
             Type nullableType = Nullable.GetUnderlyingType(type);
 
             if (nullableType != null)
             {
-                return base.ContainsKey(nullableType);
+                return _nullableTransformers.Any(t => t.CanSerialize(nullableType));
             }
 
-            return base.ContainsKey(type);
-        }
-
-        public new bool TryGetValue(Type type, out ITransformer transformer)
-        {
-            var found = base.TryGetValue(type, out transformer);
-
-            if (found)
+            if (_transformers.Any(t => t.CanSerialize(type)))
             {
                 return true;
             }
 
+            return _nullableTransformers.Any(t => t.CanSerialize(type));
+        }
+
+        public bool TryGetTransformer(Type type, out ITransformer transformer)
+        {
             Type nullableType = Nullable.GetUnderlyingType(type);
 
-            if (nullableType == null)
+            if (nullableType != null)
             {
-                return false;
+                transformer = _nullableTransformers.SingleOrDefault(t => t.CanSerialize(nullableType));
+            }
+            else
+            {
+                transformer = _transformers.SingleOrDefault(t => t.CanSerialize(type));
+
+                if (transformer == null)
+                {
+                    transformer = _nullableTransformers.SingleOrDefault(t => t.CanSerialize(type));
+                }
             }
 
-            found = base.TryGetValue(nullableType, out transformer);
-
-            return found;
+            return transformer != null;
         }
     }
 }

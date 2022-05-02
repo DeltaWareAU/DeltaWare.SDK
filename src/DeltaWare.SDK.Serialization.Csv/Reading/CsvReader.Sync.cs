@@ -16,7 +16,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Reading
 
             do
             {
-                int utf32 = _reader.Read();
+                int utf32 = _baseStream.Read();
 
                 LinePosition++;
 
@@ -50,9 +50,9 @@ namespace DeltaWare.SDK.Serialization.Csv.Reading
                         // We've hit a carriage return whilst in an encapsulated field, write that data.
                         _state |= CsvState.Writing;
                     }
-                    else if (_reader.Peek() == _readerSettings.Utf32LineFeed)
+                    else if (_baseStream.Peek() == _readerSettings.Utf32LineFeed)
                     {
-                        _reader.Read();
+                        _baseStream.Read();
 
                         // We've hit a new line
                         _state = CsvState.EndOfField | CsvState.EndOfLine;
@@ -72,9 +72,9 @@ namespace DeltaWare.SDK.Serialization.Csv.Reading
                 {
                     if (_state.HasFlag(CsvState.EncapsulateField))
                     {
-                        if (_reader.Peek() == _readerSettings.Utf32QuotationMark)
+                        if (_baseStream.Peek() == _readerSettings.Utf32QuotationMark)
                         {
-                            utf32 = _reader.Read();
+                            utf32 = _baseStream.Read();
 
                             LinePosition++;
 
@@ -150,7 +150,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Reading
 
             int lineNumber = 1;
 
-            while (!_reader.EndOfStream)
+            while (!_baseStream.EndOfStream)
             {
                 string[] row = ReadLine();
 

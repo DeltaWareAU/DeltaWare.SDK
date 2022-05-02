@@ -13,11 +13,11 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
             switch (type)
             {
                 case FieldType.Field:
-                    _writer.Write($"{field},");
+                    _baseStream.Write($"{field},");
                     break;
 
                 case FieldType.EndField:
-                    _writer.WriteLine($"{field}");
+                    _baseStream.WriteLine($"{field}");
                     break;
 
                 default:

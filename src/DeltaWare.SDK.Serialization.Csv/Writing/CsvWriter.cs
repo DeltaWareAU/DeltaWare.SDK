@@ -7,30 +7,33 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
 {
     public partial class CsvWriter : IDisposable
     {
-        private readonly StreamWriter _writer;
+        private readonly StreamWriter _baseStream;
 
         private int _expectedRowCount = -1;
         private int _lineNumber;
         private CsvState _state;
 
-        public CsvWriter(StreamWriter writer)
+        /// <inheritdoc cref="StreamWriter.BaseStream"/>>
+        public StreamWriter BaseStream => _baseStream;
+
+        public CsvWriter(StreamWriter baseStream)
         {
-            _writer = writer;
+            _baseStream = baseStream;
         }
 
         public void Dispose()
         {
-            _writer?.Dispose();
+            _baseStream?.Dispose();
         }
 
         public void Flush()
         {
-            _writer.Flush();
+            _baseStream.Flush();
         }
 
         public Task FlushAsync()
         {
-            return _writer.FlushAsync();
+            return _baseStream.FlushAsync();
         }
 
         protected virtual string EncapsulateField(string value)

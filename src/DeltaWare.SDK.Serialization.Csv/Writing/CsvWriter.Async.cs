@@ -29,11 +29,11 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
             switch (type)
             {
                 case FieldType.Field:
-                    await _writer.WriteAsync($"{field},");
+                    await _baseStream.WriteAsync($"{field},");
                     break;
 
                 case FieldType.EndField:
-                    await _writer.WriteLineAsync($"{field}");
+                    await _baseStream.WriteLineAsync($"{field}");
                     break;
 
                 default:
