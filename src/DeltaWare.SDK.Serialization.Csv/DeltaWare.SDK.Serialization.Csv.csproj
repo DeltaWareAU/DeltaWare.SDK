@@ -9,8 +9,4 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DeltaWare.SDK.Serialization.Types\DeltaWare.SDK.Serialization.Types.csproj" />
-  </ItemGroup>
-
 </Project>
