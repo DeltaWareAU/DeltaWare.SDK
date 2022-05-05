@@ -3,17 +3,17 @@
 namespace DeltaWare.SDK.Serialization.Csv.Enums
 {
     /// <summary>
-    /// Specifies how a missing column will be handled.
+    /// Indicates how a missing column will be handled.
     /// </summary>
     public enum MissingColumnHandling
     {
         /// <summary>
-        /// When a line has missing columns they will be ignored.
+        /// When a line has a missing column it will be ignored.
         /// </summary>
         NotAllow,
 
         /// <summary>
-        /// When a line has a missing columns an <see cref="InvalidCsvDataException"/> will be thrown.
+        /// When a line has a missing column an <see cref="InvalidCsvDataException"/> will be thrown.
         /// </summary>
         Allow
     }

@@ -1,118 +1,57 @@
-﻿using DeltaWare.SDK.Serialization.Csv.Reading;
+﻿using DeltaWare.SDK.Serialization.Csv.Exceptions;
+using DeltaWare.SDK.Serialization.Csv.Reading;
 using DeltaWare.SDK.Serialization.Csv.Writing;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DeltaWare.SDK.Serialization.Csv
 {
+    /// <summary>
+    /// Deserializes and Serializes CSV data.
+    /// </summary>
     public interface ICsvSerializer
     {
-        IEnumerable<object> Deserialize(CsvReader reader, Type type, bool hasHeaders = true);
+        /// <summary>
+        /// Deserializes the CSV data into the specified <see cref="Type"/>.
+        /// </summary>
+        /// <param name="reader">The reader to be deserialized.</param>
+        /// <param name="schema">The <see cref="Type"/> for the data to be serialize to.</param>
+        /// <param name="hasHeaders">Specifies if the CSV contains headers.</param>
+        /// <returns>Returns the deserialized data or an empty <see cref="IEnumerable{T}"/> if no data was present.</returns>
+        /// <exception cref="CsvSchemaException">Thrown when the Csv Schema is invalid.</exception>
+        /// <exception cref="InvalidCsvDataException">Thrown when the Csv Data is invalid.</exception>
+        IEnumerable<object> Deserialize(CsvReader reader, Type schema, bool hasHeaders = true);
 
-        Task<IEnumerable<object>> DeserializeAsync(CsvReader reader, Type type, bool hasHeaders = true);
+        /// <summary>
+        /// Deserializes the CSV data into the specified <see cref="Type"/>.
+        /// </summary>
+        /// <param name="reader">The reader to be deserialized.</param>
+        /// <param name="schema">The <see cref="Type"/> for the data to be serialize to.</param>
+        /// <param name="hasHeaders">Specifies if the CSV contains headers.</param>
+        /// <returns>Returns the deserialized data or an empty <see cref="IEnumerable{T}"/> if no data was present.</returns>
+        /// <exception cref="CsvSchemaException">Thrown when the Csv Schema is invalid.</exception>
+        /// <exception cref="InvalidCsvDataException">Thrown when the Csv Data is invalid.</exception>
+        Task<IEnumerable<object>> DeserializeAsync(CsvReader reader, Type schema, bool hasHeaders = true);
 
-        void Serialize<T>(IEnumerable<T> lines, CsvWriter writer, bool hasHeaders = true) where T : class;
+        /// <summary>
+        /// Serializes the CSV data.
+        /// </summary>
+        /// <typeparam name="TSchema">The type being serialized.</typeparam>
+        /// <param name="lines">The data to be serialized.</param>
+        /// <param name="writer">The writer for the serialized data to be written to.</param>
+        /// <param name="hasHeaders">Specifies if the CSV contains headers.</param>
+        /// <exception cref="CsvSchemaException">Thrown when the Csv Schema is invalid.</exception>
+        void Serialize<TSchema>(IEnumerable<TSchema> lines, CsvWriter writer, bool hasHeaders = true) where TSchema : class;
 
-        Task SerializeAsync<T>(IEnumerable<T> lines, CsvWriter writer, bool hasHeaders = true) where T : class;
-    }
-
-    public static class CsvSerializerExtensions
-    {
-        public static IEnumerable<T> Deserialize<T>(this ICsvSerializer serializer, string value, bool hasHeaders = true) where T : class
-        {
-            using CsvReader csvReader = new CsvReader(value);
-
-            return serializer.Deserialize(csvReader, typeof(T), hasHeaders).Cast<T>();
-        }
-
-        public static IEnumerable<T> Deserialize<T>(this ICsvSerializer serializer, Stream stream, bool hasHeaders = true) where T : class
-        {
-            StreamReader reader = new StreamReader(stream);
-
-            CsvReader csvReader = new CsvReader(reader);
-
-            return serializer.Deserialize(csvReader, typeof(T), hasHeaders).Cast<T>();
-        }
-
-        public static IEnumerable<T> Deserialize<T>(this ICsvSerializer serializer, CsvReader reader, bool hasHeaders = true) where T : class
-        {
-            return serializer.Deserialize(reader, typeof(T), hasHeaders).Cast<T>();
-        }
-
-        public static Task<IEnumerable<T>> DeserializeAsync<T>(this ICsvSerializer serializer, string value, bool hasHeaders = true) where T : class
-        {
-            using CsvReader csvReader = new(value);
-
-            return serializer.DeserializeAsync(csvReader, typeof(T), hasHeaders).CastAsync<T>();
-        }
-
-        public static Task<IEnumerable<T>> DeserializeAsync<T>(this ICsvSerializer serializer, Stream stream, bool hasHeaders = true) where T : class
-        {
-            StreamReader reader = new(stream);
-
-            CsvReader csvReader = new(reader);
-
-            return serializer.DeserializeAsync(csvReader, typeof(T), hasHeaders).CastAsync<T>();
-        }
-
-        public static Task<IEnumerable<T>> DeserializeAsync<T>(this ICsvSerializer serializer, CsvReader reader, bool hasHeaders = true) where T : class
-        {
-            return serializer.DeserializeAsync(reader, typeof(T), hasHeaders).CastAsync<T>();
-        }
-
-        public static string Serialize<T>(this ICsvSerializer serializer, IEnumerable<T> lines, bool hasHeader = true) where T : class
-        {
-            using Stream stream = new MemoryStream();
-
-            StreamWriter writer = new StreamWriter(stream);
-
-            CsvWriter csvWriter = new CsvWriter(writer);
-
-            serializer.Serialize(lines, csvWriter, hasHeader);
-
-            stream.Seek(0, SeekOrigin.Begin);
-
-            StreamReader reader = new StreamReader(stream);
-
-            return reader.ReadToEnd();
-        }
-
-        public static void Serialize<T>(this ICsvSerializer serializer, IEnumerable<T> lines, Stream stream, bool hasHeader = true) where T : class
-        {
-            StreamWriter writer = new StreamWriter(stream);
-
-            CsvWriter csvWriter = new CsvWriter(writer);
-
-            serializer.Serialize(lines, csvWriter, hasHeader);
-        }
-
-        public static async Task<string> SerializeAsync<T>(this ICsvSerializer serializer, IEnumerable<T> lines, bool hasHeader = true) where T : class
-        {
-            await using Stream stream = new MemoryStream();
-
-            StreamWriter writer = new(stream);
-
-            CsvWriter csvWriter = new(writer);
-
-            await serializer.SerializeAsync(lines, csvWriter, hasHeader);
-
-            stream.Seek(0, SeekOrigin.Begin);
-
-            StreamReader reader = new(stream);
-
-            return await reader.ReadToEndAsync();
-        }
-
-        public static Task SerializeAsync<T>(this ICsvSerializer serializer, IEnumerable<T> lines, Stream stream, bool hasHeader = true) where T : class
-        {
-            StreamWriter writer = new(stream);
-
-            CsvWriter csvWriter = new(writer);
-
-            return serializer.SerializeAsync(lines, csvWriter, hasHeader);
-        }
+        /// <summary>
+        /// Serializes the CSV data.
+        /// </summary>
+        /// <typeparam name="TSchema">The type being serialized.</typeparam>
+        /// <param name="lines">The data to be serialized.</param>
+        /// <param name="writer">The writer for the serialized data to be written to.</param>
+        /// <param name="hasHeaders">Specifies if the CSV contains headers.</param>
+        /// <exception cref="CsvSchemaException">Thrown when the Csv Schema is invalid.</exception>
+        Task SerializeAsync<TSchema>(IEnumerable<TSchema> lines, CsvWriter writer, bool hasHeaders = true) where TSchema : class;
     }
 }
