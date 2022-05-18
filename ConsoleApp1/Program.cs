@@ -1,6 +1,9 @@
 ﻿using System;
 using DeltaWare.SDK.UI.Console;
 using DeltaWare.SDK.UI.Console.Elements;
+using DeltaWare.SDK.UI.Console.Pages;
+using DeltaWare.SDK.UI.Console.Pages.Builder;
+using DeltaWare.SDK.UI.Console.Rendering;
 
 namespace ConsoleApp1
 {
@@ -8,15 +11,10 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            ConsoleRenderer renderer = new ConsoleRenderer();
+            ConsoleUIManager manager = new ConsoleUIManager();
 
-
-            Border border = new Border(renderer);
-            
-            border.Width = 20;
-            border.Height = 15;
-
-            border.Render();
+            manager.AddPage<TestPage>();
+            manager.Render<TestPage>();
 
             //renderer.Render('X');
             //renderer.Render('X');
@@ -31,6 +29,15 @@ namespace ConsoleApp1
             //renderer.Render('X', Direction.Left);
 
             Console.Read();
+        }
+    }
+
+    public class TestPage: PageBase
+    {
+        protected override void OnBuild(IPageBuilder builder)
+        {
+            builder.AddElement<TextField>()
+                .Initialize(t => t.Text = "HELLO!");
         }
     }
 }

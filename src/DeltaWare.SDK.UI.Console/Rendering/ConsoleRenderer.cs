@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DeltaWare.SDK.UI.Console
+namespace DeltaWare.SDK.UI.Console.Rendering
 {
     public class ConsoleRenderer: IRenderer
     {
@@ -10,6 +10,8 @@ namespace DeltaWare.SDK.UI.Console
 
         public ConsoleRenderer()
         {
+            System.Console.BackgroundColor = ConsoleColor.Blue;
+            System.Console.Clear();
             System.Console.CursorVisible = false;
         }
 
@@ -36,6 +38,14 @@ namespace DeltaWare.SDK.UI.Console
             System.Console.Write(value);
         }
 
+        public void Render(string value, Direction direction = Direction.Right)
+        {
+            System.Console.BackgroundColor = ConsoleColor.Red;
+            System.Console.Write(value);
+
+            UpdateCursor();
+        }
+
         private void ResetCursor()
         {
             if (_cursorX != System.Console.CursorLeft)
@@ -49,7 +59,13 @@ namespace DeltaWare.SDK.UI.Console
             }
         }
 
-        private void Translate(int x, int y)
+        private void UpdateCursor()
+        {
+            _cursorX = System.Console.CursorLeft;
+            _cursorY = System.Console.CursorTop;
+        }
+
+        public void Translate(int x, int y)
         {
             _cursorX += x;
             _cursorY += y;
@@ -57,14 +73,14 @@ namespace DeltaWare.SDK.UI.Console
             ResetCursor();
         }
 
-        private void TranslateX(int x)
+        public void TranslateX(int x)
         {
             _cursorX += x;
 
             ResetCursor();
         }
 
-        private void TranslateY(int y)
+        public void TranslateY(int y)
         {
             _cursorY += y;
 

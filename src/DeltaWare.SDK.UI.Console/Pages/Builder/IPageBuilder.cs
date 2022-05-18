@@ -5,6 +5,6 @@ namespace DeltaWare.SDK.UI.Console.Pages.Builder
 {
     public interface IPageBuilder
     {
-        void AddElement<TElement>(Action<TElement> builder) where TElement : ElementBase;
+        IElementBuilder<TElement> AddElement<TElement>() where TElement : ElementBase, new();
     }
 }

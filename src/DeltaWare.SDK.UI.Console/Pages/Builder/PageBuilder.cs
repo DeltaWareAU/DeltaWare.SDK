@@ -1,30 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DeltaWare.SDK.UI.Console.Elements;
-using DeltaWare.SDK.UI.Console.Elements.Scaffolds;
+﻿using DeltaWare.SDK.UI.Console.Elements;
+using DeltaWare.SDK.UI.Console.Scaffolding;
+using System;
 
 namespace DeltaWare.SDK.UI.Console.Pages.Builder
 {
-    internal class PageBuilder: IPageBuilder
+    internal class PageBuilder : IPageBuilder
     {
-        private readonly Scaffolding _scaffolding;
+        private readonly Scaffold _scaffold;
 
-        public PageBuilder(Scaffolding scaffolding)
+        public PageBuilder(Scaffold scaffold)
         {
-            _scaffolding = scaffolding;
+            _scaffold = scaffold;
         }
 
-        public ElementBase[] BuildElements()
+        public IElementBuilder<TElement> AddElement<TElement>() where TElement : ElementBase, new()
         {
-            throw new NotImplementedException();
-        }
-
-        public void AddElement<TElement>(Action<TElement> builder) where TElement : ElementBase
-        {
-            throw new NotImplementedException();
+            return new ElementBuilder<TElement>(_scaffold);
         }
     }
 }
