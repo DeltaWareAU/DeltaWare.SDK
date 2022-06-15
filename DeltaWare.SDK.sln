@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.AspNetCore", "src\DeltaWare.SDK.AspNetCore\DeltaWare.SDK.AspNetCore.csproj", "{17BB4373-1692-4F4B-A77F-BA0BE860A355}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.EventBus", "src\DeltaWare.SDK.EventBus\DeltaWare.SDK.EventBus.csproj", "{5AFDE58C-DCE9-480D-88B0-592674267958}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.MessageBroker", "src\DeltaWare.SDK.EventBus\DeltaWare.SDK.MessageBroker.csproj", "{5AFDE58C-DCE9-480D-88B0-592674267958}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Routing.TemplateParameters", "src\DeltaWare.SDK.Routing.TemplateParameters\DeltaWare.SDK.Routing.TemplateParameters.csproj", "{9F0C7207-F557-4631-8AA7-F3E137A4FFE4}"
 EndProject
@@ -42,7 +42,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Authenticatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Data", "src\DeltaWare.SDK.Data\DeltaWare.SDK.Data.csproj", "{E91BF8DF-BE30-41B3-B4B4-45E52DDD0E8A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventBus", "EventBus", "{879B999F-7FDB-43C2-A4CB-1E5FD9066712}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Message Broker", "Message Broker", "{879B999F-7FDB-43C2-A4CB-1E5FD9066712}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.ServiceBus", "DeltaWare.SDK.ServiceBus\DeltaWare.SDK.ServiceBus.csproj", "{E11AFDA9-8EAA-49D0-96CC-056903882437}"
 EndProject

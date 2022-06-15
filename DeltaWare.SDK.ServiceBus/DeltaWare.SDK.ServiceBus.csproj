@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\DeltaWare.SDK.EventBus\DeltaWare.SDK.EventBus.csproj" />
+    <ProjectReference Include="..\src\DeltaWare.SDK.EventBus\DeltaWare.SDK.MessageBroker.csproj" />
   </ItemGroup>
 
 </Project>

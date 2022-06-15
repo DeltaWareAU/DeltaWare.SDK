@@ -1,18 +1,18 @@
 ﻿using Azure.Messaging.ServiceBus;
-using DeltaWare.SDK.EventBus;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
+using DeltaWare.SDK.MessageBroker;
 
 namespace DeltaWare.SDK.ServiceBus
 {
-    public class EventBusAzureServiceBus
+    public class AzureServiceBusMessageBroker
     {
-        private readonly IEventBusSubscriptionManager _subscriptionManager;
+        private readonly IMessageBroker _subscriptionManager;
 
         private readonly IServiceCollection _serviceCollection;
 
-        public EventBusAzureServiceBus(IServiceCollection serviceCollection)
+        public AzureServiceBusMessageBroker(IServiceCollection serviceCollection)
         {
         }
 
