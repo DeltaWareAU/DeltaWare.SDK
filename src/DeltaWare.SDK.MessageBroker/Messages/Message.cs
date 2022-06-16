@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Text.Json.Serialization;
 
-namespace DeltaWare.SDK.EventBus.Events
+namespace DeltaWare.SDK.MessageBroker.Messages
 {
-    public record IntegrationEvent
+    public abstract record Message
     {
-        public IntegrationEvent()
+        protected Message()
         {
             Id = Guid.NewGuid();
             CreationDate = DateTime.UtcNow;
         }
 
         [JsonConstructor]
-        public IntegrationEvent(Guid id, DateTime createDate)
+        protected Message(Guid id, DateTime createDate)
         {
             Id = id;
             CreationDate = createDate;
         }
 
         [JsonInclude]
-        public Guid Id { get; }
+        public Guid Id { get; set; }
 
         [JsonInclude]
-        public DateTime CreationDate { get; }
+        public DateTime CreationDate { get; set; }
     }
 }
