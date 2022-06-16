@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 // ReSharper disable once CheckNamespace
@@ -27,6 +28,16 @@ namespace System.Linq
         public static async Task<List<T>> ToListAsync<T>(this Task<IEnumerable<T>> enumerable)
         {
             return (await enumerable).ToList();
+        }
+
+        public static async Task<IEnumerable<T>> CastAsync<T>(this Task<IEnumerable> enumerable)
+        {
+            return (await enumerable).Cast<T>();
+        }
+
+        public static async Task<IEnumerable<T>> CastAsync<T>(this Task<IEnumerable<object>> enumerable)
+        {
+            return (await enumerable).Cast<T>();
         }
     }
 }

@@ -12,6 +12,13 @@ namespace DeltaWare.SDK.Serialization.Types.Transformation
         Type Type { get; }
 
         /// <summary>
+        /// Checks if the specified <see cref="Type"/> can be Transformed by the transformer.
+        /// </summary>
+        /// <param name="type">The <see cref="Type"/> to be checked.</param>
+        /// <returns>Returns <see landword="true"/> if the <see cref="Type"/> can be Transformed or <see langword="false"/> if it cannot.</returns>
+        bool CanSerialize(Type type);
+
+        /// <summary>
         /// Transforms the specified string to an object.
         /// </summary>
         /// <param name="value">The value to be transformed.</param>
@@ -26,5 +33,9 @@ namespace DeltaWare.SDK.Serialization.Types.Transformation
         object TransformToObject(string value, Type toType, CultureInfo culture = null);
 
         string TransformToString(object value, Type type, CultureInfo culture = null);
+    }
+
+    public interface INullableTransformer : ITransformer
+    {
     }
 }

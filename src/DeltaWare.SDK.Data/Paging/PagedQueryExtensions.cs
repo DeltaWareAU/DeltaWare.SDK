@@ -1,6 +1,6 @@
-﻿using System;
+﻿using DeltaWare.SDK.Core.Helpers;
+using System;
 using System.Linq.Expressions;
-using DeltaWare.SDK.Core.Helpers;
 
 namespace DeltaWare.SDK.Data.Paging
 {

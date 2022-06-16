@@ -18,12 +18,12 @@ namespace DeltaWare.SDK.Core.Collections
         {
             Value = value;
         }
-        
+
         private Tree(ITreeNode<T> parentNode, T value) : this(value)
         {
             ParentNode = parentNode;
         }
-        
+
         /// <inheritdoc/>
         public ITreeNode<T> ParentNode { get; }
 

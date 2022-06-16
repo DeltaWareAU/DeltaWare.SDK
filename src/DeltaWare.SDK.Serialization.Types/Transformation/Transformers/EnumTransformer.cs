@@ -8,6 +8,21 @@ namespace DeltaWare.SDK.Serialization.Types.Transformation.Transformers
     {
         public Type Type { get; } = typeof(Enum);
 
+        public bool CanSerialize(Type type)
+        {
+            if (type == Type)
+            {
+                return true;
+            }
+
+            if (type.IsEnum)
+            {
+                return type.BaseType == Type;
+            }
+
+            return false;
+        }
+
         public object TransformToObject(string value, Type toType, CultureInfo culture = null)
         {
             try

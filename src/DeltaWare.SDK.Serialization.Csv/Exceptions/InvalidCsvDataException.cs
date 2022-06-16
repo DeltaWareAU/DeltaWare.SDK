@@ -4,23 +4,23 @@ namespace DeltaWare.SDK.Serialization.Csv.Exceptions
 {
     public class InvalidCsvDataException : Exception
     {
-        private InvalidCsvDataException(int lineNumber, int linePosition, string message) : base($"[Line:{lineNumber}/Position:{linePosition}] {message}")
+        private InvalidCsvDataException(int lineNumber, int linePosition, string message) : base($"Line[{lineNumber}]:Position[{linePosition}] - {message}")
         {
         }
 
         public static InvalidCsvDataException EncapsulationFieldTerminationExpected(int lineNumber, int linePosition)
         {
-            return new InvalidCsvDataException(lineNumber, linePosition, "An encapsulated field was not terminated correctly.");
+            return new InvalidCsvDataException(lineNumber, linePosition, "Encapsulated field was not terminated.");
         }
 
         public static InvalidCsvDataException EncapsulationFieldTerminationExpectedEndOfFile(int lineNumber, int linePosition)
         {
-            return new InvalidCsvDataException(lineNumber, linePosition, "An encapsulated field could was not terminated before end of file was reached.");
+            return new InvalidCsvDataException(lineNumber, linePosition, "Encapsulated field was not terminated before reaching the end of the file.");
         }
 
         public static InvalidCsvDataException ExpectedLineFeed(int lineNumber, int linePosition)
         {
-            return new InvalidCsvDataException(lineNumber, linePosition, "A Line Feed was expected but was not found.");
+            return new InvalidCsvDataException(lineNumber, linePosition, "A line feed was expected.");
         }
 
         public static InvalidCsvDataException IllegalCharacterInNonEncapsulatedField(int lineNumber, int linePosition)

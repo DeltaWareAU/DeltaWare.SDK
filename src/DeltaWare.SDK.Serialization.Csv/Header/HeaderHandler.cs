@@ -87,14 +87,14 @@ namespace DeltaWare.SDK.Serialization.Csv.Header
 
             foreach (PropertyInfo property in properties)
             {
-                if (_attributeCache.TryGetAttribute(property, out ColumnIndexAttribute columnIndex))
+                if (_attributeCache.TryGetAttribute(property, out ColumnIndexAttribute indexAttribute))
                 {
-                    if (indexedProperties[columnIndex.Index] != null)
+                    if (indexedProperties[indexAttribute.Index] != null)
                     {
-                        throw new SchemaException($"Duplicate Properties assigned to index[{columnIndex.Index}]. First[{indexedProperties[columnIndex.Index].Name}] Second[{property.Name}]");
+                        throw CsvSchemaException.DuplicateProperties(indexAttribute.Index, indexedProperties[indexAttribute.Index].Name, property.Name);
                     }
 
-                    indexedProperties[columnIndex.Index] = property;
+                    indexedProperties[indexAttribute.Index] = property;
                 }
                 else
                 {
@@ -210,7 +210,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Header
                 {
                     if (indexedProperties[indexAttribute.Index] != null)
                     {
-                        throw new SchemaException($"Duplicate Properties assigned to index[{indexAttribute.Index}]. First[{indexedProperties[indexAttribute.Index].Name}] Second[{property.Name}]");
+                        throw CsvSchemaException.DuplicateProperties(indexAttribute.Index, indexedProperties[indexAttribute.Index].Name, property.Name);
                     }
 
                     indexedProperties[indexAttribute.Index] = property;

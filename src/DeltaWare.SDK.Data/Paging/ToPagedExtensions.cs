@@ -1,9 +1,9 @@
-﻿using System;
+﻿using DeltaWare.SDK.Core.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using DeltaWare.SDK.Core.Helpers;
 
 namespace DeltaWare.SDK.Data.Paging
 {

@@ -26,7 +26,7 @@ namespace System.Threading.Tasks
         {
             object source = await task;
 
-            return (TDestination) source;
+            return (TDestination)source;
         }
     }
 }
