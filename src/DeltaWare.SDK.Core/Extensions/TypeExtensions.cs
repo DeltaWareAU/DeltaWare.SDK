@@ -21,5 +21,10 @@ namespace System
         {
             return type.GetInterfaces().Contains(typeof(T));
         }
+
+        public static bool ImplementsAttribute<T>(this Type type) where T : Attribute
+        {
+            return type.GetCustomAttribute<T>() != null;
+        }
     }
 }
