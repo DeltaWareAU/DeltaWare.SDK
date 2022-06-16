@@ -17,7 +17,7 @@
                     });
             });
 
-            benchmark.Measure();
+            benchmark.Run();
         }
     }
 }

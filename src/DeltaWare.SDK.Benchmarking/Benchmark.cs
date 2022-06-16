@@ -17,7 +17,7 @@ namespace DeltaWare.SDK.Benchmarking
             _benchmark = benchmark;
         }
 
-        public IBenchmarkResult Measure(int iterations = 1)
+        public IBenchmarkResult Run(int iterations = 1)
         {
             BenchmarkMetrics<Metric, IMetric> metrics = new BenchmarkMetrics<Metric, IMetric>(Name, Description);
 
