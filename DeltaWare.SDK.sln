@@ -56,6 +56,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Serialization
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Serialization.Types.Tests", "test\DeltaWare.SDK.Serialization.Types.Tests\DeltaWare.SDK.Serialization.Types.Tests.csproj", "{1D77C98B-ADA7-41CB-9664-2B4617630804}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Benchmarking", "src\DeltaWare.SDK.Benchmarking\DeltaWare.SDK.Benchmarking.csproj", "{DBFB7145-E803-4EFE-9B5D-D1D638871747}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -224,6 +226,14 @@ Global
 		{1D77C98B-ADA7-41CB-9664-2B4617630804}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1D77C98B-ADA7-41CB-9664-2B4617630804}.Release|x64.ActiveCfg = Release|Any CPU
 		{1D77C98B-ADA7-41CB-9664-2B4617630804}.Release|x64.Build.0 = Release|Any CPU
+		{DBFB7145-E803-4EFE-9B5D-D1D638871747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBFB7145-E803-4EFE-9B5D-D1D638871747}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBFB7145-E803-4EFE-9B5D-D1D638871747}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DBFB7145-E803-4EFE-9B5D-D1D638871747}.Debug|x64.Build.0 = Debug|Any CPU
+		{DBFB7145-E803-4EFE-9B5D-D1D638871747}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBFB7145-E803-4EFE-9B5D-D1D638871747}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBFB7145-E803-4EFE-9B5D-D1D638871747}.Release|x64.ActiveCfg = Release|Any CPU
+		{DBFB7145-E803-4EFE-9B5D-D1D638871747}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
