@@ -11,7 +11,7 @@ namespace DeltaWare.SDK.Benchmarking.Results
         long TotalTicks { get; }
 
         long Iterations { get; }
-        
+
         long MaximumTicks { get; }
 
         long MinimumTicks { get; }

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using DeltaWare.SDK.Benchmarking.Results;
+﻿using DeltaWare.SDK.Benchmarking.Results;
+using System.Collections.Generic;
 
 namespace DeltaWare.SDK.Benchmarking.Metrics
 {
@@ -36,7 +36,7 @@ namespace DeltaWare.SDK.Benchmarking.Metrics
 
             return metric;
         }
-        
+
         public void Measure()
         {
             _result.Update(0);

@@ -33,7 +33,7 @@ namespace System
                 }
 
                 return TimeUnitsHelper.ConvertMillisecondsToMicroseconds(span.TotalMilliseconds).ToString(format) + " microseconds";
-                
+
             }
 
             if (span.TotalMilliseconds < 1000)

@@ -1,6 +1,6 @@
-﻿using System;
-using DeltaWare.SDK.Core.Validators;
+﻿using DeltaWare.SDK.Core.Validators;
 using DeltaWare.SDK.MessageBroker.Messages.Enums;
+using System;
 
 namespace DeltaWare.SDK.MessageBroker.Messages.Attributes
 {

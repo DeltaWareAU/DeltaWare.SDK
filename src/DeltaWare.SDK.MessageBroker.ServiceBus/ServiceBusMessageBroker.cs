@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus;
+﻿using Azure.Messaging.ServiceBus;
 using DeltaWare.SDK.MessageBroker.Messages;
 using DeltaWare.SDK.MessageBroker.Messages.Serialization;
+using System.Threading.Tasks;
 
 namespace DeltaWare.SDK.MessageBroker.ServiceBus
 {

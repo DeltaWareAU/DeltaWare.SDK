@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using DeltaWare.SDK.MessageBroker.Messages.Enums;
+﻿using DeltaWare.SDK.MessageBroker.Messages.Enums;
 
 namespace DeltaWare.SDK.MessageBroker
 {
@@ -13,7 +11,7 @@ namespace DeltaWare.SDK.MessageBroker
         BrokerExchangeType ExchangeType { get; }
     }
 
-    public class BindingDetails: IBindingDetails
+    public class BindingDetails : IBindingDetails
     {
         public string Name { get; init; }
         public string? RoutingPattern { get; init; }

@@ -1,9 +1,9 @@
-﻿using System;
+﻿using DeltaWare.SDK.Serialization.Types;
+using DeltaWare.SDK.Serialization.Types.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using DeltaWare.SDK.Serialization.Types;
-using DeltaWare.SDK.Serialization.Types.Attributes;
 
 namespace DeltaWare.SDK.Routing.TemplateParameters
 {
@@ -112,7 +112,7 @@ namespace DeltaWare.SDK.Routing.TemplateParameters
         private ParameterDetails GetParameterDetails(string templateSection)
         {
             string parameterKey = GetParameterKey(templateSection);
-            
+
             if (IsParameterOptional(parameterKey))
             {
                 return new ParameterDetails(parameterKey[..^1], true);

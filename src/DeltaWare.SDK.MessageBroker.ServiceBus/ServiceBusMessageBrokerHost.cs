@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Azure.Messaging.ServiceBus;
+using DeltaWare.SDK.MessageBroker.Messages.Enums;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus;
-using DeltaWare.SDK.MessageBroker.Messages.Enums;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace DeltaWare.SDK.MessageBroker.ServiceBus
 {
@@ -20,7 +20,7 @@ namespace DeltaWare.SDK.MessageBroker.ServiceBus
 
         private readonly ILogger _logger;
 
-        public ServiceBusMessageBrokerHost(ILogger<ServiceBusMessageBrokerHost> logger, ServiceBusClient serviceBusClient,IMessageBrokerManager messageBrokerManager)
+        public ServiceBusMessageBrokerHost(ILogger<ServiceBusMessageBrokerHost> logger, ServiceBusClient serviceBusClient, IMessageBrokerManager messageBrokerManager)
         {
             _logger = logger;
 
@@ -28,7 +28,7 @@ namespace DeltaWare.SDK.MessageBroker.ServiceBus
 
             _messageBrokerManager = messageBrokerManager;
 
-            _processorBindings = InitiateBindings();   
+            _processorBindings = InitiateBindings();
         }
 
         public Task StartAsync(CancellationToken cancellationToken)

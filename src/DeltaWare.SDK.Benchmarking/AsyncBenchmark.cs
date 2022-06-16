@@ -1,7 +1,7 @@
-﻿using DeltaWare.SDK.Benchmarking.Results;
+﻿using DeltaWare.SDK.Benchmarking.Metrics;
+using DeltaWare.SDK.Benchmarking.Results;
 using System;
 using System.Threading.Tasks;
-using DeltaWare.SDK.Benchmarking.Metrics;
 
 namespace DeltaWare.SDK.Benchmarking
 {
@@ -25,7 +25,7 @@ namespace DeltaWare.SDK.Benchmarking
             for (int i = 0; i < iterations; i++)
             {
                 await _benchmark.Invoke(metrics);
-                
+
                 metrics.Measure();
             }
 

@@ -32,7 +32,7 @@ namespace DeltaWare.SDK.Benchmarking.Metrics
             action.Invoke();
 
             stopwatch.Stop();
-            
+
             Result.LastTicks = stopwatch.ElapsedTicks;
         }
     }

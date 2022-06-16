@@ -1,12 +1,12 @@
-﻿using System;
+﻿using DeltaWare.SDK.MessageBroker.Messages;
+using DeltaWare.SDK.MessageBroker.Messages.Attributes;
+using DeltaWare.SDK.MessageBroker.Messages.Consumers;
+using DeltaWare.SDK.MessageBroker.Messages.Serialization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using DeltaWare.SDK.MessageBroker.Messages;
-using DeltaWare.SDK.MessageBroker.Messages.Attributes;
-using DeltaWare.SDK.MessageBroker.Messages.Consumers;
-using DeltaWare.SDK.MessageBroker.Messages.Serialization;
 
 namespace DeltaWare.SDK.MessageBroker
 {
@@ -55,7 +55,7 @@ namespace DeltaWare.SDK.MessageBroker
 
             foreach (Type consumerType in _boundConsumers[messageType])
             {
-                IMessageConsumer messageConsumer = (IMessageConsumer) _serviceProvider.CreateInstance(consumerType);
+                IMessageConsumer messageConsumer = (IMessageConsumer)_serviceProvider.CreateInstance(consumerType);
 
                 Message message = _messageSerializer.Deserialize(messageData, messageType);
 
@@ -87,7 +87,7 @@ namespace DeltaWare.SDK.MessageBroker
                 }
                 else
                 {
-                    _boundConsumers.Add(messageType, new HashSet<Type>{ consumerType });
+                    _boundConsumers.Add(messageType, new HashSet<Type> { consumerType });
                 }
             }
         }
@@ -104,7 +104,7 @@ namespace DeltaWare.SDK.MessageBroker
                 }
 
                 IBindingDetails bindingDetails = bindingAttribute.GetBindingDetails();
-                
+
                 _bindingToTypeMap.Add(bindingDetails, messageType);
                 _typeToBindingMap.Add(messageType, bindingDetails);
             }

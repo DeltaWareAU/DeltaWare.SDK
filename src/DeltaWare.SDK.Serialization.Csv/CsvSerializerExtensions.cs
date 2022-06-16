@@ -1,11 +1,11 @@
-﻿using System;
+﻿using DeltaWare.SDK.Serialization.Csv.Exceptions;
 using DeltaWare.SDK.Serialization.Csv.Reading;
 using DeltaWare.SDK.Serialization.Csv.Writing;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using DeltaWare.SDK.Serialization.Csv.Exceptions;
 
 namespace DeltaWare.SDK.Serialization.Csv
 {
