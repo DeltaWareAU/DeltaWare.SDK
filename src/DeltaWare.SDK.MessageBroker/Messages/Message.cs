@@ -3,25 +3,25 @@ using System.Text.Json.Serialization;
 
 namespace DeltaWare.SDK.MessageBroker.Messages
 {
-    public record Message
+    public abstract record Message
     {
-        public Message()
+        protected Message()
         {
             Id = Guid.NewGuid();
             CreationDate = DateTime.UtcNow;
         }
 
         [JsonConstructor]
-        public Message(Guid id, DateTime createDate)
+        protected Message(Guid id, DateTime createDate)
         {
             Id = id;
             CreationDate = createDate;
         }
 
         [JsonInclude]
-        public Guid Id { get; }
+        public Guid Id { get; set; }
 
         [JsonInclude]
-        public DateTime CreationDate { get; }
+        public DateTime CreationDate { get; set; }
     }
 }

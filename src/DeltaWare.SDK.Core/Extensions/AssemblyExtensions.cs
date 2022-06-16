@@ -18,7 +18,9 @@ namespace System.Reflection
             }
             catch (ReflectionTypeLoadException e)
             {
-                return e.Types.Where(t => t != null).ToArray();
+                return e.Types
+                    .Where(t => t != null)
+                    .ToArray();
             }
         }
     }

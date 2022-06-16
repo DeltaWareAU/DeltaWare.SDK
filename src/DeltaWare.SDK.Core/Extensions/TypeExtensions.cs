@@ -26,5 +26,55 @@ namespace System
         {
             return type.GetCustomAttribute<T>() != null;
         }
+
+        public static bool IsSubclassOf<T>(this Type type)
+        {
+            return type.IsSubclassOf(typeof(T));
+        }
+
+        public static bool IsSubclassOfRawGeneric(this Type type, Type genericType)
+        {
+            if (!genericType.IsGenericType)
+            {
+                throw new ArgumentException();
+            }
+
+            while (type.BaseType != null && type != typeof(object))
+            {
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == genericType)
+                {
+                    return true;
+                }
+
+                if (type == genericType)
+                {
+                    return true;
+                }
+
+                type = type.BaseType;
+            }
+
+            return false;
+        }
+
+        public static Type[] GetGenericArguments(this Type type, Type genericType)
+        {
+            if (!genericType.IsGenericType)
+            {
+                throw new ArgumentException();
+            }
+
+            while (type.BaseType != null || type == typeof(object))
+            {
+                if (type.IsGenericType && type.GetGenericTypeDefinition() == genericType)
+                {
+                    return type.GetGenericArguments();
+                }
+
+                type = type.BaseType;
+            }
+
+            return Array.Empty<Type>();
+        }
     }
 }
