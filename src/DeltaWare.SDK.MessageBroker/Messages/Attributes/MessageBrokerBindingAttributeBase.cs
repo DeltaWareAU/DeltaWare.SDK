@@ -1,4 +1,5 @@
 ﻿using DeltaWare.SDK.Core.Validators;
+using DeltaWare.SDK.MessageBroker.Messages.Binding;
 using DeltaWare.SDK.MessageBroker.Messages.Enums;
 using System;
 

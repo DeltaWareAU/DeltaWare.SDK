@@ -11,6 +11,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.TryAddSingleton<IMessageSerializer, DefaultMessageSerializer>();
             services.TryAddSingleton<IMessageBrokerManager, MessageBrokerManager>();
+            services.TryAddSingleton<IBindingManager, BindingManager>();
 
             return services;
         }

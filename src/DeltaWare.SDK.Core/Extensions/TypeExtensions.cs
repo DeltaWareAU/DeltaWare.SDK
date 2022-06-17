@@ -39,6 +39,11 @@ namespace System
                 throw new ArgumentException();
             }
 
+            if (type == genericType)
+            {
+                return false;
+            }
+
             while (type.BaseType != null && type != typeof(object))
             {
                 if (type.IsGenericType && type.GetGenericTypeDefinition() == genericType)
