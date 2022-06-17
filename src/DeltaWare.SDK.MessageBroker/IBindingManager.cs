@@ -68,7 +68,7 @@ namespace DeltaWare.SDK.MessageBroker
         {
             foreach (Type messageType in GetMessageTypesFromAssemblies(assemblies))
             {
-                var bindingAttribute = messageType.GetCustomAttribute<MessageBrokerBindingAttributeBase>();
+                var bindingAttribute = messageType.GetCustomAttribute<MessageBrokerBindingAttribute>();
 
                 if (bindingAttribute == null)
                 {

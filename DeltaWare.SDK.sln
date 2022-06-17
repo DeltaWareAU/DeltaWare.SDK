@@ -58,7 +58,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Serialization
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Benchmarking", "src\DeltaWare.SDK.Benchmarking\DeltaWare.SDK.Benchmarking.csproj", "{DBFB7145-E803-4EFE-9B5D-D1D638871747}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{53EA510C-6A4E-4266-B7D4-DE20204DFCEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing", "Testing\Testing.csproj", "{53EA510C-6A4E-4266-B7D4-DE20204DFCEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.MessageBroker.RabbitMQ", "src\DeltaWare.SDK.MessageBroker.RabbitMQ\DeltaWare.SDK.MessageBroker.RabbitMQ.csproj", "{3441A9DA-1569-419E-9B5A-BA2BD92FDA4E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -244,6 +246,14 @@ Global
 		{53EA510C-6A4E-4266-B7D4-DE20204DFCEF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{53EA510C-6A4E-4266-B7D4-DE20204DFCEF}.Release|x64.ActiveCfg = Release|Any CPU
 		{53EA510C-6A4E-4266-B7D4-DE20204DFCEF}.Release|x64.Build.0 = Release|Any CPU
+		{3441A9DA-1569-419E-9B5A-BA2BD92FDA4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3441A9DA-1569-419E-9B5A-BA2BD92FDA4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3441A9DA-1569-419E-9B5A-BA2BD92FDA4E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3441A9DA-1569-419E-9B5A-BA2BD92FDA4E}.Debug|x64.Build.0 = Debug|Any CPU
+		{3441A9DA-1569-419E-9B5A-BA2BD92FDA4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3441A9DA-1569-419E-9B5A-BA2BD92FDA4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3441A9DA-1569-419E-9B5A-BA2BD92FDA4E}.Release|x64.ActiveCfg = Release|Any CPU
+		{3441A9DA-1569-419E-9B5A-BA2BD92FDA4E}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -260,6 +270,7 @@ Global
 		{A3A721FD-3C02-4C6F-8ED1-DD86AEE81D45} = {F1D247C8-5882-48DF-A0D9-4D28B78F8CF6}
 		{A75F56A0-6A64-4432-8CF7-92725AF37987} = {F1D247C8-5882-48DF-A0D9-4D28B78F8CF6}
 		{1D77C98B-ADA7-41CB-9664-2B4617630804} = {F1D247C8-5882-48DF-A0D9-4D28B78F8CF6}
+		{3441A9DA-1569-419E-9B5A-BA2BD92FDA4E} = {879B999F-7FDB-43C2-A4CB-1E5FD9066712}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {50B4E601-DB97-49D8-B10F-A6B644078C32}

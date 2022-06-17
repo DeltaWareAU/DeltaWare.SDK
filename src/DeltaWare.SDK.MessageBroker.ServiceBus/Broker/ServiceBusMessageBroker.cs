@@ -25,6 +25,8 @@ namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
 
         private readonly IMessageSerializer _messageSerializer;
 
+        private readonly Dictionary<IBindingDetails, ServiceBusSender> _boundSenders = new();
+
         private IReadOnlyDictionary<IMessageProcessorBinding, ServiceBusProcessor> _processorBindings;
 
         private readonly ILogger _logger;
@@ -46,7 +48,12 @@ namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
         {
             IBindingDetails bindingDetails = _bindingManager.GetMessageBinding<TMessage>();
 
-            await using ServiceBusSender sender = _serviceBusClient.CreateSender(bindingDetails.Name);
+            if (!_boundSenders.TryGetValue(bindingDetails, out ServiceBusSender sender))
+            {
+                sender = _serviceBusClient.CreateSender(bindingDetails.Name);
+
+                _boundSenders.Add(bindingDetails, sender);
+            }
 
             ServiceBusMessage serviceBusMessage = CreateServiceBusMessage(message);
 
@@ -78,13 +85,18 @@ namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
             {
                 ServiceBusProcessor processor;
 
-                if (binding.Details.ExchangeType == BrokerExchangeType.Direct)
+                switch (binding.Details.ExchangeType)
                 {
-                    processor = _serviceBusClient.CreateProcessor(binding.Details.Name);
-                }
-                else
-                {
-                    processor = _serviceBusClient.CreateProcessor(binding.Details.Name, binding.Details.RoutingPattern ?? string.Empty);
+                    case BrokerExchangeType.Direct:
+                        processor = _serviceBusClient.CreateProcessor(binding.Details.Name);
+                        break;
+                    case BrokerExchangeType.Topic:
+                        processor = _serviceBusClient.CreateProcessor(binding.Details.Name, binding.Details.RoutingPattern);
+                        break;
+                    case BrokerExchangeType.Fanout:
+                        throw new NotSupportedException("Service Bus does not support a Fanout Exchange");
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
 
                 processor.ProcessMessageAsync += args => OnMessageAsync(args, binding);
@@ -154,9 +166,15 @@ namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
 
         public async ValueTask DisposeAsync()
         {
-            IEnumerable<Task> tasks = _processorBindings.Values.Select(v => v.DisposeAsync().AsTask());
+            foreach (ServiceBusProcessor processor in _processorBindings.Values)
+            {
+                await processor.DisposeAsync();
+            }
 
-            await Task.WhenAll(tasks);
+            foreach (ServiceBusSender sender in _boundSenders.Values)
+            {
+                await sender.DisposeAsync();
+            }
 
             await _serviceBusClient.DisposeAsync();
         }

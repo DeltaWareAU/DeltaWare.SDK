@@ -2,7 +2,7 @@
 
 namespace DeltaWare.SDK.MessageBroker.Messages.Attributes
 {
-    public class FanoutBindingAttribute : MessageBrokerBindingAttributeBase
+    public class FanoutBindingAttribute : MessageBrokerBindingAttribute
     {
         public FanoutBindingAttribute(string name) : base(name, BrokerExchangeType.Fanout)
         {

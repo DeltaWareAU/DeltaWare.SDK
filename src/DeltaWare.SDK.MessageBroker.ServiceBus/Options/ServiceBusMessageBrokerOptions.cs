@@ -2,7 +2,7 @@
 {
     public interface IServiceBusMessageBrokerOptions
     {
-        public string ConnectionString { get; }
+        string ConnectionString { get; }
     }
 
     public class ServiceBusMessageBrokerOptions : IServiceBusMessageBrokerOptions

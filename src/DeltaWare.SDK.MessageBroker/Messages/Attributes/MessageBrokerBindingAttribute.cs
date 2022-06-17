@@ -6,7 +6,7 @@ using System;
 namespace DeltaWare.SDK.MessageBroker.Messages.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public abstract class MessageBrokerBindingAttributeBase : Attribute
+    public abstract class MessageBrokerBindingAttribute : Attribute
     {
         public string Name { get; }
 
@@ -14,7 +14,7 @@ namespace DeltaWare.SDK.MessageBroker.Messages.Attributes
 
         public string? RoutingPattern { get; }
 
-        protected MessageBrokerBindingAttributeBase(string name, BrokerExchangeType exchangeType, string? routingPattern = null)
+        protected MessageBrokerBindingAttribute(string name, BrokerExchangeType exchangeType, string? routingPattern = null)
         {
             StringValidator.ThrowOnNullOrWhitespace(name, nameof(name));
 
