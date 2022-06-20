@@ -93,10 +93,9 @@ namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
                         processor = _serviceBusClient.CreateProcessor(binding.Details.Name);
                         break;
                     case BrokerExchangeType.Topic:
-                        processor = _serviceBusClient.CreateProcessor(binding.Details.Name, binding.Details.RoutingPattern);
-                        break;
                     case BrokerExchangeType.Fanout:
-                        throw new NotSupportedException("Service Bus does not support a Fanout Exchange");
+                        processor = _serviceBusClient.CreateProcessor(binding.Details.Name, binding.Details.RoutingPattern ?? string.Empty);
+                        break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }

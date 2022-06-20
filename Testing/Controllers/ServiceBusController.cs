@@ -29,7 +29,7 @@ namespace Testing.Controllers
         }
 
         [HttpPost("SendMessage/Topic")]
-        public async Task<IActionResult> SendDirectMessage([FromBody] TopicMessage message)
+        public async Task<IActionResult> SendDirectMessage([FromBody] SubscriptionMessage message)
         {
             await _messageBroker.PublishAsync(message);
 

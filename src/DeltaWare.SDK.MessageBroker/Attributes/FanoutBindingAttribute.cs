@@ -1,6 +1,6 @@
 ﻿using DeltaWare.SDK.MessageBroker.Messages.Enums;
 
-namespace DeltaWare.SDK.MessageBroker.Messages.Attributes
+namespace DeltaWare.SDK.MessageBroker.Attributes
 {
     public class FanoutBindingAttribute : MessageBrokerBindingAttribute
     {

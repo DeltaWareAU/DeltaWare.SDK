@@ -27,6 +27,13 @@ namespace System
             return type.GetCustomAttribute<T>() != null;
         }
 
+        public static bool TryGetCustomAttribute<T>(this Type type, out T attribute) where T : Attribute
+        {
+            attribute = type.GetCustomAttribute<T>();
+
+            return attribute != null;
+        }
+
         public static bool IsSubclassOf<T>(this Type type)
         {
             return type.IsSubclassOf(typeof(T));

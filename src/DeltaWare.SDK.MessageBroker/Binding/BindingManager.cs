@@ -1,6 +1,7 @@
-﻿using DeltaWare.SDK.MessageBroker.Messages;
-using DeltaWare.SDK.MessageBroker.Messages.Attributes;
+﻿using DeltaWare.SDK.MessageBroker.Attributes;
+using DeltaWare.SDK.MessageBroker.Messages;
 using DeltaWare.SDK.MessageBroker.Messages.Binding;
+using DeltaWare.SDK.MessageBroker.Messages.Enums;
 using DeltaWare.SDK.MessageBroker.Processors;
 using DeltaWare.SDK.MessageBroker.Processors.Bindings;
 using System;
@@ -45,7 +46,19 @@ namespace DeltaWare.SDK.MessageBroker.Binding
                     throw new Exception();
                 }
 
-                MessageProcessorBinding processorBinding = new MessageProcessorBinding(processorType, _messageToBindingMap[messageType], messageType);
+                IBindingDetails binding = _messageToBindingMap[messageType];
+
+                if (processorType.TryGetCustomAttribute(out RoutingPatternAttribute routingPattern))
+                {
+                    binding = new BindingDetails
+                    {
+                        ExchangeType = BrokerExchangeType.Topic,
+                        Name = binding.Name,
+                        RoutingPattern = routingPattern.Pattern
+                    };
+                }
+
+                MessageProcessorBinding processorBinding = new MessageProcessorBinding(processorType, binding, messageType);
 
                 if (_messageProcessors.TryGetValue(messageType, out List<IMessageProcessorBinding> processorBindings))
                 {

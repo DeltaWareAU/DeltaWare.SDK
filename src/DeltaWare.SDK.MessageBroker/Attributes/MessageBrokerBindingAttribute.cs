@@ -3,7 +3,7 @@ using DeltaWare.SDK.MessageBroker.Messages.Binding;
 using DeltaWare.SDK.MessageBroker.Messages.Enums;
 using System;
 
-namespace DeltaWare.SDK.MessageBroker.Messages.Attributes
+namespace DeltaWare.SDK.MessageBroker.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
     public abstract class MessageBrokerBindingAttribute : Attribute

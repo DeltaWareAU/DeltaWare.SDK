@@ -3,8 +3,8 @@ using DeltaWare.SDK.MessageBroker.Messages;
 
 namespace Testing.Messages
 {
-    [TopicBinding("test.topic", "topic.alpha")]
-    public record TopicMessage : Message
+    [TopicBinding("test.topic")]
+    public record SubscriptionMessage : Message
     {
         public string TestString { get; set; }
 

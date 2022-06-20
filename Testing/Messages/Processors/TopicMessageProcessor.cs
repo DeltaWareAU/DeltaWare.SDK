@@ -1,39 +1,60 @@
-﻿using DeltaWare.SDK.MessageBroker.Processors;
+﻿using DeltaWare.SDK.MessageBroker.Attributes;
+using DeltaWare.SDK.MessageBroker.Processors;
 using DeltaWare.SDK.MessageBroker.Processors.Results;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace Testing.Messages.Processors
 {
-    public class TopicMessageProcessorA : MessageProcessor<TopicMessage>
+    [RoutingPattern("topic.alpha")]
+    public class AlphaSubscriptionMessageConsumer : MessageProcessor<SubscriptionMessage>
     {
         private readonly ILogger _logger;
 
-        public TopicMessageProcessorA(ILogger<TopicMessageProcessorA> logger)
+        public AlphaSubscriptionMessageConsumer(ILogger<AlphaSubscriptionMessageConsumer> logger)
         {
             _logger = logger;
         }
 
-        protected override Task<IMessageProcessingResult> ProcessAsync(TopicMessage message)
+        protected override Task<IMessageProcessingResult> ProcessAsync(SubscriptionMessage message)
         {
-            _logger.LogInformation($"Topic Received on A! {message.Id} - String: {message.TestString} - Int: {message.TestInt}");
+            _logger.LogInformation($"Direct Received on Subscription! {message.Id} - String: {message.TestString} - Int: {message.TestInt}");
 
             return Task.FromResult(MessageProcessingResult.Success());
         }
     }
 
-    public class TopicMessageProcessorB : MessageProcessor<TopicMessage>
+    [RoutingPattern("topic.beta")]
+    public class BetaSubscriptionMessageConsumer : MessageProcessor<SubscriptionMessage>
     {
         private readonly ILogger _logger;
 
-        public TopicMessageProcessorB(ILogger<TopicMessageProcessorB> logger)
+        public BetaSubscriptionMessageConsumer(ILogger<BetaSubscriptionMessageConsumer> logger)
         {
             _logger = logger;
         }
 
-        protected override Task<IMessageProcessingResult> ProcessAsync(TopicMessage message)
+        protected override Task<IMessageProcessingResult> ProcessAsync(SubscriptionMessage message)
         {
-            _logger.LogInformation($"Topic Received on B! {message.Id} - String: {message.TestString} - Int: {message.TestInt}");
+            _logger.LogInformation($"Direct Received on Subscription! {message.Id} - String: {message.TestString} - Int: {message.TestInt}");
+
+            return Task.FromResult(MessageProcessingResult.Success());
+        }
+    }
+
+    [RoutingPattern("topic.charlie")]
+    public class CharlieSubscriptionMessageConsumer : MessageProcessor<SubscriptionMessage>
+    {
+        private readonly ILogger _logger;
+
+        public CharlieSubscriptionMessageConsumer(ILogger<CharlieSubscriptionMessageConsumer> logger)
+        {
+            _logger = logger;
+        }
+
+        protected override Task<IMessageProcessingResult> ProcessAsync(SubscriptionMessage message)
+        {
+            _logger.LogInformation($"Direct Received on Subscription! {message.Id} - String: {message.TestString} - Int: {message.TestInt}");
 
             return Task.FromResult(MessageProcessingResult.Success());
         }

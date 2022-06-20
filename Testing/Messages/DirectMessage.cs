@@ -1,5 +1,5 @@
-﻿using DeltaWare.SDK.MessageBroker.Messages;
-using DeltaWare.SDK.MessageBroker.Messages.Attributes;
+﻿using DeltaWare.SDK.MessageBroker.Attributes;
+using DeltaWare.SDK.MessageBroker.Messages;
 
 namespace Testing.Messages
 {
