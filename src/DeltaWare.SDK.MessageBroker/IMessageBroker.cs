@@ -1,10 +1,20 @@
-﻿using DeltaWare.SDK.MessageBroker.Messages;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 namespace DeltaWare.SDK.MessageBroker
 {
-    public interface IMessageBroker
+    public interface IMessageBroker : IMessagePublisher
     {
-        Task SendAsync<TMessage>(TMessage message) where TMessage : Message;
+        bool Initiated { get; }
+
+        bool IsListening { get; }
+
+        bool IsProcessing { get; }
+
+        void InitiateBindings();
+
+        Task StartListeningAsync(CancellationToken cancellationToken = default);
+
+        Task StopListeningAsync(CancellationToken cancellationToken = default);
     }
 }

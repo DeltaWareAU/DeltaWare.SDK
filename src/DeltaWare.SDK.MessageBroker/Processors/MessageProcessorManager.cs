@@ -1,21 +1,20 @@
 ﻿using DeltaWare.SDK.MessageBroker.Messages;
 using DeltaWare.SDK.MessageBroker.Messages.Serialization;
-using DeltaWare.SDK.MessageBroker.Processors;
 using DeltaWare.SDK.MessageBroker.Processors.Bindings;
 using DeltaWare.SDK.MessageBroker.Processors.Results;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace DeltaWare.SDK.MessageBroker
+namespace DeltaWare.SDK.MessageBroker.Processors
 {
-    public class MessageBrokerManager : IMessageBrokerManager
+    public class MessageProcessorManager : IMessageProcessorManager
     {
         private readonly IServiceScopeFactory _serviceScopeFactory;
 
         private readonly IMessageSerializer _messageSerializer;
 
-        public MessageBrokerManager(IServiceScopeFactory serviceScopeFactory, IMessageSerializer messageSerializer)
+        public MessageProcessorManager(IServiceScopeFactory serviceScopeFactory, IMessageSerializer messageSerializer)
         {
             _serviceScopeFactory = serviceScopeFactory;
             _messageSerializer = messageSerializer;

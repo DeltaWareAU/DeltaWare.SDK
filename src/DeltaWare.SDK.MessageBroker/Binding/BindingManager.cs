@@ -8,15 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace DeltaWare.SDK.MessageBroker
+namespace DeltaWare.SDK.MessageBroker.Binding
 {
-    public interface IBindingManager
-    {
-        IEnumerable<IMessageProcessorBinding> GetBindings();
-
-        IBindingDetails GetMessageBinding<T>() where T : Message;
-    }
-
     public class BindingManager : IBindingManager
     {
         private readonly Dictionary<Type, IBindingDetails> _messageToBindingMap = new();
@@ -31,7 +24,8 @@ namespace DeltaWare.SDK.MessageBroker
             DiscoverProcessorsFromAssemblies(assemblies);
         }
 
-        public IEnumerable<IMessageProcessorBinding> GetBindings() => _messageProcessors.SelectMany(map => map.Value);
+        public IEnumerable<IMessageProcessorBinding> GetProcessorBindings() => _messageProcessors.SelectMany(map => map.Value);
+        public IEnumerable<IBindingDetails> GetMessageBindings() => _messageToBindingMap.Select(map => map.Value);
 
         public IBindingDetails GetMessageBinding<T>() where T : Message => _messageToBindingMap[typeof(T)];
 

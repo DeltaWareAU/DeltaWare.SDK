@@ -3,15 +3,15 @@ using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
+namespace DeltaWare.SDK.MessageBroker.Hosting
 {
-    internal class ServiceBusMessageBrokerHost : IHostedService
+    internal class MessageBrokerHost : IHostedService
     {
-        private readonly IServiceBusMessageBroker _messageBroker;
+        private readonly IMessageBroker _messageBroker;
 
         private readonly ILogger _logger;
 
-        public ServiceBusMessageBrokerHost(ILogger<ServiceBusMessageBrokerHost> logger, IServiceBusMessageBroker messageBroker)
+        public MessageBrokerHost(ILogger<MessageBrokerHost> logger, IMessageBroker messageBroker)
         {
             _logger = logger;
             _messageBroker = messageBroker;

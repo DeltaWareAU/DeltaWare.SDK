@@ -18,9 +18,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     ConnectionString = connectionString
                 })
                 .UseMessageBroker()
-                .AddSingleton<IServiceBusMessageBroker, ServiceBusMessageBroker>()
-                .AddSingleton<IMessageBroker>(p => p.GetRequiredService<IServiceBusMessageBroker>())
-                .AddHostedService<ServiceBusMessageBrokerHost>();
+                .AddSingleton<IMessageBroker, ServiceBusMessageBroker>();
 
             return serviceCollection;
         }

@@ -1,8 +1,10 @@
 ﻿using Azure.Messaging.ServiceBus;
+using DeltaWare.SDK.MessageBroker.Binding;
 using DeltaWare.SDK.MessageBroker.Messages;
 using DeltaWare.SDK.MessageBroker.Messages.Binding;
 using DeltaWare.SDK.MessageBroker.Messages.Enums;
 using DeltaWare.SDK.MessageBroker.Messages.Serialization;
+using DeltaWare.SDK.MessageBroker.Processors;
 using DeltaWare.SDK.MessageBroker.Processors.Bindings;
 using DeltaWare.SDK.MessageBroker.Processors.Results;
 using DeltaWare.SDK.MessageBroker.ServiceBus.Options;
@@ -15,13 +17,13 @@ using System.Threading.Tasks;
 
 namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
 {
-    internal class ServiceBusMessageBroker : IServiceBusMessageBroker, IAsyncDisposable
+    internal class ServiceBusMessageBroker : IMessageBroker, IAsyncDisposable
     {
         private readonly ServiceBusClient _serviceBusClient;
 
         private readonly IBindingManager _bindingManager;
 
-        private readonly IMessageBrokerManager _messageBrokerManager;
+        private readonly IMessageProcessorManager _messageProcessorManager;
 
         private readonly IMessageSerializer _messageSerializer;
 
@@ -35,16 +37,16 @@ namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
         public bool IsListening { get; private set; }
         public bool IsProcessing => _processorBindings?.Values.Any(p => p.IsProcessing) ?? false;
 
-        public ServiceBusMessageBroker(ILogger<ServiceBusMessageBroker> logger, IServiceBusMessageBrokerOptions options, IMessageBrokerManager messageBrokerManager, IMessageSerializer messageSerializer, IBindingManager bindingManager)
+        public ServiceBusMessageBroker(ILogger<ServiceBusMessageBroker> logger, IServiceBusMessageBrokerOptions options, IMessageProcessorManager messageProcessorManager, IMessageSerializer messageSerializer, IBindingManager bindingManager)
         {
             _logger = logger;
             _serviceBusClient = new ServiceBusClient(options.ConnectionString);
-            _messageBrokerManager = messageBrokerManager;
+            _messageProcessorManager = messageProcessorManager;
             _messageSerializer = messageSerializer;
             _bindingManager = bindingManager;
         }
 
-        public async Task SendAsync<TMessage>(TMessage message) where TMessage : Message
+        public async Task PublishAsync<TMessage>(TMessage message) where TMessage : Message
         {
             IBindingDetails bindingDetails = _bindingManager.GetMessageBinding<TMessage>();
 
@@ -81,7 +83,7 @@ namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
 
             Dictionary<IMessageProcessorBinding, ServiceBusProcessor> processorBindings = new Dictionary<IMessageProcessorBinding, ServiceBusProcessor>();
 
-            foreach (IMessageProcessorBinding binding in _bindingManager.GetBindings())
+            foreach (IMessageProcessorBinding binding in _bindingManager.GetProcessorBindings())
             {
                 ServiceBusProcessor processor;
 
@@ -142,7 +144,7 @@ namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
 
         private async Task OnMessageAsync(ProcessMessageEventArgs args, IMessageProcessorBinding binding)
         {
-            IMessageProcessingResult result = await _messageBrokerManager.ProcessMessageAsync(binding, args.Message.Body.ToString());
+            IMessageProcessingResult result = await _messageProcessorManager.ProcessMessageAsync(binding, args.Message.Body.ToString());
 
             if (result.WasSuccessful)
             {

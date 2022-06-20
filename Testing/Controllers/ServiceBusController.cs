@@ -23,7 +23,7 @@ namespace Testing.Controllers
         [HttpPost("SendMessage/Direct")]
         public async Task<IActionResult> SendDirectMessage([FromBody] DirectMessage message)
         {
-            await _messageBroker.SendAsync(message);
+            await _messageBroker.PublishAsync(message);
 
             return Ok();
         }
@@ -31,7 +31,7 @@ namespace Testing.Controllers
         [HttpPost("SendMessage/Topic")]
         public async Task<IActionResult> SendDirectMessage([FromBody] TopicMessage message)
         {
-            await _messageBroker.SendAsync(message);
+            await _messageBroker.PublishAsync(message);
 
             return Ok();
         }
