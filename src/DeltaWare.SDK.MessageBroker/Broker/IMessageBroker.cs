@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace DeltaWare.SDK.MessageBroker
+namespace DeltaWare.SDK.MessageBroker.Broker
 {
     public interface IMessageBroker : IMessagePublisher
     {

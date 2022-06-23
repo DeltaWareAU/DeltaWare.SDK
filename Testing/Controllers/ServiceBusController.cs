@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
+using DeltaWare.SDK.MessageBroker.Binding;
+using DeltaWare.SDK.MessageBroker.Broker;
 using Testing.Messages;
 
 namespace Testing.Controllers

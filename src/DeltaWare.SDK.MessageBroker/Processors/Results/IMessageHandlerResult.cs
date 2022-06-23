@@ -2,7 +2,7 @@
 
 namespace DeltaWare.SDK.MessageBroker.Processors.Results
 {
-    public interface IMessageProcessingResult
+    public interface IMessageHandlerResult
     {
         public bool Retry { get; }
 

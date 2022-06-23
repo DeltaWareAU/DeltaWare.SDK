@@ -1,13 +1,11 @@
 ﻿using DeltaWare.SDK.MessageBroker.Messages;
-using DeltaWare.SDK.MessageBroker.Messages.Binding;
-using DeltaWare.SDK.MessageBroker.Processors.Bindings;
 using System.Collections.Generic;
 
 namespace DeltaWare.SDK.MessageBroker.Binding
 {
-    public interface IBindingManager
+    public interface IBindingDirector
     {
-        IEnumerable<IMessageProcessorBinding> GetProcessorBindings();
+        IEnumerable<IMessageHandlerBinding> GetHandlerBindings();
 
         IEnumerable<IBindingDetails> GetMessageBindings();
 

@@ -1,7 +1,7 @@
-﻿using DeltaWare.SDK.Core.Validators;
-using System;
+﻿using System;
+using DeltaWare.SDK.Core.Validators;
 
-namespace DeltaWare.SDK.MessageBroker.Attributes
+namespace DeltaWare.SDK.MessageBroker.Binding.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class RoutingPatternAttribute : Attribute

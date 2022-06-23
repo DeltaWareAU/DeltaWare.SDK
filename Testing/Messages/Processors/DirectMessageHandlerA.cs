@@ -5,68 +5,68 @@ using System.Threading.Tasks;
 
 namespace Testing.Messages.Processors
 {
-    public class DirectMessageProcessorA : MessageProcessor<DirectMessage>
+    public class DirectMessageHandlerA : MessageHandler<DirectMessage>
     {
         private readonly ILogger _logger;
 
-        public DirectMessageProcessorA(ILogger<DirectMessageProcessorA> logger)
+        public DirectMessageHandlerA(ILogger<DirectMessageHandlerA> logger)
         {
             _logger = logger;
         }
 
-        protected override Task<IMessageProcessingResult> ProcessAsync(DirectMessage message)
+        protected override Task<IMessageHandlerResult> ProcessAsync(DirectMessage message)
         {
             _logger.LogInformation($"Direct Received on A! {message.Id} - String: {message.TestString} - Int: {message.TestInt}");
 
-            return Task.FromResult(MessageProcessingResult.Success());
+            return Task.FromResult(MessageHandlerResult.Success());
         }
     }
-    public class DirectMessageProcessorB : MessageProcessor<DirectMessage>
+    public class DirectMessageHandlerB : MessageHandler<DirectMessage>
     {
         private readonly ILogger _logger;
 
-        public DirectMessageProcessorB(ILogger<DirectMessageProcessorB> logger)
+        public DirectMessageHandlerB(ILogger<DirectMessageHandlerB> logger)
         {
             _logger = logger;
         }
 
-        protected override Task<IMessageProcessingResult> ProcessAsync(DirectMessage message)
+        protected override Task<IMessageHandlerResult> ProcessAsync(DirectMessage message)
         {
             _logger.LogInformation($"Direct Received on B! {message.Id} - String: {message.TestString} - Int: {message.TestInt}");
 
-            return Task.FromResult(MessageProcessingResult.Success());
+            return Task.FromResult(MessageHandlerResult.Success());
         }
     }
-    public class DirectMessageProcessorC : MessageProcessor<DirectMessage>
+    public class DirectMessageHandlerC : MessageHandler<DirectMessage>
     {
         private readonly ILogger _logger;
 
-        public DirectMessageProcessorC(ILogger<DirectMessageProcessorC> logger)
+        public DirectMessageHandlerC(ILogger<DirectMessageHandlerC> logger)
         {
             _logger = logger;
         }
 
-        protected override Task<IMessageProcessingResult> ProcessAsync(DirectMessage message)
+        protected override Task<IMessageHandlerResult> ProcessAsync(DirectMessage message)
         {
             _logger.LogInformation($"Direct Received on C! {message.Id} - String: {message.TestString} - Int: {message.TestInt}");
 
-            return Task.FromResult(MessageProcessingResult.Success());
+            return Task.FromResult(MessageHandlerResult.Success());
         }
     }
-    public class DirectMessageProcessorD : MessageProcessor<DirectMessage>
+    public class DirectMessageHandlerD : MessageHandler<DirectMessage>
     {
         private readonly ILogger _logger;
 
-        public DirectMessageProcessorD(ILogger<DirectMessageProcessorD> logger)
+        public DirectMessageHandlerD(ILogger<DirectMessageHandlerD> logger)
         {
             _logger = logger;
         }
 
-        protected override Task<IMessageProcessingResult> ProcessAsync(DirectMessage message)
+        protected override Task<IMessageHandlerResult> ProcessAsync(DirectMessage message)
         {
             _logger.LogInformation($"Direct Received on D! {message.Id} - String: {message.TestString} - Int: {message.TestInt}");
 
-            return Task.FromResult(MessageProcessingResult.Success());
+            return Task.FromResult(MessageHandlerResult.Success());
         }
     }
 }

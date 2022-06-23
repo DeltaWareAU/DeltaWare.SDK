@@ -1,7 +1,7 @@
-﻿using DeltaWare.SDK.MessageBroker.Messages;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using DeltaWare.SDK.MessageBroker.Messages;
 
-namespace DeltaWare.SDK.MessageBroker
+namespace DeltaWare.SDK.MessageBroker.Broker
 {
     public interface IMessagePublisher
     {

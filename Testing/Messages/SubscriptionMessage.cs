@@ -1,10 +1,10 @@
-﻿using DeltaWare.SDK.MessageBroker.Attributes;
+﻿using DeltaWare.SDK.MessageBroker.Binding.Attributes;
 using DeltaWare.SDK.MessageBroker.Messages;
 
 namespace Testing.Messages
 {
     [TopicBinding("test.topic")]
-    public record SubscriptionMessage : Message
+    public class SubscriptionMessage : Message
     {
         public string TestString { get; set; }
 

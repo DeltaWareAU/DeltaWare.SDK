@@ -1,23 +1,21 @@
-﻿using DeltaWare.SDK.MessageBroker.Attributes;
-using DeltaWare.SDK.MessageBroker.Messages;
-using DeltaWare.SDK.MessageBroker.Messages.Binding;
-using DeltaWare.SDK.MessageBroker.Messages.Enums;
+﻿using DeltaWare.SDK.MessageBroker.Messages;
 using DeltaWare.SDK.MessageBroker.Processors;
-using DeltaWare.SDK.MessageBroker.Processors.Bindings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using DeltaWare.SDK.MessageBroker.Binding.Attributes;
+using DeltaWare.SDK.MessageBroker.Binding.Enums;
 
 namespace DeltaWare.SDK.MessageBroker.Binding
 {
-    public class BindingManager : IBindingManager
+    public class BindingDirector : IBindingDirector
     {
         private readonly Dictionary<Type, IBindingDetails> _messageToBindingMap = new();
 
-        private readonly Dictionary<Type, List<IMessageProcessorBinding>> _messageProcessors = new();
+        private readonly Dictionary<Type, MessageHandlerBinding> _messageProcessors = new();
 
-        public BindingManager()
+        public BindingDirector()
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 
@@ -25,7 +23,7 @@ namespace DeltaWare.SDK.MessageBroker.Binding
             DiscoverProcessorsFromAssemblies(assemblies);
         }
 
-        public IEnumerable<IMessageProcessorBinding> GetProcessorBindings() => _messageProcessors.SelectMany(map => map.Value);
+        public IEnumerable<IMessageHandlerBinding> GetHandlerBindings() => _messageProcessors.Select(map => map.Value);
         public IEnumerable<IBindingDetails> GetMessageBindings() => _messageToBindingMap.Select(map => map.Value);
 
         public IBindingDetails GetMessageBinding<T>() where T : Message => _messageToBindingMap[typeof(T)];
@@ -34,7 +32,7 @@ namespace DeltaWare.SDK.MessageBroker.Binding
         {
             foreach (Type processorType in GetProcessorTypesFromAssemblies(assemblies))
             {
-                Type? messageType = processorType.GetGenericArguments(typeof(MessageProcessor<>)).FirstOrDefault();
+                Type? messageType = processorType.GetGenericArguments(typeof(MessageHandler<>)).FirstOrDefault();
 
                 if (messageType == null)
                 {
@@ -58,16 +56,14 @@ namespace DeltaWare.SDK.MessageBroker.Binding
                     };
                 }
 
-                MessageProcessorBinding processorBinding = new MessageProcessorBinding(processorType, binding, messageType);
+                if (!_messageProcessors.TryGetValue(messageType, out MessageHandlerBinding processorBinding))
+                {
+                    processorBinding = new MessageHandlerBinding(binding, messageType);
 
-                if (_messageProcessors.TryGetValue(messageType, out List<IMessageProcessorBinding> processorBindings))
-                {
-                    processorBindings.Add(processorBinding);
+                    _messageProcessors.Add(messageType, processorBinding);
                 }
-                else
-                {
-                    _messageProcessors.Add(messageType, new List<IMessageProcessorBinding> { processorBinding });
-                }
+
+                processorBinding.AddProcessor(processorType);
             }
         }
 
@@ -90,7 +86,7 @@ namespace DeltaWare.SDK.MessageBroker.Binding
 
         private IEnumerable<Type> GetProcessorTypesFromAssemblies(params Assembly[] assemblies)
         {
-            return assemblies.SelectMany(a => a.GetLoadedTypes().Where(t => t.IsSubclassOfRawGeneric(typeof(MessageProcessor<>))));
+            return assemblies.SelectMany(a => a.GetLoadedTypes().Where(t => t.IsSubclassOfRawGeneric(typeof(MessageHandler<>))));
 
         }
 

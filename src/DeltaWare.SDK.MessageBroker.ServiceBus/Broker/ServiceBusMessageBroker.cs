@@ -1,11 +1,8 @@
 ﻿using Azure.Messaging.ServiceBus;
 using DeltaWare.SDK.MessageBroker.Binding;
 using DeltaWare.SDK.MessageBroker.Messages;
-using DeltaWare.SDK.MessageBroker.Messages.Binding;
-using DeltaWare.SDK.MessageBroker.Messages.Enums;
 using DeltaWare.SDK.MessageBroker.Messages.Serialization;
 using DeltaWare.SDK.MessageBroker.Processors;
-using DeltaWare.SDK.MessageBroker.Processors.Bindings;
 using DeltaWare.SDK.MessageBroker.Processors.Results;
 using DeltaWare.SDK.MessageBroker.ServiceBus.Options;
 using Microsoft.Extensions.Logging;
@@ -14,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DeltaWare.SDK.MessageBroker.Binding.Enums;
+using DeltaWare.SDK.MessageBroker.Broker;
 
 namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
 {
@@ -21,34 +20,34 @@ namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
     {
         private readonly ServiceBusClient _serviceBusClient;
 
-        private readonly IBindingManager _bindingManager;
+        private readonly IBindingDirector _bindingDirector;
 
-        private readonly IMessageProcessorManager _messageProcessorManager;
+        private readonly IMessageHandlerManager _messageHandlerManager;
 
         private readonly IMessageSerializer _messageSerializer;
 
         private readonly Dictionary<IBindingDetails, ServiceBusSender> _boundSenders = new();
 
-        private IReadOnlyDictionary<IMessageProcessorBinding, ServiceBusProcessor> _processorBindings;
+        private IReadOnlyDictionary<IMessageHandlerBinding, ServiceBusProcessor> _handlerBindings;
 
         private readonly ILogger _logger;
 
         public bool Initiated { get; private set; }
         public bool IsListening { get; private set; }
-        public bool IsProcessing => _processorBindings?.Values.Any(p => p.IsProcessing) ?? false;
+        public bool IsProcessing => _handlerBindings?.Values.Any(p => p.IsProcessing) ?? false;
 
-        public ServiceBusMessageBroker(ILogger<ServiceBusMessageBroker> logger, IServiceBusMessageBrokerOptions options, IMessageProcessorManager messageProcessorManager, IMessageSerializer messageSerializer, IBindingManager bindingManager)
+        public ServiceBusMessageBroker(ILogger<ServiceBusMessageBroker> logger, IServiceBusMessageBrokerOptions options, IMessageHandlerManager messageHandlerManager, IMessageSerializer messageSerializer, IBindingDirector bindingDirector)
         {
             _logger = logger;
             _serviceBusClient = new ServiceBusClient(options.ConnectionString);
-            _messageProcessorManager = messageProcessorManager;
+            _messageHandlerManager = messageHandlerManager;
             _messageSerializer = messageSerializer;
-            _bindingManager = bindingManager;
+            _bindingDirector = bindingDirector;
         }
 
         public async Task PublishAsync<TMessage>(TMessage message) where TMessage : Message
         {
-            IBindingDetails bindingDetails = _bindingManager.GetMessageBinding<TMessage>();
+            IBindingDetails bindingDetails = _bindingDirector.GetMessageBinding<TMessage>();
 
             if (!_boundSenders.TryGetValue(bindingDetails, out ServiceBusSender sender))
             {
@@ -81,19 +80,19 @@ namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
                 return;
             }
 
-            Dictionary<IMessageProcessorBinding, ServiceBusProcessor> processorBindings = new Dictionary<IMessageProcessorBinding, ServiceBusProcessor>();
+            Dictionary<IMessageHandlerBinding, ServiceBusProcessor> handlerBindings = new Dictionary<IMessageHandlerBinding, ServiceBusProcessor>();
 
-            foreach (IMessageProcessorBinding binding in _bindingManager.GetProcessorBindings())
+            foreach (IMessageHandlerBinding binding in _bindingDirector.GetHandlerBindings())
             {
                 ServiceBusProcessor processor;
 
                 switch (binding.Details.ExchangeType)
                 {
+                    case BrokerExchangeType.Fanout:
                     case BrokerExchangeType.Direct:
                         processor = _serviceBusClient.CreateProcessor(binding.Details.Name);
                         break;
                     case BrokerExchangeType.Topic:
-                    case BrokerExchangeType.Fanout:
                         processor = _serviceBusClient.CreateProcessor(binding.Details.Name, binding.Details.RoutingPattern ?? string.Empty);
                         break;
                     default:
@@ -103,10 +102,10 @@ namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
                 processor.ProcessMessageAsync += args => OnMessageAsync(args, binding);
                 processor.ProcessErrorAsync += args => OnErrorsAsync(args, binding);
 
-                processorBindings.Add(binding, processor);
+                handlerBindings.Add(binding, processor);
             }
 
-            _processorBindings = processorBindings;
+            _handlerBindings = handlerBindings;
 
             Initiated = true;
         }
@@ -118,13 +117,12 @@ namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
                 return;
             }
 
-            IEnumerable<Task> tasks = _processorBindings.Values.Select(p => p.StartProcessingAsync(cancellationToken));
-
             IsListening = true;
 
-            await Task.WhenAll(tasks);
-
-            IsListening = true;
+            foreach (ServiceBusProcessor processor in _handlerBindings.Values)
+            {
+                await processor.StopProcessingAsync(cancellationToken);
+            }
         }
 
         public async Task StopListeningAsync(CancellationToken cancellationToken)
@@ -134,40 +132,41 @@ namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
                 return;
             }
 
-            IEnumerable<Task> tasks = _processorBindings.Values.Select(p => p.StopProcessingAsync(cancellationToken));
-
-            await Task.WhenAll(tasks);
-
             IsListening = false;
+
+            foreach (ServiceBusProcessor processor in _handlerBindings.Values)
+            {
+                await processor.StopProcessingAsync(cancellationToken);
+            }
         }
 
-        private async Task OnMessageAsync(ProcessMessageEventArgs args, IMessageProcessorBinding binding)
+        private async Task OnMessageAsync(ProcessMessageEventArgs args, IMessageHandlerBinding binding)
         {
-            IMessageProcessingResult result = await _messageProcessorManager.ProcessMessageAsync(binding, args.Message.Body.ToString());
+            IMessageHandlerResults results = await _messageHandlerManager.HandleMessageAsync(binding, args.Message.Body.ToString());
 
-            if (result.WasSuccessful)
+            if (results.WasSuccessful)
             {
                 await args.CompleteMessageAsync(args.Message);
             }
             else
             {
-                if (!result.Retry)
+                if (!results.Retry)
                 {
-                    await args.DeadLetterMessageAsync(args.Message, result.Message);
+                    await args.DeadLetterMessageAsync(args.Message);
                 }
             }
         }
 
-        private Task OnErrorsAsync(ProcessErrorEventArgs args, IMessageProcessorBinding binding)
+        private Task OnErrorsAsync(ProcessErrorEventArgs args, IMessageHandlerBinding binding)
         {
-            _logger.LogError(args.Exception, $"Failed to process {binding.Details.Name}");
+            _logger.LogError(args.Exception, "Failed to process {messageName}", binding.Details.Name);
 
             return Task.CompletedTask;
         }
 
         public async ValueTask DisposeAsync()
         {
-            foreach (ServiceBusProcessor processor in _processorBindings.Values)
+            foreach (ServiceBusProcessor processor in _handlerBindings.Values)
             {
                 await processor.DisposeAsync();
             }

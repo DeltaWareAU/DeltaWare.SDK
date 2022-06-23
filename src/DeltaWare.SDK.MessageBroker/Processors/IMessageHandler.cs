@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace DeltaWare.SDK.MessageBroker.Processors
 {
-    public interface IMessageProcessor
+    public interface IMessageHandler
     {
-        Task<IMessageProcessingResult> ProcessAsync(Message message);
+        Task<IMessageHandlerResult> HandleAsync(Message message);
     }
 }

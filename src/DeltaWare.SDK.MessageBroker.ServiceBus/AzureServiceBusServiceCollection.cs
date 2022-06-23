@@ -1,5 +1,7 @@
 ﻿using DeltaWare.SDK.Core.Validators;
 using DeltaWare.SDK.MessageBroker;
+using DeltaWare.SDK.MessageBroker.Binding;
+using DeltaWare.SDK.MessageBroker.Broker;
 using DeltaWare.SDK.MessageBroker.ServiceBus.Broker;
 using DeltaWare.SDK.MessageBroker.ServiceBus.Options;
 
@@ -8,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class AzureServiceBusServiceCollection
     {
-        public static IServiceCollection UseServiceBus(this IServiceCollection serviceCollection, string connectionString)
+        public static IServiceCollection UseAzureServiceBus(this IServiceCollection serviceCollection, string connectionString)
         {
             StringValidator.ThrowOnNullOrWhitespace(connectionString, nameof(connectionString));
 

@@ -2,7 +2,7 @@
 
 namespace DeltaWare.SDK.MessageBroker.Processors.Results
 {
-    public class MessageProcessingResult : IMessageProcessingResult
+    public class MessageHandlerResult : IMessageHandlerResult
     {
         public bool Retry { get; init; }
 
@@ -14,20 +14,19 @@ namespace DeltaWare.SDK.MessageBroker.Processors.Results
 
         public string? Message { get; init; }
 
-        public static IMessageProcessingResult Success(string? message = null) => new MessageProcessingResult
+        public static IMessageHandlerResult Success() => new MessageHandlerResult
         {
-            WasSuccessful = true,
-            Message = message
+            WasSuccessful = true
         };
 
-        public static IMessageProcessingResult Failure(string message, bool retry = false) => new MessageProcessingResult
+        public static IMessageHandlerResult Failure(string message, bool retry = false) => new MessageHandlerResult
         {
             Message = message,
             Retry = retry,
             WasSuccessful = false
         };
 
-        public static IMessageProcessingResult Failure(Exception exception, bool retry = false) => new MessageProcessingResult
+        public static IMessageHandlerResult Failure(Exception exception, bool retry = false) => new MessageHandlerResult
         {
             Exception = exception,
             Message = exception.Message,
@@ -35,7 +34,7 @@ namespace DeltaWare.SDK.MessageBroker.Processors.Results
             Retry = retry
         };
 
-        public static IMessageProcessingResult Failure(Exception exception, string message, bool retry = false) => new MessageProcessingResult
+        public static IMessageHandlerResult Failure(Exception exception, string message, bool retry = false) => new MessageHandlerResult
         {
             Exception = exception,
             Message = message,

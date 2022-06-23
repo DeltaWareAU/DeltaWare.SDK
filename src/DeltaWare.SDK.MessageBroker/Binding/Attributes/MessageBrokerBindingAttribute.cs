@@ -1,9 +1,8 @@
-﻿using DeltaWare.SDK.Core.Validators;
-using DeltaWare.SDK.MessageBroker.Messages.Binding;
-using DeltaWare.SDK.MessageBroker.Messages.Enums;
-using System;
+﻿using System;
+using DeltaWare.SDK.Core.Validators;
+using DeltaWare.SDK.MessageBroker.Binding.Enums;
 
-namespace DeltaWare.SDK.MessageBroker.Attributes
+namespace DeltaWare.SDK.MessageBroker.Binding.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
     public abstract class MessageBrokerBindingAttribute : Attribute
