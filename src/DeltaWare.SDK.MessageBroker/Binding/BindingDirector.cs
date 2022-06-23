@@ -1,11 +1,11 @@
-﻿using DeltaWare.SDK.MessageBroker.Messages;
+﻿using DeltaWare.SDK.MessageBroker.Binding.Attributes;
+using DeltaWare.SDK.MessageBroker.Binding.Enums;
+using DeltaWare.SDK.MessageBroker.Messages;
 using DeltaWare.SDK.MessageBroker.Processors;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using DeltaWare.SDK.MessageBroker.Binding.Attributes;
-using DeltaWare.SDK.MessageBroker.Binding.Enums;
 
 namespace DeltaWare.SDK.MessageBroker.Binding
 {
@@ -13,7 +13,7 @@ namespace DeltaWare.SDK.MessageBroker.Binding
     {
         private readonly Dictionary<Type, IBindingDetails> _messageToBindingMap = new();
 
-        private readonly Dictionary<Type, MessageHandlerBinding> _messageProcessors = new();
+        private readonly Dictionary<IBindingDetails, MessageHandlerBinding> _messageProcessors = new();
 
         public BindingDirector()
         {
@@ -56,11 +56,11 @@ namespace DeltaWare.SDK.MessageBroker.Binding
                     };
                 }
 
-                if (!_messageProcessors.TryGetValue(messageType, out MessageHandlerBinding processorBinding))
+                if (!_messageProcessors.TryGetValue(binding, out MessageHandlerBinding processorBinding))
                 {
                     processorBinding = new MessageHandlerBinding(binding, messageType);
 
-                    _messageProcessors.Add(messageType, processorBinding);
+                    _messageProcessors.Add(binding, processorBinding);
                 }
 
                 processorBinding.AddProcessor(processorType);

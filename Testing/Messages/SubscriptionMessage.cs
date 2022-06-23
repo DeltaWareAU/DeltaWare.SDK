@@ -3,7 +3,7 @@ using DeltaWare.SDK.MessageBroker.Messages;
 
 namespace Testing.Messages
 {
-    [TopicBinding("test.topic")]
+    [FanoutBinding("test.fanout")]
     public class SubscriptionMessage : Message
     {
         public string TestString { get; set; }

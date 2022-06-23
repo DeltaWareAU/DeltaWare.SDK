@@ -16,9 +16,9 @@
     public class RabbitMqMessageBrokerOptions : IRabbitMqMessageBrokerOptions
     {
         public string UserName { get; set; }
-        public string Password { get; }
-        public string HostName { get; }
-        public string VirtualHost { get; }
+        public string Password { get; set; }
+        public string HostName { get; set; }
+        public string VirtualHost { get; set; }
         public int Port { get; set; }
     }
 }

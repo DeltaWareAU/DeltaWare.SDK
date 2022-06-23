@@ -1,5 +1,7 @@
 ﻿using Azure.Messaging.ServiceBus;
 using DeltaWare.SDK.MessageBroker.Binding;
+using DeltaWare.SDK.MessageBroker.Binding.Enums;
+using DeltaWare.SDK.MessageBroker.Broker;
 using DeltaWare.SDK.MessageBroker.Messages;
 using DeltaWare.SDK.MessageBroker.Messages.Serialization;
 using DeltaWare.SDK.MessageBroker.Processors;
@@ -11,8 +13,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DeltaWare.SDK.MessageBroker.Binding.Enums;
-using DeltaWare.SDK.MessageBroker.Broker;
 
 namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
 {
@@ -93,7 +93,7 @@ namespace DeltaWare.SDK.MessageBroker.ServiceBus.Broker
                         processor = _serviceBusClient.CreateProcessor(binding.Details.Name);
                         break;
                     case BrokerExchangeType.Topic:
-                        processor = _serviceBusClient.CreateProcessor(binding.Details.Name, binding.Details.RoutingPattern ?? string.Empty);
+                        processor = _serviceBusClient.CreateProcessor(binding.Details.Name, binding.Details.RoutingPattern);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

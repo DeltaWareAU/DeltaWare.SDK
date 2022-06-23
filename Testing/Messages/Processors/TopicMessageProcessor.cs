@@ -1,8 +1,8 @@
-﻿using DeltaWare.SDK.MessageBroker.Processors;
+﻿using DeltaWare.SDK.MessageBroker.Binding.Attributes;
+using DeltaWare.SDK.MessageBroker.Processors;
 using DeltaWare.SDK.MessageBroker.Processors.Results;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
-using DeltaWare.SDK.MessageBroker.Binding.Attributes;
 
 namespace Testing.Messages.Processors
 {
@@ -18,7 +18,7 @@ namespace Testing.Messages.Processors
 
         protected override Task<IMessageHandlerResult> ProcessAsync(SubscriptionMessage message)
         {
-            _logger.LogInformation($"Direct Received on Subscription! {message.Id} - String: {message.TestString} - Int: {message.TestInt}");
+            _logger.LogInformation($"Alpha Topic Received on Subscription! {message.Id} - String: {message.TestString} - Int: {message.TestInt}");
 
             return Task.FromResult(MessageHandlerResult.Success());
         }
@@ -36,7 +36,7 @@ namespace Testing.Messages.Processors
 
         protected override Task<IMessageHandlerResult> ProcessAsync(SubscriptionMessage message)
         {
-            _logger.LogInformation($"Direct Received on Subscription! {message.Id} - String: {message.TestString} - Int: {message.TestInt}");
+            _logger.LogInformation($"Beta Topic Received on Subscription! {message.Id} - String: {message.TestString} - Int: {message.TestInt}");
 
             return Task.FromResult(MessageHandlerResult.Success());
         }
@@ -54,7 +54,7 @@ namespace Testing.Messages.Processors
 
         protected override Task<IMessageHandlerResult> ProcessAsync(SubscriptionMessage message)
         {
-            _logger.LogInformation($"Direct Received on Subscription! {message.Id} - String: {message.TestString} - Int: {message.TestInt}");
+            _logger.LogInformation($"Charlie Topic Received on Subscription! {message.Id} - String: {message.TestString} - Int: {message.TestInt}");
 
             return Task.FromResult(MessageHandlerResult.Success());
         }

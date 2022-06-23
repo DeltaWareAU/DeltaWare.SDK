@@ -19,7 +19,17 @@ namespace Testing
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.UseAzureServiceBus("Endpoint=sb://platform-services-sb-playground.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ZpCe3gv5YN1rPoMChwtAU97rn5fxRpcNX1MUXo9IV4E=");
+            //services.UseAzureServiceBus("Endpoint=sb://platform-services-sb-playground.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=ZpCe3gv5YN1rPoMChwtAU97rn5fxRpcNX1MUXo9IV4E=");
+
+            services.UseRabbitMQ(o =>
+            {
+                o.HostName = "10.168.0.40";
+                o.VirtualHost = "/";
+                o.Port = 5672;
+                o.UserName = "testing";
+                o.Password = "testing";
+            });
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

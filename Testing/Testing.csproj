@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\src\DeltaWare.SDK.MessageBroker.RabbitMQ\DeltaWare.SDK.MessageBroker.RabbitMQ.csproj" />
     <ProjectReference Include="..\src\DeltaWare.SDK.MessageBroker.ServiceBus\DeltaWare.SDK.MessageBroker.ServiceBus.csproj" />
   </ItemGroup>
 

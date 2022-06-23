@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using DeltaWare.SDK.MessageBroker.Messages;
+﻿using DeltaWare.SDK.MessageBroker.Messages;
+using System.Threading.Tasks;
 
 namespace DeltaWare.SDK.MessageBroker.Broker
 {

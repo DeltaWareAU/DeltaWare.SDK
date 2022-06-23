@@ -13,6 +13,8 @@ namespace DeltaWare.SDK.MessageBroker.RabbitMQ.Broker
 
         private readonly IMessageHandlerBinding _binding;
 
+        public IModel Channel { get; set; }
+
         public HandlerBindingConsumer(IMessageHandlerManager messageHandlerManager, IMessageHandlerBinding binding)
         {
             _messageHandlerManager = messageHandlerManager;
@@ -27,7 +29,11 @@ namespace DeltaWare.SDK.MessageBroker.RabbitMQ.Broker
 
             if (results.WasSuccessful)
             {
-                Model.BasicAck(deliveryTag, false);
+                Channel.BasicAck(deliveryTag, false);
+            }
+            else
+            {
+                Channel.BasicNack(deliveryTag, false, results.Retry);
             }
         }
     }

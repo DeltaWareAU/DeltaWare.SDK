@@ -1,9 +1,7 @@
-﻿using DeltaWare.SDK.MessageBroker;
+﻿using DeltaWare.SDK.MessageBroker.Broker;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
-using DeltaWare.SDK.MessageBroker.Binding;
-using DeltaWare.SDK.MessageBroker.Broker;
 using Testing.Messages;
 
 namespace Testing.Controllers
@@ -32,6 +30,14 @@ namespace Testing.Controllers
 
         [HttpPost("SendMessage/Topic")]
         public async Task<IActionResult> SendDirectMessage([FromBody] SubscriptionMessage message)
+        {
+            await _messageBroker.PublishAsync(message);
+
+            return Ok();
+        }
+
+        [HttpPost("SendMessage/Topic/Alpha")]
+        public async Task<IActionResult> SendDirectMessage([FromBody] TopicMessage message)
         {
             await _messageBroker.PublishAsync(message);
 

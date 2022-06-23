@@ -1,11 +1,11 @@
-﻿using DeltaWare.SDK.MessageBroker.Messages;
+﻿using DeltaWare.SDK.MessageBroker.Binding;
+using DeltaWare.SDK.MessageBroker.Messages;
 using DeltaWare.SDK.MessageBroker.Messages.Serialization;
 using DeltaWare.SDK.MessageBroker.Processors.Results;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
-using DeltaWare.SDK.MessageBroker.Binding;
 
 namespace DeltaWare.SDK.MessageBroker.Processors
 {

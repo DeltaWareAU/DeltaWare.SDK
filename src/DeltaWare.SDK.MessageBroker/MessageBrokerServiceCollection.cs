@@ -1,5 +1,4 @@
-﻿using DeltaWare.SDK.MessageBroker;
-using DeltaWare.SDK.MessageBroker.Binding;
+﻿using DeltaWare.SDK.MessageBroker.Binding;
 using DeltaWare.SDK.MessageBroker.Broker;
 using DeltaWare.SDK.MessageBroker.Broker.Hosting;
 using DeltaWare.SDK.MessageBroker.Messages.Serialization;
