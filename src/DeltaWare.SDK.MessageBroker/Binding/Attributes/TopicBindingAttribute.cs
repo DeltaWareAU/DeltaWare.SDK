@@ -1,9 +1,9 @@
 ﻿using DeltaWare.SDK.Core.Validators;
-using DeltaWare.SDK.MessageBroker.Messages.Enums;
+using DeltaWare.SDK.MessageBroker.Binding.Enums;
 
-namespace DeltaWare.SDK.MessageBroker.Messages.Attributes
+namespace DeltaWare.SDK.MessageBroker.Binding.Attributes
 {
-    public class TopicBindingAttribute : MessageBrokerBindingAttributeBase
+    public class TopicBindingAttribute : MessageBrokerBindingAttribute
     {
         public TopicBindingAttribute(string name, string routingPattern) : base(name, BrokerExchangeType.Topic, routingPattern)
         {

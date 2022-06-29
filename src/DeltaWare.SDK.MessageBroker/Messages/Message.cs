@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace DeltaWare.SDK.MessageBroker.Messages
 {
-    public abstract record Message
+    public abstract class Message
     {
         protected Message()
         {

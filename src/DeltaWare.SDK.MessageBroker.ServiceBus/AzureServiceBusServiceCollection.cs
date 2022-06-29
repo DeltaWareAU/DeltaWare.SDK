@@ -1,21 +1,24 @@
-﻿using Azure.Messaging.ServiceBus;
-using DeltaWare.SDK.MessageBroker;
-using DeltaWare.SDK.MessageBroker.ServiceBus;
+﻿using DeltaWare.SDK.Core.Validators;
+using DeltaWare.SDK.MessageBroker.Broker;
+using DeltaWare.SDK.MessageBroker.ServiceBus.Broker;
+using DeltaWare.SDK.MessageBroker.ServiceBus.Options;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class AzureServiceBusServiceCollection
     {
-        public static IServiceCollection UseServiceBus(this IServiceCollection serviceCollection, string connectionString)
+        public static IServiceCollection UseAzureServiceBus(this IServiceCollection serviceCollection, string connectionString)
         {
-            serviceCollection.AddSingleton(new ServiceBusClient(connectionString));
+            StringValidator.ThrowOnNullOrWhitespace(connectionString, nameof(connectionString));
 
-            serviceCollection.UseMessageBroker();
-
-            serviceCollection.AddHostedService<ServiceBusMessageBrokerHost>();
-
-            serviceCollection.AddTransient<IMessageBroker, ServiceBusMessageBroker>();
+            serviceCollection
+                .AddSingleton<IServiceBusMessageBrokerOptions>(new ServiceBusMessageBrokerOptions
+                {
+                    ConnectionString = connectionString
+                })
+                .UseMessageBroker()
+                .AddSingleton<IMessageBroker, ServiceBusMessageBroker>();
 
             return serviceCollection;
         }
