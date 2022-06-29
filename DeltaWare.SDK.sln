@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.AutoMapper", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BDDE738C-4BBC-40B8-8EEB-EA4DDC9FBFFA}"
 	ProjectSection(SolutionItems) = preProject
+		LICENSE.md = LICENSE.md
 		nuget_logo.png = nuget_logo.png
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.AspNetCore", "src\DeltaWare.SDK.AspNetCore\DeltaWare.SDK.AspNetCore.csproj", "{17BB4373-1692-4F4B-A77F-BA0BE860A355}"
