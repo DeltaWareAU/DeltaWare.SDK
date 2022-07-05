@@ -6,7 +6,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Enums
     /// Indicates the current state of the CSV.
     /// </summary>
     [Flags]
-    public enum CsvState
+    internal enum CsvState
     {
         /// <summary>
         /// Indicates that the CSV field should not be written to the buffer.

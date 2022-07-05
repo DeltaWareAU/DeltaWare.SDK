@@ -9,33 +9,33 @@ using System.Reflection;
 
 namespace DeltaWare.SDK.Serialization.Csv.Header
 {
-    internal class HeaderHandler
+    internal class DefaultHeaderHandler : IHeaderHandler
     {
         private readonly IAttributeCache _attributeCache;
 
         private readonly IObjectSerializer _objectSerializer;
 
-        public HeaderHandler(IAttributeCache attributeCache, IObjectSerializer objectSerializer)
+        public DefaultHeaderHandler(IAttributeCache attributeCache, IObjectSerializer objectSerializer)
         {
             _attributeCache = attributeCache;
             _objectSerializer = objectSerializer;
         }
 
-        public string[] BuilderHeader(PropertyInfo[] properties)
+        public string[] GetHeaderNames(PropertyInfo[] indexedProperties)
         {
-            string[] headers = new string[properties.Length];
+            string[] headers = new string[indexedProperties.Length];
 
             for (int i = 0; i < headers.Length; i++)
             {
                 string header;
 
-                if (_attributeCache.TryGetAttribute(properties[i], out ColumnHeaderAttribute columnHeader))
+                if (_attributeCache.TryGetAttribute(indexedProperties[i], out ColumnHeaderAttribute columnHeader))
                 {
                     header = columnHeader.HeaderName;
                 }
                 else
                 {
-                    header = properties[i].Name;
+                    header = indexedProperties[i].Name;
                 }
 
                 headers[i] = header;
@@ -60,7 +60,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Header
             return indexedProperties;
         }
 
-        public PropertyInfo[] GetOrderedProperties(Type type)
+        public PropertyInfo[] GetIndexedProperties(Type type)
         {
             List<PropertyInfo> properties = new();
 

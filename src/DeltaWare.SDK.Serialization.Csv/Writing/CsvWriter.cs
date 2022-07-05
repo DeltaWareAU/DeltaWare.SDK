@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DeltaWare.SDK.Serialization.Csv.Writing
 {
-    public sealed class CsvWriter : IDisposable
+    public sealed class CsvWriter : ICsvWriter, IDisposable
     {
         private readonly StreamWriter _baseStream;
 
@@ -17,9 +17,13 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
         /// <inheritdoc cref="StreamWriter.BaseStream"/>>
         public StreamWriter BaseStream => _baseStream;
 
-        public CsvWriter(StreamWriter baseStream)
+        public WriteMode Mode { get; }
+
+        public CsvWriter(StreamWriter baseStream, WriteMode mode = WriteMode.Default)
         {
             _baseStream = baseStream;
+
+            Mode = mode;
         }
 
         public void Dispose()
@@ -80,17 +84,17 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
             _state = CsvState.EndOfFile;
         }
 
-        public async Task WriteAsync(string field, FieldType type = FieldType.Field)
+        public async Task WriteAsync(string field, WriteOperation type = WriteOperation.Field)
         {
             field = EncapsulateField(field);
 
             switch (type)
             {
-                case FieldType.Field:
+                case WriteOperation.Field:
                     await _baseStream.WriteAsync($"{field},");
                     break;
 
-                case FieldType.EndField:
+                case WriteOperation.TerminateLine:
                     await _baseStream.WriteLineAsync($"{field}");
                     break;
 
@@ -103,13 +107,16 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
         {
             _lineNumber++;
 
-            if (_expectedRowCount == -1)
+            if (Mode == WriteMode.Default)
             {
-                _expectedRowCount = line.Length;
-            }
-            else if (_expectedRowCount != line.Length)
-            {
-                throw InvalidCsvDataException.InvalidColumnCount(_lineNumber, _expectedRowCount, line.Length);
+                if (_expectedRowCount == -1)
+                {
+                    _expectedRowCount = line.Length;
+                }
+                else if (_expectedRowCount != line.Length)
+                {
+                    throw InvalidCsvDataException.InvalidColumnCount(_lineNumber, _expectedRowCount, line.Length);
+                }
             }
 
             for (int i = 0; i < line.Length; i++)
@@ -120,7 +127,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
                 }
                 else
                 {
-                    await WriteAsync(line[i], FieldType.EndField);
+                    await WriteAsync(line[i], WriteOperation.TerminateLine);
                 }
             }
         }
@@ -129,17 +136,17 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
 
         #region Sync Methods
 
-        public void Write(string field, FieldType type = FieldType.Field)
+        public void Write(string field, WriteOperation type = WriteOperation.Field)
         {
             field = EncapsulateField(field);
 
             switch (type)
             {
-                case FieldType.Field:
+                case WriteOperation.Field:
                     _baseStream.Write($"{field},");
                     break;
 
-                case FieldType.EndField:
+                case WriteOperation.TerminateLine:
                     _baseStream.WriteLine($"{field}");
                     break;
 
@@ -167,13 +174,16 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
         {
             _lineNumber++;
 
-            if (_expectedRowCount == -1)
+            if (Mode == WriteMode.Default)
             {
-                _expectedRowCount = line.Length;
-            }
-            else if (_expectedRowCount != line.Length)
-            {
-                throw InvalidCsvDataException.InvalidColumnCount(_lineNumber, _expectedRowCount, line.Length);
+                if (_expectedRowCount == -1)
+                {
+                    _expectedRowCount = line.Length;
+                }
+                else if (_expectedRowCount != line.Length)
+                {
+                    throw InvalidCsvDataException.InvalidColumnCount(_lineNumber, _expectedRowCount, line.Length);
+                }
             }
 
             for (int i = 0; i < line.Length; i++)
@@ -184,7 +194,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
                 }
                 else
                 {
-                    Write(line[i], FieldType.EndField);
+                    Write(line[i], WriteOperation.TerminateLine);
                 }
             }
         }

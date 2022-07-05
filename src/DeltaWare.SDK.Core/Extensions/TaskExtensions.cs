@@ -28,5 +28,12 @@ namespace System.Threading.Tasks
 
             return (TDestination)source;
         }
+
+        public static async Task<TDestination> CastAsync<TDestination>(this Task<object> task)
+        {
+            object source = await task;
+
+            return (TDestination)source;
+        }
     }
 }

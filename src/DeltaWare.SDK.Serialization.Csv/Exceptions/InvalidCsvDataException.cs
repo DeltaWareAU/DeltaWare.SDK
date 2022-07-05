@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DeltaWare.SDK.Serialization.Csv.Writing;
+using System;
 
 namespace DeltaWare.SDK.Serialization.Csv.Exceptions
 {
@@ -30,7 +31,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Exceptions
 
         public static InvalidCsvDataException InvalidColumnCount(int lineNumber, int expected, int actual)
         {
-            return new InvalidCsvDataException(lineNumber, 0, $"The current line has an invalid row count. Expected: {expected}, found: {actual}");
+            return new InvalidCsvDataException(lineNumber, 0, $"The current line has an invalid row count. Expected: {expected}, found: {actual} - If you're attempting to write a Record Type CSV ensure to set the {nameof(CsvWriter)} to the mode to {nameof(WriteMode.Record)} during instantiation.");
         }
     }
 }

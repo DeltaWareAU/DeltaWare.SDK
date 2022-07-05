@@ -6,9 +6,12 @@ namespace System.Collections.Generic
 {
     public static class ListExtensions
     {
-        public static bool IsEmpty(this IList value)
+        public static void AddRange(this IList list, IEnumerable enumerable)
         {
-            return value.Count == 0;
+            foreach (object value in enumerable)
+            {
+                list.Add(value);
+            }
         }
 
         /// <summary>
