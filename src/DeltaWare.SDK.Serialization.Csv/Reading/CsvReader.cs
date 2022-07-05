@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DeltaWare.SDK.Serialization.Csv.Reading
 {
-    public sealed class CsvReader : IDisposable
+    public sealed class CsvReader : ICsvReader, IDisposable
     {
         private readonly StreamReader _baseStream;
         private readonly ICsvReaderSettings _readerSettings;

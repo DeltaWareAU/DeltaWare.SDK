@@ -1,9 +1,9 @@
-﻿namespace DeltaWare.SDK.Serialization.Csv.Enums
+﻿namespace DeltaWare.SDK.Serialization.Csv.Writing
 {
     /// <summary>
     /// Indicates the Field Type.
     /// </summary>
-    public enum FieldType
+    public enum WriteMode
     {
         /// <summary>
         /// Normal Field.
@@ -11,9 +11,9 @@
         /// <remarks>Any field that is not the last field for the current line.</remarks>
         Field,
         /// <summary>
-        /// End Field.
+        /// Terminate the current Line.
         /// </summary>
         /// <remarks>The last field for the current line.</remarks>
-        EndField,
+        TerminateLine,
     }
 }

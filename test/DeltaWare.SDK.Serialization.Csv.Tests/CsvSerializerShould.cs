@@ -68,7 +68,104 @@ namespace DeltaWare.SDK.Serialization.Csv.Tests
 
             recordContainer.Transactions[1].TransactionId.ShouldBe("3482739487");
             recordContainer.Transactions[1].Paid.ShouldBe(false);
+        }
 
+        [Fact]
+        public async Task SerializeRecordContainerAsync()
+        {
+            CsvSerializer serializer = new();
+
+            RecordContainer recordContainer;
+
+            await _textRecordFileSemaphore.WaitAsync();
+
+            try
+            {
+                using (Stream stream = new FileStream("./_Data/TEST.Records.csv", FileMode.Open))
+                {
+                    recordContainer = await serializer.DeserializeRecordsAsync<RecordContainer>(stream);
+                }
+            }
+            finally
+            {
+                _textRecordFileSemaphore.Release();
+            }
+
+            recordContainer.Users.Count.ShouldBe(3);
+            recordContainer.Orders.Count.ShouldBe(2);
+            recordContainer.Transactions.Count.ShouldBe(2);
+            recordContainer.Products.Count.ShouldBe(0);
+
+            recordContainer.Users[0].Id.ShouldBe(5);
+            recordContainer.Users[0].FirstName.ShouldBe("John");
+            recordContainer.Users[0].LastName.ShouldBe("Doe");
+            recordContainer.Users[0].BirthDate.ShouldBe(new DateTime(1970, 04, 24));
+
+            recordContainer.Users[1].Id.ShouldBe(172);
+            recordContainer.Users[1].FirstName.ShouldBe("Debra");
+            recordContainer.Users[1].LastName.ShouldBe("Thompson");
+            recordContainer.Users[1].BirthDate.ShouldBeNull();
+
+            recordContainer.Users[2].Id.ShouldBe(59);
+            recordContainer.Users[2].FirstName.ShouldBe("Grant");
+            recordContainer.Users[2].LastName.ShouldBe("Burk");
+            recordContainer.Users[2].BirthDate.ShouldBe(new DateTime(1985, 11, 15));
+
+            recordContainer.Orders[0].OrderId.ShouldBe(new Guid("A95A067E-A77C-43FE-BAFF-211725608AA7"));
+            recordContainer.Orders[0].Date.ShouldBe(new DateTime(2020, 07, 24));
+            recordContainer.Orders[0].Amount.ShouldBe(516);
+
+            recordContainer.Orders[1].OrderId.ShouldBe(new Guid("5B24142F-B003-4CF2-81E8-E036D9A0E3A1"));
+            recordContainer.Orders[1].Date.ShouldBe(new DateTime(2021, 01, 15));
+            recordContainer.Orders[1].Amount.ShouldBe(12572.15m);
+
+            recordContainer.Transactions[0].TransactionId.ShouldBe("553245234");
+            recordContainer.Transactions[0].Paid.ShouldBe(true);
+
+            recordContainer.Transactions[1].TransactionId.ShouldBe("3482739487");
+            recordContainer.Transactions[1].Paid.ShouldBe(false);
+
+            Stream memoryStream = new MemoryStream();
+
+            await serializer.SerializeRecordAsync(recordContainer, memoryStream);
+
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            recordContainer = await serializer.DeserializeRecordsAsync<RecordContainer>(memoryStream);
+
+            recordContainer.Users.Count.ShouldBe(3);
+            recordContainer.Orders.Count.ShouldBe(2);
+            recordContainer.Transactions.Count.ShouldBe(2);
+            recordContainer.Products.Count.ShouldBe(0);
+
+            recordContainer.Users[0].Id.ShouldBe(5);
+            recordContainer.Users[0].FirstName.ShouldBe("John");
+            recordContainer.Users[0].LastName.ShouldBe("Doe");
+            recordContainer.Users[0].BirthDate.ShouldBe(new DateTime(1970, 04, 24));
+
+            recordContainer.Users[1].Id.ShouldBe(172);
+            recordContainer.Users[1].FirstName.ShouldBe("Debra");
+            recordContainer.Users[1].LastName.ShouldBe("Thompson");
+            recordContainer.Users[1].BirthDate.ShouldBeNull();
+
+            recordContainer.Users[2].Id.ShouldBe(59);
+            recordContainer.Users[2].FirstName.ShouldBe("Grant");
+            recordContainer.Users[2].LastName.ShouldBe("Burk");
+            recordContainer.Users[2].BirthDate.ShouldBe(new DateTime(1985, 11, 15));
+
+            recordContainer.Orders[0].OrderId.ShouldBe(new Guid("A95A067E-A77C-43FE-BAFF-211725608AA7"));
+            recordContainer.Orders[0].Date.ShouldBe(new DateTime(2020, 07, 24));
+            recordContainer.Orders[0].Amount.ShouldBe(516);
+
+            recordContainer.Orders[1].OrderId.ShouldBe(new Guid("5B24142F-B003-4CF2-81E8-E036D9A0E3A1"));
+            recordContainer.Orders[1].Date.ShouldBe(new DateTime(2021, 01, 15));
+            recordContainer.Orders[1].Amount.ShouldBe(12572.15m);
+
+            recordContainer.Transactions[0].TransactionId.ShouldBe("553245234");
+            recordContainer.Transactions[0].Paid.ShouldBe(true);
+
+            recordContainer.Transactions[1].TransactionId.ShouldBe("3482739487");
+            recordContainer.Transactions[1].Paid.ShouldBe(false);
         }
 
         [Fact]
@@ -148,6 +245,117 @@ namespace DeltaWare.SDK.Serialization.Csv.Tests
             {
                 _textRecordFileSemaphore.Release();
             }
+
+            records.Count.ShouldBe(7);
+
+            records[0].GetType().ShouldBe(typeof(UserRecord));
+            ((UserRecord)records[0]).Id.ShouldBe(5);
+            ((UserRecord)records[0]).FirstName.ShouldBe("John");
+            ((UserRecord)records[0]).LastName.ShouldBe("Doe");
+            ((UserRecord)records[0]).BirthDate.ShouldBe(new DateTime(1970, 04, 24));
+
+            records[1].GetType().ShouldBe(typeof(UserRecord));
+            ((UserRecord)records[1]).Id.ShouldBe(172);
+            ((UserRecord)records[1]).FirstName.ShouldBe("Debra");
+            ((UserRecord)records[1]).LastName.ShouldBe("Thompson");
+            ((UserRecord)records[1]).BirthDate.ShouldBeNull();
+
+            records[5].GetType().ShouldBe(typeof(UserRecord));
+            ((UserRecord)records[5]).Id.ShouldBe(59);
+            ((UserRecord)records[5]).FirstName.ShouldBe("Grant");
+            ((UserRecord)records[5]).LastName.ShouldBe("Burk");
+            ((UserRecord)records[5]).BirthDate.ShouldBe(new DateTime(1985, 11, 15));
+
+
+            records[2].GetType().ShouldBe(typeof(OrderRecord));
+            ((OrderRecord)records[2]).OrderId.ShouldBe(new Guid("A95A067E-A77C-43FE-BAFF-211725608AA7"));
+            ((OrderRecord)records[2]).Date.ShouldBe(new DateTime(2020, 07, 24));
+            ((OrderRecord)records[2]).Amount.ShouldBe(516);
+
+            records[4].GetType().ShouldBe(typeof(OrderRecord));
+            ((OrderRecord)records[4]).OrderId.ShouldBe(new Guid("5B24142F-B003-4CF2-81E8-E036D9A0E3A1"));
+            ((OrderRecord)records[4]).Date.ShouldBe(new DateTime(2021, 01, 15));
+            ((OrderRecord)records[4]).Amount.ShouldBe(12572.15m);
+
+
+            records[3].GetType().ShouldBe(typeof(TransactionRecord));
+            ((TransactionRecord)records[3]).TransactionId.ShouldBe("553245234");
+            ((TransactionRecord)records[3]).Paid.ShouldBe(true);
+
+            records[6].GetType().ShouldBe(typeof(TransactionRecord));
+            ((TransactionRecord)records[6]).TransactionId.ShouldBe("3482739487");
+            ((TransactionRecord)records[6]).Paid.ShouldBe(false);
+
+        }
+
+        [Fact]
+        public async Task SerializeRecordsAsync()
+        {
+            CsvSerializer serializer = new();
+
+            List<object> records;
+
+            await _textRecordFileSemaphore.WaitAsync();
+
+            try
+            {
+                await using (Stream stream = new FileStream("./_Data/TEST.Records.csv", FileMode.Open))
+                {
+                    records = await serializer.DeserializeRecordsAsync(stream, typeof(UserRecord), typeof(OrderRecord), typeof(TransactionRecord)).ToListAsync();
+                }
+            }
+            finally
+            {
+                _textRecordFileSemaphore.Release();
+            }
+
+            records.Count.ShouldBe(7);
+
+            records[0].GetType().ShouldBe(typeof(UserRecord));
+            ((UserRecord)records[0]).Id.ShouldBe(5);
+            ((UserRecord)records[0]).FirstName.ShouldBe("John");
+            ((UserRecord)records[0]).LastName.ShouldBe("Doe");
+            ((UserRecord)records[0]).BirthDate.ShouldBe(new DateTime(1970, 04, 24));
+
+            records[1].GetType().ShouldBe(typeof(UserRecord));
+            ((UserRecord)records[1]).Id.ShouldBe(172);
+            ((UserRecord)records[1]).FirstName.ShouldBe("Debra");
+            ((UserRecord)records[1]).LastName.ShouldBe("Thompson");
+            ((UserRecord)records[1]).BirthDate.ShouldBeNull();
+
+            records[5].GetType().ShouldBe(typeof(UserRecord));
+            ((UserRecord)records[5]).Id.ShouldBe(59);
+            ((UserRecord)records[5]).FirstName.ShouldBe("Grant");
+            ((UserRecord)records[5]).LastName.ShouldBe("Burk");
+            ((UserRecord)records[5]).BirthDate.ShouldBe(new DateTime(1985, 11, 15));
+
+
+            records[2].GetType().ShouldBe(typeof(OrderRecord));
+            ((OrderRecord)records[2]).OrderId.ShouldBe(new Guid("A95A067E-A77C-43FE-BAFF-211725608AA7"));
+            ((OrderRecord)records[2]).Date.ShouldBe(new DateTime(2020, 07, 24));
+            ((OrderRecord)records[2]).Amount.ShouldBe(516);
+
+            records[4].GetType().ShouldBe(typeof(OrderRecord));
+            ((OrderRecord)records[4]).OrderId.ShouldBe(new Guid("5B24142F-B003-4CF2-81E8-E036D9A0E3A1"));
+            ((OrderRecord)records[4]).Date.ShouldBe(new DateTime(2021, 01, 15));
+            ((OrderRecord)records[4]).Amount.ShouldBe(12572.15m);
+
+
+            records[3].GetType().ShouldBe(typeof(TransactionRecord));
+            ((TransactionRecord)records[3]).TransactionId.ShouldBe("553245234");
+            ((TransactionRecord)records[3]).Paid.ShouldBe(true);
+
+            records[6].GetType().ShouldBe(typeof(TransactionRecord));
+            ((TransactionRecord)records[6]).TransactionId.ShouldBe("3482739487");
+            ((TransactionRecord)records[6]).Paid.ShouldBe(false);
+
+            Stream memoryStream = new MemoryStream();
+
+            await serializer.SerializeRecordAsync(records, memoryStream);
+
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            records = await serializer.DeserializeRecordsAsync(memoryStream, typeof(UserRecord), typeof(OrderRecord), typeof(TransactionRecord)).ToListAsync();
 
             records.Count.ShouldBe(7);
 

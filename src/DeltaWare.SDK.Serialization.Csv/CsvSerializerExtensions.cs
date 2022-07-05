@@ -1,4 +1,5 @@
-﻿using DeltaWare.SDK.Serialization.Csv.Exceptions;
+﻿using DeltaWare.SDK.Serialization.Csv.Enums;
+using DeltaWare.SDK.Serialization.Csv.Exceptions;
 using DeltaWare.SDK.Serialization.Csv.Reading;
 using DeltaWare.SDK.Serialization.Csv.Writing;
 using System;
@@ -11,83 +12,151 @@ namespace DeltaWare.SDK.Serialization.Csv
 {
     public static class CsvSerializerExtensions
     {
-        #region Records
+        #region Record Deserialization
 
-        public static Task<TContainerSchema> DeserializeRecordsAsync<TContainerSchema>(this ICsvSerializer serializer, string value) where TContainerSchema : class
+        public static Task<TContainer> DeserializeRecordsAsync<TContainer>(this ICsvSerializer serializer, string value) where TContainer : class
         {
             using CsvReader csvReader = new CsvReader(value);
 
-            return serializer.DeserializeRecordsAsync(csvReader, typeof(TContainerSchema)).CastAsync<TContainerSchema>();
+            return serializer.DeserializeRecordsAsync(csvReader, typeof(TContainer)).CastAsync<TContainer>();
         }
 
-        public static Task<TContainerSchema> DeserializeRecordsAsync<TContainerSchema>(this CsvSerializer serializer, string value) where TContainerSchema : class
+        public static TContainer DeserializeRecords<TContainer>(this ICsvSerializer serializer, string value) where TContainer : class
         {
-            return DeserializeRecordsAsync<TContainerSchema>((ICsvSerializer)serializer, value);
+            using CsvReader csvReader = new CsvReader(value);
+
+            return (TContainer)serializer.DeserializeRecords(csvReader, typeof(TContainer));
         }
 
-        public static Task<TContainerSchema> DeserializeRecordsAsync<TContainerSchema>(this ICsvSerializer serializer, Stream stream) where TContainerSchema : class
+        public static Task<TContainer> DeserializeRecordsAsync<TContainer>(this CsvSerializer serializer, string value) where TContainer : class
+        {
+            return DeserializeRecordsAsync<TContainer>((ICsvSerializer)serializer, value);
+        }
+
+        public static TContainer DeserializeRecords<TContainer>(this CsvSerializer serializer, string value) where TContainer : class
+        {
+            return DeserializeRecords<TContainer>((ICsvSerializer)serializer, value);
+        }
+
+        public static Task<TContainer> DeserializeRecordsAsync<TContainer>(this ICsvSerializer serializer, Stream stream) where TContainer : class
         {
             StreamReader reader = new StreamReader(stream);
 
-            CsvReader csvReader = new CsvReader(reader);
+            ICsvReader csvReader = new CsvReader(reader);
 
-            return serializer.DeserializeRecordsAsync(csvReader, typeof(TContainerSchema)).CastAsync<TContainerSchema>();
+            return serializer.DeserializeRecordsAsync(csvReader, typeof(TContainer)).CastAsync<TContainer>();
         }
 
-        public static Task<TContainerSchema> DeserializeRecordsAsync<TContainerSchema>(this CsvSerializer serializer, Stream stream) where TContainerSchema : class
+        public static TContainer DeserializeRecords<TContainer>(this ICsvSerializer serializer, Stream stream) where TContainer : class
         {
-            return DeserializeRecordsAsync<TContainerSchema>((ICsvSerializer)serializer, stream);
+            StreamReader reader = new StreamReader(stream);
+
+            ICsvReader csvReader = new CsvReader(reader);
+
+            return (TContainer)serializer.DeserializeRecords(csvReader, typeof(TContainer));
         }
 
-        public static Task<TContainerSchema> DeserializeRecordsAsync<TContainerSchema>(this ICsvSerializer serializer, CsvReader reader) where TContainerSchema : class
+        public static Task<TContainer> DeserializeRecordsAsync<TContainer>(this CsvSerializer serializer, Stream stream) where TContainer : class
         {
-            return serializer.DeserializeRecordsAsync(reader, typeof(TContainerSchema)).CastAsync<TContainerSchema>();
+            return DeserializeRecordsAsync<TContainer>((ICsvSerializer)serializer, stream);
         }
 
-        public static Task<TContainerSchema> DeserializeRecordsAsync<TContainerSchema>(this CsvSerializer serializer, CsvReader reader) where TContainerSchema : class
+        public static TContainer DeserializeRecords<TContainer>(this CsvSerializer serializer, Stream stream) where TContainer : class
         {
-            return DeserializeRecordsAsync<TContainerSchema>((ICsvSerializer)serializer, reader);
+            return DeserializeRecords<TContainer>((ICsvSerializer)serializer, stream);
         }
 
-        // -------------
+        public static Task<TContainer> DeserializeRecordsAsync<TContainer>(this ICsvSerializer serializer, ICsvReader reader) where TContainer : class
+        {
+            return serializer.DeserializeRecordsAsync(reader, typeof(TContainer)).CastAsync<TContainer>();
+        }
 
-        public static Task DeserializeRecordsAsync<TContainerSchema>(this ICsvSerializer serializer, string value, TContainerSchema container) where TContainerSchema : class
+        public static TContainer DeserializeRecords<TContainer>(this ICsvSerializer serializer, ICsvReader reader) where TContainer : class
+        {
+            return (TContainer)serializer.DeserializeRecords(reader, typeof(TContainer));
+        }
+
+        public static Task<TContainer> DeserializeRecordsAsync<TContainer>(this CsvSerializer serializer, ICsvReader reader) where TContainer : class
+        {
+            return DeserializeRecordsAsync<TContainer>((ICsvSerializer)serializer, reader);
+        }
+
+        public static TContainer DeserializeRecords<TContainer>(this CsvSerializer serializer, ICsvReader reader) where TContainer : class
+        {
+            return DeserializeRecords<TContainer>((ICsvSerializer)serializer, reader);
+        }
+
+        public static Task DeserializeRecordsAsync<TContainer>(this ICsvSerializer serializer, string value, TContainer container) where TContainer : class
         {
             using CsvReader csvReader = new CsvReader(value);
 
             return serializer.DeserializeRecordsAsync(csvReader, container);
         }
 
-        public static Task DeserializeRecordsAsync<TContainerSchema>(this CsvSerializer serializer, string value, TContainerSchema container) where TContainerSchema : class
+        public static void DeserializeRecords<TContainer>(this ICsvSerializer serializer, string value, TContainer container) where TContainer : class
         {
-            return DeserializeRecordsAsync<TContainerSchema>((ICsvSerializer)serializer, value);
+            using CsvReader csvReader = new CsvReader(value);
+
+            serializer.DeserializeRecords(csvReader, container);
         }
 
-        public static Task DeserializeRecordsAsync<TContainerSchema>(this ICsvSerializer serializer, Stream stream, TContainerSchema container) where TContainerSchema : class
+        public static Task DeserializeRecordsAsync<TContainer>(this CsvSerializer serializer, string value, TContainer container) where TContainer : class
+        {
+            return DeserializeRecordsAsync<TContainer>((ICsvSerializer)serializer, value);
+        }
+
+        public static void DeserializeRecords<TContainer>(this CsvSerializer serializer, string value, TContainer container) where TContainer : class
+        {
+            DeserializeRecords<TContainer>((ICsvSerializer)serializer, value);
+        }
+
+        public static Task DeserializeRecordsAsync<TContainer>(this ICsvSerializer serializer, Stream stream, TContainer container) where TContainer : class
         {
             StreamReader reader = new StreamReader(stream);
 
-            CsvReader csvReader = new CsvReader(reader);
+            ICsvReader csvReader = new CsvReader(reader);
 
             return serializer.DeserializeRecordsAsync(csvReader, container);
         }
 
-        public static Task DeserializeRecordsAsync<TContainerSchema>(this CsvSerializer serializer, Stream stream, TContainerSchema container) where TContainerSchema : class
+        public static void DeserializeRecords<TContainer>(this ICsvSerializer serializer, Stream stream, TContainer container) where TContainer : class
+        {
+            StreamReader reader = new StreamReader(stream);
+
+            ICsvReader csvReader = new CsvReader(reader);
+
+            serializer.DeserializeRecords(csvReader, container);
+        }
+
+        public static Task DeserializeRecordsAsync<TContainer>(this CsvSerializer serializer, Stream stream, TContainer container) where TContainer : class
         {
             return DeserializeRecordsAsync((ICsvSerializer)serializer, stream, container);
         }
 
-        public static Task DeserializeRecordsAsync<TContainerSchema>(this ICsvSerializer serializer, CsvReader reader, TContainerSchema container) where TContainerSchema : class
+        public static void DeserializeRecords<TContainer>(this CsvSerializer serializer, Stream stream, TContainer container) where TContainer : class
+        {
+            DeserializeRecords((ICsvSerializer)serializer, stream, container);
+        }
+
+        public static Task DeserializeRecordsAsync<TContainer>(this ICsvSerializer serializer, ICsvReader reader, TContainer container) where TContainer : class
         {
             return serializer.DeserializeRecordsAsync(reader, container);
         }
 
-        public static Task DeserializeRecordsAsync<TContainerSchema>(this CsvSerializer serializer, CsvReader reader, TContainerSchema container) where TContainerSchema : class
+        public static void DeserializeRecords<TContainer>(this ICsvSerializer serializer, ICsvReader reader, TContainer container) where TContainer : class
+        {
+            serializer.DeserializeRecords(reader, container);
+        }
+
+        public static Task DeserializeRecordsAsync<TContainer>(this CsvSerializer serializer, ICsvReader reader, TContainer container) where TContainer : class
         {
             return DeserializeRecordsAsync((ICsvSerializer)serializer, reader, container);
         }
 
-        // -------------
+        public static void DeserializeRecords<TContainer>(this CsvSerializer serializer, ICsvReader reader, TContainer container) where TContainer : class
+        {
+            DeserializeRecords((ICsvSerializer)serializer, reader, container);
+        }
 
         public static Task<IEnumerable<object>> DeserializeRecordsAsync(this ICsvSerializer serializer, string value, params Type[] recordTypes)
         {
@@ -96,18 +165,39 @@ namespace DeltaWare.SDK.Serialization.Csv
             return serializer.DeserializeRecordsAsync(csvReader, recordTypes);
         }
 
+        public static IEnumerable<object> DeserializeRecords(this ICsvSerializer serializer, string value, params Type[] recordTypes)
+        {
+            using CsvReader csvReader = new CsvReader(value);
+
+            return serializer.DeserializeRecords(csvReader, recordTypes);
+        }
+
         public static Task<IEnumerable<object>> DeserializeRecordsAsync(this CsvSerializer serializer, string value, params Type[] recordTypes)
         {
             return DeserializeRecordsAsync((ICsvSerializer)serializer, value, recordTypes);
+        }
+
+        public static IEnumerable<object> DeserializeRecords(this CsvSerializer serializer, string value, params Type[] recordTypes)
+        {
+            return DeserializeRecords((ICsvSerializer)serializer, value, recordTypes);
         }
 
         public static Task<IEnumerable<object>> DeserializeRecordsAsync(this ICsvSerializer serializer, Stream stream, params Type[] recordTypes)
         {
             StreamReader reader = new StreamReader(stream);
 
-            CsvReader csvReader = new CsvReader(reader);
+            ICsvReader csvReader = new CsvReader(reader);
 
             return serializer.DeserializeRecordsAsync(csvReader, recordTypes);
+        }
+
+        public static IEnumerable<object> DeserializeRecords(this ICsvSerializer serializer, Stream stream, params Type[] recordTypes)
+        {
+            StreamReader reader = new StreamReader(stream);
+
+            ICsvReader csvReader = new CsvReader(reader);
+
+            return serializer.DeserializeRecords(csvReader, recordTypes);
         }
 
         public static Task<IEnumerable<object>> DeserializeRecordsAsync(this CsvSerializer serializer, Stream stream, params Type[] recordTypes)
@@ -115,9 +205,124 @@ namespace DeltaWare.SDK.Serialization.Csv
             return DeserializeRecordsAsync((ICsvSerializer)serializer, stream, recordTypes);
         }
 
+        public static IEnumerable<object> DeserializeRecords(this CsvSerializer serializer, Stream stream, params Type[] recordTypes)
+        {
+            return DeserializeRecords((ICsvSerializer)serializer, stream, recordTypes);
+        }
+
         #endregion
 
+        #region Record Serialziation
 
+        public static async Task<string> SerializeRecordAsync(this ICsvSerializer serializer, IEnumerable<object> lines)
+        {
+            await using Stream stream = new MemoryStream();
+
+            StreamWriter writer = new(stream);
+
+            ICsvWriter csvWriter = new CsvWriter(writer, CsvType.Record);
+
+            await serializer.SerializeRecordAsync(lines, csvWriter);
+
+            stream.Seek(0, SeekOrigin.Begin);
+
+            StreamReader reader = new(stream);
+
+            return await reader.ReadToEndAsync();
+        }
+
+        public static Task<string> SerializeRecordAsync(this CsvSerializer serializer, IEnumerable<object> lines)
+        {
+            return SerializeRecordAsync((ICsvSerializer)serializer, lines);
+        }
+
+        public static Task SerializeRecordAsync(this ICsvSerializer serializer, IEnumerable<object> lines, Stream stream)
+        {
+            StreamWriter writer = new(stream);
+
+            ICsvWriter csvWriter = new CsvWriter(writer, CsvType.Record);
+
+            return serializer.SerializeRecordAsync(lines, csvWriter);
+        }
+
+        public static Task SerializeRecordAsync(this CsvSerializer serializer, IEnumerable<object> lines, Stream stream)
+        {
+            return SerializeRecordAsync((ICsvSerializer)serializer, lines, stream);
+        }
+
+        public static async Task<string> SerializeRecordAsync(this ICsvSerializer serializer, object container)
+        {
+            await using Stream stream = new MemoryStream();
+
+            StreamWriter writer = new(stream);
+
+            ICsvWriter csvWriter = new CsvWriter(writer, CsvType.Record);
+
+            await serializer.SerializeRecordAsync(container, csvWriter);
+
+            stream.Seek(0, SeekOrigin.Begin);
+
+            StreamReader reader = new(stream);
+
+            return await reader.ReadToEndAsync();
+        }
+
+        public static Task<string> SerializeRecordAsync(this CsvSerializer serializer, object container)
+        {
+            return SerializeRecordAsync((ICsvSerializer)serializer, container);
+        }
+
+        public static Task SerializeRecordAsync(this ICsvSerializer serializer, object container, Stream stream)
+        {
+            StreamWriter writer = new(stream);
+
+            ICsvWriter csvWriter = new CsvWriter(writer, CsvType.Record);
+
+            return serializer.SerializeRecordAsync(container, csvWriter);
+        }
+
+        public static Task SerializeRecordAsync(this CsvSerializer serializer, object container, Stream stream)
+        {
+            return SerializeRecordAsync((ICsvSerializer)serializer, container, stream);
+        }
+
+        public static string SerializeRecord(this ICsvSerializer serializer, IEnumerable<object> lines)
+        {
+            using Stream stream = new MemoryStream();
+
+            StreamWriter writer = new(stream);
+
+            ICsvWriter csvWriter = new CsvWriter(writer, CsvType.Record);
+
+            serializer.SerializeRecord(lines, csvWriter);
+
+            stream.Seek(0, SeekOrigin.Begin);
+
+            StreamReader reader = new(stream);
+
+            return reader.ReadToEnd();
+        }
+
+        public static string SerializeRecord(this CsvSerializer serializer, IEnumerable<object> lines)
+        {
+            return SerializeRecord((ICsvSerializer)serializer, lines);
+        }
+
+        public static void SerializeRecord(this ICsvSerializer serializer, IEnumerable<object> lines, Stream stream)
+        {
+            StreamWriter writer = new(stream);
+
+            ICsvWriter csvWriter = new CsvWriter(writer, CsvType.Record);
+
+            serializer.SerializeRecord(lines, csvWriter);
+        }
+
+        public static void SerializeRecord(this CsvSerializer serializer, IEnumerable<object> lines, Stream stream)
+        {
+            SerializeRecord((ICsvSerializer)serializer, lines, stream);
+        }
+
+        #endregion
 
         /// <summary>
         /// Deserializes the CSV data into the specified <see cref="Type"/>.
@@ -160,7 +365,7 @@ namespace DeltaWare.SDK.Serialization.Csv
         /// <exception cref="InvalidCsvDataException">Thrown when the Csv Data is invalid.</exception>
         public static Task<IEnumerable<TSchema>> DeserializeAsync<TSchema>(this ICsvSerializer serializer, string value, bool hasHeaders = true) where TSchema : class
         {
-            using CsvReader csvReader = new(value);
+            using CsvReader csvReader = new CsvReader(value);
 
             return serializer.DeserializeAsync(csvReader, typeof(TSchema), hasHeaders).CastAsync<TSchema>();
         }
@@ -192,7 +397,7 @@ namespace DeltaWare.SDK.Serialization.Csv
         {
             StreamReader reader = new StreamReader(stream);
 
-            CsvReader csvReader = new CsvReader(reader);
+            ICsvReader csvReader = new CsvReader(reader);
 
             return serializer.Deserialize(csvReader, typeof(TSchema), hasHeaders).Cast<TSchema>();
         }
@@ -224,7 +429,7 @@ namespace DeltaWare.SDK.Serialization.Csv
         {
             StreamReader reader = new(stream);
 
-            CsvReader csvReader = new(reader);
+            ICsvReader csvReader = new CsvReader(reader);
 
             return serializer.DeserializeAsync(csvReader, typeof(TSchema), hasHeaders).CastAsync<TSchema>();
         }
@@ -252,7 +457,7 @@ namespace DeltaWare.SDK.Serialization.Csv
         /// <returns>Returns the deserialized data or an empty <see cref="IEnumerable{T}"/> if no data was present.</returns>
         /// <exception cref="CsvSchemaException">Thrown when the Csv Schema is invalid.</exception>
         /// <exception cref="InvalidCsvDataException">Thrown when the Csv Data is invalid.</exception>
-        public static IEnumerable<TSchema> Deserialize<TSchema>(this ICsvSerializer serializer, CsvReader reader, bool hasHeaders = true) where TSchema : class
+        public static IEnumerable<TSchema> Deserialize<TSchema>(this ICsvSerializer serializer, ICsvReader reader, bool hasHeaders = true) where TSchema : class
         {
             return serializer.Deserialize(reader, typeof(TSchema), hasHeaders).Cast<TSchema>();
         }
@@ -266,7 +471,7 @@ namespace DeltaWare.SDK.Serialization.Csv
         /// <returns>Returns the deserialized data or an empty <see cref="IEnumerable{T}"/> if no data was present.</returns>
         /// <exception cref="CsvSchemaException">Thrown when the Csv Schema is invalid.</exception>
         /// <exception cref="InvalidCsvDataException">Thrown when the Csv Data is invalid.</exception>
-        public static IEnumerable<TSchema> Deserialize<TSchema>(this CsvSerializer serializer, CsvReader reader, bool hasHeaders = true) where TSchema : class
+        public static IEnumerable<TSchema> Deserialize<TSchema>(this CsvSerializer serializer, ICsvReader reader, bool hasHeaders = true) where TSchema : class
         {
             return Deserialize<TSchema>((ICsvSerializer)serializer, reader, hasHeaders);
         }
@@ -280,7 +485,7 @@ namespace DeltaWare.SDK.Serialization.Csv
         /// <returns>Returns the deserialized data or an empty <see cref="IEnumerable{T}"/> if no data was present.</returns>
         /// <exception cref="CsvSchemaException">Thrown when the Csv Schema is invalid.</exception>
         /// <exception cref="InvalidCsvDataException">Thrown when the Csv Data is invalid.</exception>
-        public static Task<IEnumerable<TSchema>> DeserializeAsync<TSchema>(this ICsvSerializer serializer, CsvReader reader, bool hasHeaders = true) where TSchema : class
+        public static Task<IEnumerable<TSchema>> DeserializeAsync<TSchema>(this ICsvSerializer serializer, ICsvReader reader, bool hasHeaders = true) where TSchema : class
         {
             return serializer.DeserializeAsync(reader, typeof(TSchema), hasHeaders).CastAsync<TSchema>();
         }
@@ -294,7 +499,7 @@ namespace DeltaWare.SDK.Serialization.Csv
         /// <returns>Returns the deserialized data or an empty <see cref="IEnumerable{T}"/> if no data was present.</returns>
         /// <exception cref="CsvSchemaException">Thrown when the Csv Schema is invalid.</exception>
         /// <exception cref="InvalidCsvDataException">Thrown when the Csv Data is invalid.</exception>
-        public static Task<IEnumerable<TSchema>> DeserializeAsync<TSchema>(this CsvSerializer serializer, CsvReader reader, bool hasHeaders = true) where TSchema : class
+        public static Task<IEnumerable<TSchema>> DeserializeAsync<TSchema>(this CsvSerializer serializer, ICsvReader reader, bool hasHeaders = true) where TSchema : class
         {
             return DeserializeAsync<TSchema>((ICsvSerializer)serializer, reader, hasHeaders);
         }
@@ -305,7 +510,7 @@ namespace DeltaWare.SDK.Serialization.Csv
 
             StreamWriter writer = new StreamWriter(stream);
 
-            CsvWriter csvWriter = new CsvWriter(writer);
+            ICsvWriter csvWriter = new CsvWriter(writer);
 
             serializer.Serialize(lines, csvWriter, hasHeader);
 
@@ -325,7 +530,7 @@ namespace DeltaWare.SDK.Serialization.Csv
         {
             StreamWriter writer = new StreamWriter(stream);
 
-            CsvWriter csvWriter = new CsvWriter(writer);
+            ICsvWriter csvWriter = new CsvWriter(writer);
 
             serializer.Serialize(lines, csvWriter, hasHeader);
         }
@@ -341,7 +546,7 @@ namespace DeltaWare.SDK.Serialization.Csv
 
             StreamWriter writer = new(stream);
 
-            CsvWriter csvWriter = new(writer);
+            ICsvWriter csvWriter = new CsvWriter(writer);
 
             await serializer.SerializeAsync(lines, csvWriter, hasHeader);
 
@@ -361,7 +566,7 @@ namespace DeltaWare.SDK.Serialization.Csv
         {
             StreamWriter writer = new(stream);
 
-            CsvWriter csvWriter = new(writer);
+            ICsvWriter csvWriter = new CsvWriter(writer);
 
             return serializer.SerializeAsync(lines, csvWriter, hasHeader);
         }
