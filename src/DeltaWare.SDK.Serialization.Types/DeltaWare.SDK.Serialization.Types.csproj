@@ -1,16 +1,32 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <Version>5.0.0.2</Version>
+	  <TargetFramework>net5.0</TargetFramework>
+	  <Version>$(TargetFramework.Replace("net", "").Split('.')[0]).0.0.5</Version>
     <Authors>Bradley Clarke</Authors>
     <Company>DeltaWare</Company>
     <Product>DeltaWare.SDK</Product>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageIcon>nuget_logo.png</PackageIcon>
+      <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+      <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+      <PackageOutputPath>..\..\nuget.packages</PackageOutputPath>
+    <PackageIconUrl />
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DeltaWare.SDK.Core\DeltaWare.SDK.Core.csproj" />
+  </ItemGroup>
+
+	    <ItemGroup>
+        <None Include="..\..\LICENSE.md" pack="true" PackagePath="." />
+    </ItemGroup>
+
+    <ItemGroup>
+    <None Include="..\..\nuget_logo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -4,11 +4,11 @@ using System;
 namespace DeltaWare.SDK.Serialization.Csv.Attributes
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class RecordTypeAttribute : Attribute
+    public class RecordKeyAttribute : Attribute
     {
         public string Type { get; }
 
-        public RecordTypeAttribute(string type)
+        public RecordKeyAttribute(string type)
         {
             StringValidator.ThrowOnNullOrWhitespace(type, nameof(type));
 

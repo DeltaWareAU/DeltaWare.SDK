@@ -1,5 +1,4 @@
-﻿using DeltaWare.SDK.Serialization.Csv.Enums;
-using DeltaWare.SDK.Serialization.Csv.Exceptions;
+﻿using DeltaWare.SDK.Serialization.Csv.Exceptions;
 using DeltaWare.SDK.Serialization.Csv.Reading;
 using DeltaWare.SDK.Serialization.Csv.Writing;
 using System;
@@ -158,31 +157,31 @@ namespace DeltaWare.SDK.Serialization.Csv
             DeserializeRecords((ICsvSerializer)serializer, reader, container);
         }
 
-        public static Task<IEnumerable<object>> DeserializeRecordsAsync(this ICsvSerializer serializer, string value, params Type[] recordTypes)
+        public static Task<IEnumerable<object>> DeserializeRecordsAsync(this ICsvSerializer serializer, string value, Type[] recordTypes)
         {
             using CsvReader csvReader = new CsvReader(value);
 
             return serializer.DeserializeRecordsAsync(csvReader, recordTypes);
         }
 
-        public static IEnumerable<object> DeserializeRecords(this ICsvSerializer serializer, string value, params Type[] recordTypes)
+        public static IEnumerable<object> DeserializeRecords(this ICsvSerializer serializer, string value, Type[] recordTypes)
         {
             using CsvReader csvReader = new CsvReader(value);
 
             return serializer.DeserializeRecords(csvReader, recordTypes);
         }
 
-        public static Task<IEnumerable<object>> DeserializeRecordsAsync(this CsvSerializer serializer, string value, params Type[] recordTypes)
+        public static Task<IEnumerable<object>> DeserializeRecordsAsync(this CsvSerializer serializer, string value, Type[] recordTypes)
         {
             return DeserializeRecordsAsync((ICsvSerializer)serializer, value, recordTypes);
         }
 
-        public static IEnumerable<object> DeserializeRecords(this CsvSerializer serializer, string value, params Type[] recordTypes)
+        public static IEnumerable<object> DeserializeRecords(this CsvSerializer serializer, string value, Type[] recordTypes)
         {
             return DeserializeRecords((ICsvSerializer)serializer, value, recordTypes);
         }
 
-        public static Task<IEnumerable<object>> DeserializeRecordsAsync(this ICsvSerializer serializer, Stream stream, params Type[] recordTypes)
+        public static Task<IEnumerable<object>> DeserializeRecordsAsync(this ICsvSerializer serializer, Stream stream, Type[] recordTypes)
         {
             StreamReader reader = new StreamReader(stream);
 
@@ -191,7 +190,7 @@ namespace DeltaWare.SDK.Serialization.Csv
             return serializer.DeserializeRecordsAsync(csvReader, recordTypes);
         }
 
-        public static IEnumerable<object> DeserializeRecords(this ICsvSerializer serializer, Stream stream, params Type[] recordTypes)
+        public static IEnumerable<object> DeserializeRecords(this ICsvSerializer serializer, Stream stream, Type[] recordTypes)
         {
             StreamReader reader = new StreamReader(stream);
 
@@ -200,12 +199,12 @@ namespace DeltaWare.SDK.Serialization.Csv
             return serializer.DeserializeRecords(csvReader, recordTypes);
         }
 
-        public static Task<IEnumerable<object>> DeserializeRecordsAsync(this CsvSerializer serializer, Stream stream, params Type[] recordTypes)
+        public static Task<IEnumerable<object>> DeserializeRecordsAsync(this CsvSerializer serializer, Stream stream, Type[] recordTypes)
         {
             return DeserializeRecordsAsync((ICsvSerializer)serializer, stream, recordTypes);
         }
 
-        public static IEnumerable<object> DeserializeRecords(this CsvSerializer serializer, Stream stream, params Type[] recordTypes)
+        public static IEnumerable<object> DeserializeRecords(this CsvSerializer serializer, Stream stream, Type[] recordTypes)
         {
             return DeserializeRecords((ICsvSerializer)serializer, stream, recordTypes);
         }
@@ -220,7 +219,7 @@ namespace DeltaWare.SDK.Serialization.Csv
 
             StreamWriter writer = new(stream);
 
-            ICsvWriter csvWriter = new CsvWriter(writer, CsvType.Record);
+            ICsvWriter csvWriter = new CsvWriter(writer, WriteMode.Record);
 
             await serializer.SerializeRecordAsync(lines, csvWriter);
 
@@ -240,7 +239,7 @@ namespace DeltaWare.SDK.Serialization.Csv
         {
             StreamWriter writer = new(stream);
 
-            ICsvWriter csvWriter = new CsvWriter(writer, CsvType.Record);
+            ICsvWriter csvWriter = new CsvWriter(writer, WriteMode.Record);
 
             return serializer.SerializeRecordAsync(lines, csvWriter);
         }
@@ -256,7 +255,7 @@ namespace DeltaWare.SDK.Serialization.Csv
 
             StreamWriter writer = new(stream);
 
-            ICsvWriter csvWriter = new CsvWriter(writer, CsvType.Record);
+            ICsvWriter csvWriter = new CsvWriter(writer, WriteMode.Record);
 
             await serializer.SerializeRecordAsync(container, csvWriter);
 
@@ -276,7 +275,7 @@ namespace DeltaWare.SDK.Serialization.Csv
         {
             StreamWriter writer = new(stream);
 
-            ICsvWriter csvWriter = new CsvWriter(writer, CsvType.Record);
+            ICsvWriter csvWriter = new CsvWriter(writer, WriteMode.Record);
 
             return serializer.SerializeRecordAsync(container, csvWriter);
         }
@@ -292,7 +291,7 @@ namespace DeltaWare.SDK.Serialization.Csv
 
             StreamWriter writer = new(stream);
 
-            ICsvWriter csvWriter = new CsvWriter(writer, CsvType.Record);
+            ICsvWriter csvWriter = new CsvWriter(writer, WriteMode.Record);
 
             serializer.SerializeRecord(lines, csvWriter);
 
@@ -312,7 +311,7 @@ namespace DeltaWare.SDK.Serialization.Csv
         {
             StreamWriter writer = new(stream);
 
-            ICsvWriter csvWriter = new CsvWriter(writer, CsvType.Record);
+            ICsvWriter csvWriter = new CsvWriter(writer, WriteMode.Record);
 
             serializer.SerializeRecord(lines, csvWriter);
         }

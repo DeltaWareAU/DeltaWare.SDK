@@ -16,9 +16,8 @@ namespace DeltaWare.SDK.Serialization.Csv
         object DeserializeRecords(ICsvReader reader, Type containerType);
         Task DeserializeRecordsAsync(ICsvReader reader, object container);
         void DeserializeRecords(ICsvReader reader, object container);
-        Task<IEnumerable<object>> DeserializeRecordsAsync(ICsvReader reader, params Type[] recordTypes);
-        IEnumerable<object> DeserializeRecords(ICsvReader reader, params Type[] recordTypes);
-
+        Task<IEnumerable<object>> DeserializeRecordsAsync(ICsvReader reader, Type[] recordTypes);
+        IEnumerable<object> DeserializeRecords(ICsvReader reader, Type[] recordTypes);
 
         Task SerializeRecordAsync(IEnumerable<object> lines, ICsvWriter writer);
         void SerializeRecord(IEnumerable<object> lines, ICsvWriter writer);

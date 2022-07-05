@@ -1,7 +1,6 @@
 ﻿using DeltaWare.SDK.Core.Caching;
 using DeltaWare.SDK.Core.Helpers;
 using DeltaWare.SDK.Serialization.Csv.Attributes;
-using DeltaWare.SDK.Serialization.Csv.Enums;
 using DeltaWare.SDK.Serialization.Csv.Exceptions;
 using DeltaWare.SDK.Serialization.Csv.Header;
 using DeltaWare.SDK.Serialization.Csv.Reading;
@@ -138,7 +137,7 @@ namespace DeltaWare.SDK.Serialization.Csv
             }
         }
 
-        public async Task<IEnumerable<object>> DeserializeRecordsAsync(ICsvReader reader, params Type[] recordTypes)
+        public async Task<IEnumerable<object>> DeserializeRecordsAsync(ICsvReader reader, Type[] recordTypes)
         {
             List<object> deserializedValues = new List<object>();
 
@@ -177,7 +176,7 @@ namespace DeltaWare.SDK.Serialization.Csv
             return deserializedValues;
         }
 
-        public IEnumerable<object> DeserializeRecords(ICsvReader reader, params Type[] recordTypes)
+        public IEnumerable<object> DeserializeRecords(ICsvReader reader, Type[] recordTypes)
         {
             List<object> deserializedValues = new List<object>();
 
@@ -222,7 +221,7 @@ namespace DeltaWare.SDK.Serialization.Csv
 
         public async Task SerializeRecordAsync(IEnumerable<object> lines, ICsvWriter writer)
         {
-            if (writer.Mode != CsvType.Record)
+            if (writer.Mode != WriteMode.Record)
             {
                 throw new InvalidOperationException("Invalid CSV Writer Mode, the mode must be set as Record");
             }
@@ -240,7 +239,7 @@ namespace DeltaWare.SDK.Serialization.Csv
                     indexedRecordProperties.Add(schemaType, indexedProperties);
                 }
 
-                if (!_attributeCache.TryGetAttribute(schemaType, out RecordTypeAttribute recordType))
+                if (!_attributeCache.TryGetAttribute(schemaType, out RecordKeyAttribute recordType))
                 {
                     if (_settings.IgnoreUnknownRecords)
                     {
@@ -262,7 +261,7 @@ namespace DeltaWare.SDK.Serialization.Csv
 
         public void SerializeRecord(IEnumerable<object> lines, ICsvWriter writer)
         {
-            if (writer.Mode != CsvType.Record)
+            if (writer.Mode != WriteMode.Record)
             {
                 throw new InvalidOperationException("Invalid CSV Writer Mode, the mode must be set as Record");
             }
@@ -280,7 +279,7 @@ namespace DeltaWare.SDK.Serialization.Csv
                     indexedRecordProperties.Add(schemaType, indexedProperties);
                 }
 
-                if (!_attributeCache.TryGetAttribute(schemaType, out RecordTypeAttribute recordType))
+                if (!_attributeCache.TryGetAttribute(schemaType, out RecordKeyAttribute recordType))
                 {
                     if (_settings.IgnoreUnknownRecords)
                     {
@@ -448,7 +447,7 @@ namespace DeltaWare.SDK.Serialization.Csv
 
             foreach (Type recordSchema in recordTypes)
             {
-                if (!_attributeCache.TryGetAttribute(recordSchema, out RecordTypeAttribute recordType))
+                if (!_attributeCache.TryGetAttribute(recordSchema, out RecordKeyAttribute recordType))
                 {
                     throw CsvSchemaException.InvalidRecordTypeDeclaration(recordSchema);
                 }
@@ -511,7 +510,7 @@ namespace DeltaWare.SDK.Serialization.Csv
 
                 Type genericType = property.PropertyType.GetGenericArguments().First();
 
-                if (!_attributeCache.HasAttribute<RecordTypeAttribute>(genericType))
+                if (!_attributeCache.HasAttribute<RecordKeyAttribute>(genericType))
                 {
                     continue;
                 }

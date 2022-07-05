@@ -1,19 +1,17 @@
 ﻿namespace DeltaWare.SDK.Serialization.Csv.Writing
 {
     /// <summary>
-    /// Indicates the Field Type.
+    /// Specifies how the <see cref="CsvWriter"/> will write the CSV data.
     /// </summary>
     public enum WriteMode
     {
         /// <summary>
-        /// Normal Field.
+        /// Default for writing CSV data.
         /// </summary>
-        /// <remarks>Any field that is not the last field for the current line.</remarks>
-        Field,
+        Default,
         /// <summary>
-        /// Terminate the current Line.
+        /// Enables support for writing Record Type CSV data, this disables checks performed to check for CSV data validity.
         /// </summary>
-        /// <remarks>The last field for the current line.</remarks>
-        TerminateLine,
+        Record
     }
 }

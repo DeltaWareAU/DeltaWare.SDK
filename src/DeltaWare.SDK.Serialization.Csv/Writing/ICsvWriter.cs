@@ -1,5 +1,4 @@
-﻿using DeltaWare.SDK.Serialization.Csv.Enums;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 
 namespace DeltaWare.SDK.Serialization.Csv.Writing
@@ -9,7 +8,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
         /// <inheritdoc cref="StreamWriter.BaseStream"/>>
         StreamWriter BaseStream { get; }
 
-        CsvType Mode { get; }
+        WriteMode Mode { get; }
 
         void Dispose();
 
@@ -21,11 +20,11 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
 
         Task WriteAllAsync(string[][] lines);
 
-        Task WriteAsync(string field, WriteMode type = WriteMode.Field);
+        Task WriteAsync(string field, WriteOperation type = WriteOperation.Field);
 
         Task WriteLineAsync(string[] line);
 
-        void Write(string field, WriteMode type = WriteMode.Field);
+        void Write(string field, WriteOperation type = WriteOperation.Field);
 
         void WriteAll(string[][] lines);
 

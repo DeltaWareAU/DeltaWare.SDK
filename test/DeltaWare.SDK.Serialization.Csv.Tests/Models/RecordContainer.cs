@@ -15,19 +15,23 @@ namespace DeltaWare.SDK.Serialization.Csv.Tests.Models
         public List<ProductRecord> Products { get; set; } = new();
     }
 
-    [RecordType("users")]
+    [RecordKey("users")]
     public class UserRecord
     {
+        [ColumnIndex(0)]
         public int Id { get; set; }
 
+        [ColumnIndex(1)]
         public string FirstName { get; set; }
 
+        [ColumnIndex(2)]
         public string LastName { get; set; }
 
+        [ColumnIndex(3)]
         public DateTime? BirthDate { get; set; }
     }
 
-    [RecordType("orders")]
+    [RecordKey("orders")]
     public class OrderRecord
     {
         public Guid OrderId { get; set; }
@@ -37,7 +41,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Tests.Models
         public decimal Amount { get; set; }
     }
 
-    [RecordType("transactions")]
+    [RecordKey("transactions")]
     public class TransactionRecord
     {
         public string TransactionId { get; set; }
@@ -45,7 +49,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Tests.Models
         public bool Paid { get; set; }
     }
 
-    [RecordType("products")]
+    [RecordKey("products")]
     public class ProductRecord
     {
         public string TransactionId { get; set; }

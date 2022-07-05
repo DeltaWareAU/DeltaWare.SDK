@@ -16,7 +16,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Exceptions
 
         internal static CsvSchemaException InvalidRecordTypeDeclaration(Type type)
         {
-            return new CsvSchemaException($"The specified type {type.Name} cannot be used as a record type schema as it does not declare the {nameof(RecordTypeAttribute)}.");
+            return new CsvSchemaException($"The specified type {type.Name} cannot be used as a record type schema as it does not declare the {nameof(RecordKeyAttribute)}.");
         }
 
         public static Exception UndeclaredRecordTypeEncountered(string recordType)

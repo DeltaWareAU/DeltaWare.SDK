@@ -238,7 +238,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Tests
             {
                 await using (Stream stream = new FileStream("./_Data/TEST.Records.csv", FileMode.Open))
                 {
-                    records = await serializer.DeserializeRecordsAsync(stream, typeof(UserRecord), typeof(OrderRecord), typeof(TransactionRecord)).ToListAsync();
+                    records = await serializer.DeserializeRecordsAsync(stream, new[] { typeof(UserRecord), typeof(OrderRecord), typeof(TransactionRecord) }).ToListAsync();
                 }
             }
             finally
@@ -301,7 +301,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Tests
             {
                 await using (Stream stream = new FileStream("./_Data/TEST.Records.csv", FileMode.Open))
                 {
-                    records = await serializer.DeserializeRecordsAsync(stream, typeof(UserRecord), typeof(OrderRecord), typeof(TransactionRecord)).ToListAsync();
+                    records = await serializer.DeserializeRecordsAsync(stream, new[] { typeof(UserRecord), typeof(OrderRecord), typeof(TransactionRecord) }).ToListAsync();
                 }
             }
             finally
@@ -355,7 +355,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Tests
 
             memoryStream.Seek(0, SeekOrigin.Begin);
 
-            records = await serializer.DeserializeRecordsAsync(memoryStream, typeof(UserRecord), typeof(OrderRecord), typeof(TransactionRecord)).ToListAsync();
+            records = await serializer.DeserializeRecordsAsync(memoryStream, new[] { typeof(UserRecord), typeof(OrderRecord), typeof(TransactionRecord) }).ToListAsync();
 
             records.Count.ShouldBe(7);
 
@@ -415,7 +415,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Tests
             {
                 await using (Stream stream = new FileStream("./_Data/TEST.Records.csv", FileMode.Open))
                 {
-                    records = await serializer.DeserializeRecordsAsync(stream, typeof(UserRecord)).ToListAsync();
+                    records = await serializer.DeserializeRecordsAsync(stream, new[] { typeof(UserRecord) }).ToListAsync();
                 }
             }
             finally

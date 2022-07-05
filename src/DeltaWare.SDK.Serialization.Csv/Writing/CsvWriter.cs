@@ -17,9 +17,9 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
         /// <inheritdoc cref="StreamWriter.BaseStream"/>>
         public StreamWriter BaseStream => _baseStream;
 
-        public CsvType Mode { get; }
+        public WriteMode Mode { get; }
 
-        public CsvWriter(StreamWriter baseStream, CsvType mode = CsvType.Default)
+        public CsvWriter(StreamWriter baseStream, WriteMode mode = WriteMode.Default)
         {
             _baseStream = baseStream;
 
@@ -84,17 +84,17 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
             _state = CsvState.EndOfFile;
         }
 
-        public async Task WriteAsync(string field, WriteMode type = WriteMode.Field)
+        public async Task WriteAsync(string field, WriteOperation type = WriteOperation.Field)
         {
             field = EncapsulateField(field);
 
             switch (type)
             {
-                case WriteMode.Field:
+                case WriteOperation.Field:
                     await _baseStream.WriteAsync($"{field},");
                     break;
 
-                case WriteMode.TerminateLine:
+                case WriteOperation.TerminateLine:
                     await _baseStream.WriteLineAsync($"{field}");
                     break;
 
@@ -107,7 +107,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
         {
             _lineNumber++;
 
-            if (Mode == CsvType.Default)
+            if (Mode == WriteMode.Default)
             {
                 if (_expectedRowCount == -1)
                 {
@@ -127,7 +127,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
                 }
                 else
                 {
-                    await WriteAsync(line[i], WriteMode.TerminateLine);
+                    await WriteAsync(line[i], WriteOperation.TerminateLine);
                 }
             }
         }
@@ -136,17 +136,17 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
 
         #region Sync Methods
 
-        public void Write(string field, WriteMode type = WriteMode.Field)
+        public void Write(string field, WriteOperation type = WriteOperation.Field)
         {
             field = EncapsulateField(field);
 
             switch (type)
             {
-                case WriteMode.Field:
+                case WriteOperation.Field:
                     _baseStream.Write($"{field},");
                     break;
 
-                case WriteMode.TerminateLine:
+                case WriteOperation.TerminateLine:
                     _baseStream.WriteLine($"{field}");
                     break;
 
@@ -174,7 +174,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
         {
             _lineNumber++;
 
-            if (Mode == CsvType.Default)
+            if (Mode == WriteMode.Default)
             {
                 if (_expectedRowCount == -1)
                 {
@@ -194,7 +194,7 @@ namespace DeltaWare.SDK.Serialization.Csv.Writing
                 }
                 else
                 {
-                    Write(line[i], WriteMode.TerminateLine);
+                    Write(line[i], WriteOperation.TerminateLine);
                 }
             }
         }
