@@ -20,6 +20,7 @@ namespace DeltaWare.SDK.Serialization.Types.Transformation
             new IntTransformer(),
             new LongTransformer(),
             new FloatTransformer(),
+            new GuidTransformer(),
             new DecimalTransformer(),
             new DateTimeTransformer(),
             new TimeSpanTransformer(),

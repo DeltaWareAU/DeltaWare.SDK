@@ -12,6 +12,11 @@ namespace DeltaWare.SDK.Serialization.Csv
     /// </summary>
     public interface ICsvSerializer
     {
+        Task<object> DeserializeRecordsAsync(CsvReader reader, Type containerSchema);
+        Task DeserializeRecordsAsync(CsvReader reader, object container);
+
+        Task<IEnumerable<object>> DeserializeRecordsAsync(CsvReader reader, params Type[] schema);
+
         /// <summary>
         /// Deserializes the CSV data into the specified <see cref="Type"/>.
         /// </summary>
