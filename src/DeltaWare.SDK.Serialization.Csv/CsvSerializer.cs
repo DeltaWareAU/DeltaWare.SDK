@@ -1,15 +1,14 @@
 ﻿using DeltaWare.SDK.Core.Caching;
-using DeltaWare.SDK.Core.Helpers;
 using DeltaWare.SDK.Serialization.Csv.Attributes;
 using DeltaWare.SDK.Serialization.Csv.Exceptions;
 using DeltaWare.SDK.Serialization.Csv.Header;
 using DeltaWare.SDK.Serialization.Csv.Reading;
+using DeltaWare.SDK.Serialization.Csv.Records;
 using DeltaWare.SDK.Serialization.Csv.Settings;
 using DeltaWare.SDK.Serialization.Csv.Validation;
 using DeltaWare.SDK.Serialization.Csv.Writing;
 using DeltaWare.SDK.Serialization.Types;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -20,10 +19,11 @@ namespace DeltaWare.SDK.Serialization.Csv
     public class CsvSerializer : ICsvSerializer
     {
         private readonly IAttributeCache _attributeCache;
-        private readonly DefaultHeaderHandler _headerHandler;
+        private readonly IHeaderHandler _headerHandler;
         private readonly IObjectSerializer _objectSerializer;
         private readonly ICsvValidator _csvValidator;
         private readonly ICsvSerializerSettings _settings;
+        private readonly RecordHelper _recordHelper;
 
         public CsvSerializer(ICsvSerializerSettings settings = null)
         {
@@ -32,8 +32,9 @@ namespace DeltaWare.SDK.Serialization.Csv
             _attributeCache = settings?.AttributeCache ?? new AttributeCache();
             _objectSerializer = settings?.Serializer ?? new ObjectSerializer(_attributeCache);
             _csvValidator = settings?.Validator ?? new DefaultCsvValidator(_attributeCache);
+            _headerHandler = settings?.HeaderHandler ?? new DefaultHeaderHandler(_attributeCache, _objectSerializer);
 
-            _headerHandler = new DefaultHeaderHandler(_attributeCache, _objectSerializer);
+            _recordHelper = new RecordHelper(_attributeCache, _settings);
         }
 
         public CsvSerializer(Action<CsvSerializerSettings> settingsBuilder)
@@ -47,8 +48,9 @@ namespace DeltaWare.SDK.Serialization.Csv
             _attributeCache = settings?.AttributeCache ?? new AttributeCache();
             _objectSerializer = settings?.Serializer ?? new ObjectSerializer(_attributeCache);
             _csvValidator = settings?.Validator ?? new DefaultCsvValidator(_attributeCache);
+            _headerHandler = settings?.HeaderHandler ?? new DefaultHeaderHandler(_attributeCache, _objectSerializer);
 
-            _headerHandler = new DefaultHeaderHandler(_attributeCache, _objectSerializer);
+            _recordHelper = new RecordHelper(_attributeCache, _settings);
         }
 
         #region Deserialize Records
@@ -73,146 +75,62 @@ namespace DeltaWare.SDK.Serialization.Csv
 
         public async Task DeserializeRecordsAsync(ICsvReader reader, object container)
         {
-            Dictionary<Type, PropertyInfo> recordSchemas = GetContainerSchemas(container.GetType());
+            Dictionary<Type, PropertyInfo> recordSchemas = _recordHelper.GetContainerSchemas(container.GetType());
 
             IEnumerable<object> records = await DeserializeRecordsAsync(reader, recordSchemas.Keys.ToArray());
 
-            IEnumerable<IGrouping<Type, object>> recordTypeGroup = records.GroupBy(r => r.GetType());
-
-            foreach (IGrouping<Type, object> recordType in recordTypeGroup)
-            {
-                if (!recordSchemas.TryGetValue(recordType.Key, out PropertyInfo property))
-                {
-                    if (_settings.IgnoreUnknownRecords)
-                    {
-                        continue;
-                    }
-
-                    throw CsvSchemaException.UndeclaredRecordTypeEncountered(recordType.Key.Name);
-                }
-
-                IList list = (IList)property.GetValue(container);
-
-                if (list == null)
-                {
-                    list = GenericTypeHelper.CreateGenericList(recordType.Key);
-
-                    property.SetValue(container, list);
-                }
-
-                list.AddRange(recordType);
-            }
+            _recordHelper.SetContainerValues(container, records, recordSchemas);
         }
 
         public void DeserializeRecords(ICsvReader reader, object container)
         {
-            Dictionary<Type, PropertyInfo> recordSchemas = GetContainerSchemas(container.GetType());
+            Dictionary<Type, PropertyInfo> recordSchemas = _recordHelper.GetContainerSchemas(container.GetType());
 
             IEnumerable<object> records = DeserializeRecords(reader, recordSchemas.Keys.ToArray());
 
-            IEnumerable<IGrouping<Type, object>> recordTypeGroup = records.GroupBy(r => r.GetType());
-
-            foreach (IGrouping<Type, object> recordType in recordTypeGroup)
-            {
-                if (!recordSchemas.TryGetValue(recordType.Key, out PropertyInfo property))
-                {
-                    if (_settings.IgnoreUnknownRecords)
-                    {
-                        continue;
-                    }
-
-                    throw CsvSchemaException.UndeclaredRecordTypeEncountered(recordType.Key.Name);
-                }
-
-                IList list = (IList)property.GetValue(container);
-
-                if (list == null)
-                {
-                    list = GenericTypeHelper.CreateGenericList(recordType.Key);
-
-                    property.SetValue(container, list);
-                }
-
-                list.AddRange(recordType);
-            }
+            _recordHelper.SetContainerValues(container, records, recordSchemas);
         }
 
         public async Task<IEnumerable<object>> DeserializeRecordsAsync(ICsvReader reader, Type[] recordTypes)
         {
-            List<object> deserializedValues = new List<object>();
+            List<object> deserializedRecords = new List<object>();
 
-            Dictionary<string, Type> recordSchemaTypeMap = BuildRecordSchemaTypeMap(recordTypes);
+            Dictionary<string, Type> recordSchemas = _recordHelper.GetRecordSchemas(recordTypes);
 
-            Dictionary<string, PropertyInfo[]> indexedRecordProperties = new Dictionary<string, PropertyInfo[]>();
+            Dictionary<string, PropertyInfo[]> indexedRecordPropertiesCache = new Dictionary<string, PropertyInfo[]>();
 
             while (!reader.EndOfStream)
             {
                 string[] currentLine = await reader.ReadLineAsync();
 
-                string recordType = currentLine[0];
-
-                if (!recordSchemaTypeMap.TryGetValue(recordType, out Type recordSchema))
+                if (TryDeserializeRecord(currentLine, recordSchemas, indexedRecordPropertiesCache, out object deserializeRecord))
                 {
-                    if (_settings.IgnoreUnknownRecords)
-                    {
-                        continue;
-                    }
-
-                    throw CsvSchemaException.UndeclaredRecordTypeEncountered(recordType);
+                    deserializedRecords.Add(deserializeRecord);
                 }
-
-                if (!indexedRecordProperties.TryGetValue(recordType, out PropertyInfo[] indexedProperties))
-                {
-                    indexedProperties = _headerHandler.BuildHeaderIndex(recordSchema, currentLine.Length - 1);
-
-                    indexedRecordProperties.Add(recordType, indexedProperties);
-                }
-
-                object deserializedValue = DeserializeLine(currentLine.Skip(1).ToArray(), recordSchema, indexedProperties);
-
-                deserializedValues.Add(deserializedValue);
             }
 
-            return deserializedValues;
+            return deserializedRecords;
         }
 
         public IEnumerable<object> DeserializeRecords(ICsvReader reader, Type[] recordTypes)
         {
-            List<object> deserializedValues = new List<object>();
+            List<object> deserializedRecords = new List<object>();
 
-            Dictionary<string, Type> recordSchemaTypeMap = BuildRecordSchemaTypeMap(recordTypes);
+            Dictionary<string, Type> recordSchemas = _recordHelper.GetRecordSchemas(recordTypes);
 
-            Dictionary<string, PropertyInfo[]> indexedRecordProperties = new Dictionary<string, PropertyInfo[]>();
+            Dictionary<string, PropertyInfo[]> indexedRecordPropertiesCache = new Dictionary<string, PropertyInfo[]>();
 
             while (!reader.EndOfStream)
             {
                 string[] currentLine = reader.ReadLine();
 
-                string recordType = currentLine[0];
-
-                if (!recordSchemaTypeMap.TryGetValue(recordType, out Type recordSchema))
+                if (TryDeserializeRecord(currentLine, recordSchemas, indexedRecordPropertiesCache, out object deserializeRecord))
                 {
-                    if (_settings.IgnoreUnknownRecords)
-                    {
-                        continue;
-                    }
-
-                    throw CsvSchemaException.UndeclaredRecordTypeEncountered(recordType);
+                    deserializedRecords.Add(deserializeRecord);
                 }
-
-                if (!indexedRecordProperties.TryGetValue(recordType, out PropertyInfo[] indexedProperties))
-                {
-                    indexedProperties = _headerHandler.BuildHeaderIndex(recordSchema, currentLine.Length - 1);
-
-                    indexedRecordProperties.Add(recordType, indexedProperties);
-                }
-
-                object deserializedValue = DeserializeLine(currentLine.Skip(1).ToArray(), recordSchema, indexedProperties);
-
-                deserializedValues.Add(deserializedValue);
             }
 
-            return deserializedValues;
+            return deserializedRecords;
         }
 
         #endregion
@@ -301,18 +219,18 @@ namespace DeltaWare.SDK.Serialization.Csv
 
         public Task SerializeRecordAsync(object container, ICsvWriter writer)
         {
-            Dictionary<Type, PropertyInfo> recordSchemas = GetContainerSchemas(container.GetType());
+            Dictionary<Type, PropertyInfo> recordSchemas = _recordHelper.GetContainerSchemas(container.GetType());
 
-            IEnumerable<object> lines = GetContainerValues(container, recordSchemas);
+            IEnumerable<object> lines = _recordHelper.GetContainerValues(container, recordSchemas);
 
             return SerializeRecordAsync(lines, writer);
         }
 
         public void SerializeRecord(object container, ICsvWriter writer)
         {
-            Dictionary<Type, PropertyInfo> recordSchemas = GetContainerSchemas(container.GetType());
+            Dictionary<Type, PropertyInfo> recordSchemas = _recordHelper.GetContainerSchemas(container.GetType());
 
-            IEnumerable<object> lines = GetContainerValues(container, recordSchemas);
+            IEnumerable<object> lines = _recordHelper.GetContainerValues(container, recordSchemas);
 
             SerializeRecord(lines, writer);
         }
@@ -441,23 +359,6 @@ namespace DeltaWare.SDK.Serialization.Csv
 
         #endregion
 
-        private Dictionary<string, Type> BuildRecordSchemaTypeMap(Type[] recordTypes)
-        {
-            Dictionary<string, Type> recordTypeMap = new Dictionary<string, Type>();
-
-            foreach (Type recordSchema in recordTypes)
-            {
-                if (!_attributeCache.TryGetAttribute(recordSchema, out RecordKeyAttribute recordType))
-                {
-                    throw CsvSchemaException.InvalidRecordTypeDeclaration(recordSchema);
-                }
-
-                recordTypeMap.Add(recordType.Type, recordSchema);
-            }
-
-            return recordTypeMap;
-        }
-
         private object DeserializeLine(string[] line, Type type, PropertyInfo[] indexedProperties)
         {
             object parentObject = Activator.CreateInstance(type);
@@ -494,50 +395,32 @@ namespace DeltaWare.SDK.Serialization.Csv
             return fields;
         }
 
-        private Dictionary<Type, PropertyInfo> GetContainerSchemas(Type containerType)
+        private bool TryDeserializeRecord(string[] currentLine, Dictionary<string, Type> recordSchemas, Dictionary<string, PropertyInfo[]> indexedRecordPropertiesCache, out object deserializeRecord)
         {
-            PropertyInfo[] publicProperties = containerType.GetPublicProperties();
+            deserializeRecord = null;
 
-            Dictionary<Type, PropertyInfo> recordSchemas = new Dictionary<Type, PropertyInfo>();
+            string recordType = currentLine[0];
 
-            foreach (PropertyInfo property in publicProperties)
+            if (!recordSchemas.TryGetValue(recordType, out Type recordSchema))
             {
-                if (!property.PropertyType.ImplementsInterface<IList>())
+                if (_settings.IgnoreUnknownRecords)
                 {
-                    // Non IList types are not supported.
-                    continue;
+                    return false;
                 }
 
-                Type genericType = property.PropertyType.GetGenericArguments().First();
-
-                if (!_attributeCache.HasAttribute<RecordKeyAttribute>(genericType))
-                {
-                    continue;
-                }
-
-                recordSchemas.Add(genericType, property);
+                throw CsvSchemaException.UndeclaredRecordTypeEncountered(recordType);
             }
 
-            if (recordSchemas.IsEmpty())
+            if (!indexedRecordPropertiesCache.TryGetValue(recordType, out PropertyInfo[] indexedProperties))
             {
-                throw new Exception("No record schemas found for container");
+                indexedProperties = _headerHandler.BuildHeaderIndex(recordSchema, currentLine.Length - 1);
+
+                indexedRecordPropertiesCache.Add(recordType, indexedProperties);
             }
 
-            return recordSchemas;
-        }
+            deserializeRecord = DeserializeLine(currentLine.Skip(1).ToArray(), recordSchema, indexedProperties);
 
-        private IEnumerable<object> GetContainerValues(object container, Dictionary<Type, PropertyInfo> recordSchemas)
-        {
-            List<object> lines = new List<object>();
-
-            foreach ((_, PropertyInfo property) in recordSchemas)
-            {
-                IList list = (IList)property.GetValue(container);
-
-                lines.AddRange(list);
-            }
-
-            return lines;
+            return true;
         }
     }
 }

@@ -6,6 +6,8 @@ namespace DeltaWare.SDK.Serialization.Csv.Tests.Models
 {
     public class RecordContainer
     {
+        public HeaderRecord Header { get; set; }
+
         public List<UserRecord> Users { get; set; } = new();
 
         public List<OrderRecord> Orders { get; set; } = new();
@@ -13,6 +15,16 @@ namespace DeltaWare.SDK.Serialization.Csv.Tests.Models
         public List<TransactionRecord> Transactions { get; set; } = new();
 
         public List<ProductRecord> Products { get; set; } = new();
+    }
+
+    [RecordKey("header")]
+    public class HeaderRecord
+    {
+        [ColumnIndex(0)]
+        public Guid Id { get; set; }
+
+        [ColumnIndex(1)]
+        public DateTime GeneratedDate { get; set; }
     }
 
     [RecordKey("users")]

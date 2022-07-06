@@ -1,16 +1,23 @@
 ﻿This package provides an easy to use high performance approach to Deserializing and Serializing CSV files whilst being highly extensible for that annoying edge case.
 
-Currently the Serializer has the following features.
+Current Features
 
- - Implemented using the  [RFC 4180](https://datatracker.ietf.org/doc/html/rfc4180) standard.
- - Deserialize and Serialize standard CSVs.
- - Deserialize and Serialize record CSVs.
- - Column and Header Name Indexing.
+ - Fully Supports the [RFC 4180](https://datatracker.ietf.org/doc/html/rfc4180) standard.
+ - Serialize CSVs.
+ - Serialize CSV Records.
+ - Mapping Properties to Column Index or Header Name
  - Validation
- - Allows for custom serializtion of types.
+ - Custom serializtion of types.
  - Nullable Types
  - Standalone Reader and Writer
  - Async and Sync operations.
+
+Planned Features
+
+ - Anonymous Types
+ - Serialization using the CsvReader and CsvWriter.
+ - Allow Serialization to Map Properties to both Header and Column Index.
+ At presnet if you're using the ColumnHeaderAttribute it is not possible to specify the order using the ColumnIndexAttribute, ordering can only be done by changing the property order in .Net
  
  Get it from Nuget ```Install-Package DeltaWare.SDK.Serialization.Csv```
 
