@@ -12,6 +12,8 @@ Currently the Serializer has the following features.
  - Standalone Reader and Writer
  - Async and Sync operations.
  
+ Get it from Nuget ```Install-Package DeltaWare.SDK.Serialization.Csv```
+
 # Creating a Model
 There are several ways to declared a model and we'll go over each of them.
 
@@ -104,26 +106,26 @@ transactions,3482739487,false
 [RecordType("users")]
 public class UserRecord
 {
-		// Note in this example, the Column Index attribute isn't necessary.
-		// By default a column index is applied to Properties in order of there declaration.
-        [ColumnIndex(0)]
-        public int Id { get; set; }
+	// Note in this example, the Column Index attribute isn't entirely necessary.
+	// The default column index for properties is based off the order that they where declared in.
+    [ColumnIndex(0)]
+    public int Id { get; set; }
 
-        [ColumnIndex(1)]
-        public string FirstName { get; set; }
+    [ColumnIndex(1)]
+    public string FirstName { get; set; }
 
-        [ColumnIndex(2)]
-        public string LastName { get; set; }
+    [ColumnIndex(2)]
+    public string LastName { get; set; }
 
-        [ColumnIndex(3)]
-        public DateTime? BirthDate { get; set; }
+    [ColumnIndex(3)]
+    public DateTime? BirthDate { get; set; }
 }
 ```
 ## Deserializing a Record
 ```csharp
 CsvSerializer serializer = new CsvSerializer();
 
-IEnumerable<object> myRecords = await serializer.DeserializeAsync(csvString, new[] { typeof(UserRecord), typeof(OrderRecord), typeof(TransactionRecord) });
+IEnumerable<object> myRecords = await serializer.DeserializeRecordsAsync(csvString, new[] { typeof(UserRecord), typeof(OrderRecord), typeof(TransactionRecord) });
 
 foreach(object myRecord in myRecords)
 {
@@ -155,7 +157,7 @@ public class RecordContainer
 ```csharp
 CsvSerializer serializer = new CsvSerializer();
 
-RecordContainer myRecords = await serializer.DeserializeAsync(csvString, typeof(RecordContainer));
+RecordContainer myRecords = await serializer.DeserializeRecordsAsync<RecordContainer>(csvString);
 
 // Do a thing with user.
 myRecords.Users;
