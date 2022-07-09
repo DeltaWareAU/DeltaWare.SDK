@@ -1,5 +1,6 @@
 ﻿using DeltaWare.SDK.Serialization.Csv.Attributes;
 using System;
+using System.Collections;
 
 namespace DeltaWare.SDK.Serialization.Csv.Exceptions
 {
@@ -22,6 +23,11 @@ namespace DeltaWare.SDK.Serialization.Csv.Exceptions
         public static Exception UndeclaredRecordTypeEncountered(string recordType)
         {
             return new CsvSchemaException($"A schema was not declared for the current Record Type: {recordType}.");
+        }
+
+        public static Exception DuplicateRecordsForNonCollection(Type recordType, int count)
+        {
+            return new CsvSchemaException($"Found {count} records for {recordType.Name} when only one may be present, if having multiple records is desired declare the properties value with {nameof(IList)}");
         }
     }
 }
