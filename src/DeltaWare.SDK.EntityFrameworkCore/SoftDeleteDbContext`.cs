@@ -29,7 +29,7 @@ namespace DeltaWare.SDK.EntityFrameworkCore
             return base.SaveChanges();
         }
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             InternalSaveChanges();
 

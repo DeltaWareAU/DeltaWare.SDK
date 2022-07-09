@@ -5,7 +5,7 @@ namespace DeltaWare.SDK.Core.Collections.RecyclingQueue
 {
     public class ConcurrentRecyclingQueue<TValue> : RecyclingQueue<TValue>
     {
-        private readonly object _concurrencyLock = new();
+        private readonly object _concurrencyLock = new object();
 
         public ConcurrentRecyclingQueue(int capacity) : base(capacity)
         {

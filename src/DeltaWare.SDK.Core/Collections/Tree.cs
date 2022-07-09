@@ -7,7 +7,7 @@ namespace DeltaWare.SDK.Core.Collections
     /// <inheritdoc/>
     public class Tree<T> : ITreeNode<T>
     {
-        private readonly List<ITreeNode<T>> _childNodes = new();
+        private readonly List<ITreeNode<T>> _childNodes = new List<ITreeNode<T>>();
 
         /// <summary>
         /// Creates a new instance of <see cref="Tree{T}"/>

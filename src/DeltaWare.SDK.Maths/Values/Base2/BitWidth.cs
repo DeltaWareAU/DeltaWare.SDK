@@ -37,13 +37,13 @@
 
         private readonly int _value;
 
-        public static BitWidth One => new(1);
-        public static BitWidth Two => new(2);
-        public static BitWidth Four => new(4);
-        public static BitWidth Eight => new(8);
-        public static BitWidth Sixteen => new(16);
-        public static BitWidth ThirtyTwo => new(32);
-        public static BitWidth SixtyFour => new(64);
+        public static BitWidth One => new BitWidth(1);
+        public static BitWidth Two => new BitWidth(2);
+        public static BitWidth Four => new BitWidth(4);
+        public static BitWidth Eight => new BitWidth(8);
+        public static BitWidth Sixteen => new BitWidth(16);
+        public static BitWidth ThirtyTwo => new BitWidth(32);
+        public static BitWidth SixtyFour => new BitWidth(64);
 
         private BitWidth(int value)
         {

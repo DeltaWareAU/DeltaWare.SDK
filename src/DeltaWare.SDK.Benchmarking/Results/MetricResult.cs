@@ -22,7 +22,7 @@ namespace DeltaWare.SDK.Benchmarking.Results
 
         public decimal AverageTicks => Math.Round((decimal)TotalTicks / Iterations, 2);
 
-        protected List<MetricResult> ChildResults { get; } = new();
+        protected List<MetricResult> ChildResults { get; } = new List<MetricResult>();
 
         public IReadOnlyList<IBenchmarkResult> Results => ChildResults;
 

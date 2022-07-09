@@ -7,11 +7,11 @@ namespace DeltaWare.SDK.Serialization.Types.Transformation
 {
     public class TransformerCollection
     {
-        private readonly List<ITransformer> _transformers = new();
+        private readonly List<ITransformer> _transformers = new List<ITransformer>();
 
-        private readonly List<INullableTransformer> _nullableTransformers = new();
+        private readonly List<INullableTransformer> _nullableTransformers = new List<INullableTransformer>();
 
-        public static TransformerCollection DefaultCollection { get; } = new
+        public static TransformerCollection DefaultCollection { get; } = new TransformerCollection
         (
             new StringTransformer(),
             new CharTransformer(),

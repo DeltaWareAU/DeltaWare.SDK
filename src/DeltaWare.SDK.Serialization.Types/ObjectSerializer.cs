@@ -288,7 +288,7 @@ namespace DeltaWare.SDK.Serialization.Types
 
         private Dictionary<string, string> SerializeToDictionary<T>(T value, IEnumerable<PropertyInfo> properties) where T : class
         {
-            Dictionary<string, string> propertyDictionary = new();
+            Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
 
             foreach (PropertyInfo property in properties)
             {
