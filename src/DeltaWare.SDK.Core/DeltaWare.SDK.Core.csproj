@@ -1,17 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-    <Version>$(TargetFramework.Replace("net", "").Split('.')[0]).0.1.5</Version>
+    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+    <Version>6.0.0.5</Version>
     <Authors>Bradley Clarke</Authors>
     <Company>DeltaWare</Company>
     <Product>DeltaWare.SDK</Product>
-    <PackageIcon>nuget_logo.png</PackageIcon>
+      <PackageProjectUrl>https://github.com/DeltaWareAU/DeltaWare.SDK</PackageProjectUrl>
+      <PackageIcon>nuget_logo.png</PackageIcon>
       <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
       <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
       <PackageOutputPath>..\..\nuget.packages</PackageOutputPath>
     <PackageIconUrl />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
     <ItemGroup>

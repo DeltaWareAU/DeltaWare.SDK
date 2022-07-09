@@ -6,11 +6,11 @@ namespace DeltaWare.SDK.Benchmarking.Metrics
 {
     internal class Metric : IMetric
     {
-        public string Name { get; init; }
+        public string Name { get; set; }
 
-        public string Description { get; init; }
+        public string Description { get; set; }
 
-        public MetricResult Result { get; init; }
+        public MetricResult Result { get; set; }
 
         public Metric()
         {

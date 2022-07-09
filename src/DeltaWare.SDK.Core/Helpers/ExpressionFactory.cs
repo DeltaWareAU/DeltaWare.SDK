@@ -33,7 +33,7 @@ namespace DeltaWare.SDK.Core.Helpers
 
             ConstantExpression searchConstant = Expression.Constant(filter ?? string.Empty, typeof(string));
 
-            List<Expression> expressions = new();
+            List<Expression> expressions = new List<Expression>();
 
             foreach (PropertyInfo property in PropertySelectorHelper.GetSelectedProperties(propertySelector))
             {

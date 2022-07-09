@@ -7,15 +7,14 @@ namespace DeltaWare.SDK.Core.Caching
 {
     public class AttributeCache : IAttributeCache
     {
-        private readonly Dictionary<PropertyInfo, Dictionary<Type, List<Attribute>>> _propertyCache = new();
-        private readonly Dictionary<Type, Dictionary<Type, List<Attribute>>> _typeCache = new();
+        private readonly Dictionary<PropertyInfo, Dictionary<Type, List<Attribute>>> _propertyCache = new Dictionary<PropertyInfo, Dictionary<Type, List<Attribute>>>();
+        private readonly Dictionary<Type, Dictionary<Type, List<Attribute>>> _typeCache = new Dictionary<Type, Dictionary<Type, List<Attribute>>>();
 
         public TAttribute[] GetAttributes<TAttribute>(Type type) where TAttribute : Attribute
         {
             if (_typeCache.TryGetValue(type, out Dictionary<Type, List<Attribute>> cache))
             {
-                if (!cache.TryGetValue(typeof(TAttribute),
-                    out List<Attribute> cachedAttributes))
+                if (!cache.TryGetValue(typeof(TAttribute), out List<Attribute> cachedAttributes))
                 {
                     return null;
                 }
@@ -23,7 +22,7 @@ namespace DeltaWare.SDK.Core.Caching
                 return cachedAttributes.Cast<TAttribute>().ToArray();
             }
 
-            List<TAttribute> foundAttributes = new();
+            List<TAttribute> foundAttributes = new List<TAttribute>();
 
             cache = new Dictionary<Type, List<Attribute>>();
 
@@ -36,15 +35,13 @@ namespace DeltaWare.SDK.Core.Caching
 
                 Type attributeType = attributeInstance.GetType();
 
-                if (cache.TryGetValue(attributeType,
-                    out List<Attribute> attributeList))
+                if (cache.TryGetValue(attributeType, out List<Attribute> attributeList))
                 {
                     attributeList.Add((Attribute)attributeInstance);
                 }
                 else
                 {
-                    cache.Add(attributeType,
-                        new List<Attribute> { (Attribute)attributeInstance });
+                    cache.Add(attributeType, new List<Attribute> { (Attribute)attributeInstance });
                 }
             }
 
@@ -70,7 +67,7 @@ namespace DeltaWare.SDK.Core.Caching
                 return cachedAttributes.Cast<TAttribute>().ToArray();
             }
 
-            List<TAttribute> foundAttributes = new();
+            List<TAttribute> foundAttributes = new List<TAttribute>();
 
             cache = new Dictionary<Type, List<Attribute>>();
 
@@ -83,15 +80,13 @@ namespace DeltaWare.SDK.Core.Caching
 
                 Type attributeType = attributeInstance.GetType();
 
-                if (cache.TryGetValue(attributeType,
-                    out List<Attribute> attributeList))
+                if (cache.TryGetValue(attributeType, out List<Attribute> attributeList))
                 {
                     attributeList.Add((Attribute)attributeInstance);
                 }
                 else
                 {
-                    cache.Add(attributeType,
-                        new List<Attribute> { (Attribute)attributeInstance });
+                    cache.Add(attributeType, new List<Attribute> { (Attribute)attributeInstance });
                 }
             }
 
@@ -121,8 +116,7 @@ namespace DeltaWare.SDK.Core.Caching
 
             if (_typeCache.TryGetValue(type, out Dictionary<Type, List<Attribute>> cache))
             {
-                if (!cache.TryGetValue(typeof(TAttribute),
-                    out List<Attribute> cachedAttributes))
+                if (!cache.TryGetValue(typeof(TAttribute), out List<Attribute> cachedAttributes))
                 {
                     return false;
                 }
@@ -148,15 +142,13 @@ namespace DeltaWare.SDK.Core.Caching
 
                 Type attributeType = attributeInstance.GetType();
 
-                if (cache.TryGetValue(attributeType,
-                    out List<Attribute> attributeList))
+                if (cache.TryGetValue(attributeType, out List<Attribute> attributeList))
                 {
                     attributeList.Add((Attribute)attributeInstance);
                 }
                 else
                 {
-                    cache.Add(attributeType,
-                        new List<Attribute> { (Attribute)attributeInstance });
+                    cache.Add(attributeType, new List<Attribute> { (Attribute)attributeInstance });
                 }
             }
 
@@ -171,8 +163,7 @@ namespace DeltaWare.SDK.Core.Caching
 
             if (_propertyCache.TryGetValue(property, out Dictionary<Type, List<Attribute>> cache))
             {
-                if (!cache.TryGetValue(typeof(TAttribute),
-                    out List<Attribute> cachedAttributes))
+                if (!cache.TryGetValue(typeof(TAttribute), out List<Attribute> cachedAttributes))
                 {
                     return false;
                 }
@@ -198,15 +189,13 @@ namespace DeltaWare.SDK.Core.Caching
 
                 Type attributeType = attributeInstance.GetType();
 
-                if (cache.TryGetValue(attributeType,
-                    out List<Attribute> attributeList))
+                if (cache.TryGetValue(attributeType, out List<Attribute> attributeList))
                 {
                     attributeList.Add((Attribute)attributeInstance);
                 }
                 else
                 {
-                    cache.Add(attributeType,
-                        new List<Attribute> { (Attribute)attributeInstance });
+                    cache.Add(attributeType, new List<Attribute> { (Attribute)attributeInstance });
                 }
             }
 

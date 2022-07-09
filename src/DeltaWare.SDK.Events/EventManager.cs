@@ -8,8 +8,8 @@ namespace DeltaWare.SDK.Events
 {
     public class EventManager : IEventManager
     {
-        private readonly Dictionary<Type, List<object>> _events = new();
-        private readonly object _subscriptionLock = new();
+        private readonly Dictionary<Type, List<object>> _events = new Dictionary<Type, List<object>>();
+        private readonly object _subscriptionLock = new object();
 
         public void Publish<TEvent>(TEvent sender) where TEvent : IEventListener
         {
