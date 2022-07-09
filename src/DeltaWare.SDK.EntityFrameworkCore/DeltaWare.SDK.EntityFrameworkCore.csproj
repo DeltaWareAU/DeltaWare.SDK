@@ -34,6 +34,7 @@
     </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="DeltaWare.SDK.Serialization.Types" Version="6.0.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.15" />
@@ -41,7 +42,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DeltaWare.SDK.Data\DeltaWare.SDK.Data.csproj" />
-    <ProjectReference Include="..\DeltaWare.SDK.Serialization.Types\DeltaWare.SDK.Serialization.Types.csproj" />
   </ItemGroup>
 
 </Project>

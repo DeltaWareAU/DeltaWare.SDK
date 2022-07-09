@@ -30,7 +30,7 @@
     </ItemGroup>
 
     <ItemGroup>
-    <ProjectReference Include="..\DeltaWare.SDK.Serialization.Types\DeltaWare.SDK.Serialization.Types.csproj" />
-  </ItemGroup>
+      <PackageReference Include="DeltaWare.SDK.Serialization.Types" Version="6.0.1.1" />
+    </ItemGroup>
 
 </Project>
