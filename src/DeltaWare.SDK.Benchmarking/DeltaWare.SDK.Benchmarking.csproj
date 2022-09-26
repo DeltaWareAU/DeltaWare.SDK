@@ -29,8 +29,4 @@
         <None Include="..\..\LICENSE.md" pack="true" PackagePath="." />
     </ItemGroup>
 
-    <ItemGroup>
-    <ProjectReference Include="..\DeltaWare.SDK.Core\DeltaWare.SDK.Core.csproj" />
-  </ItemGroup>
-
 </Project>
