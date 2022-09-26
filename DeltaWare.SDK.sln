@@ -38,6 +38,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Comparison.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeltaWare.SDK.Benchmarking", "src\DeltaWare.SDK.Benchmarking\DeltaWare.SDK.Benchmarking.csproj", "{DBFB7145-E803-4EFE-9B5D-D1D638871747}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeltaWare.SDK.Maths.Tests", "tests\DeltaWare.SDK.Maths.Tests\DeltaWare.SDK.Maths.Tests.csproj", "{58066660-3AE3-47E8-9296-B0DADF0AB30C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -142,6 +144,14 @@ Global
 		{DBFB7145-E803-4EFE-9B5D-D1D638871747}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DBFB7145-E803-4EFE-9B5D-D1D638871747}.Release|x64.ActiveCfg = Release|Any CPU
 		{DBFB7145-E803-4EFE-9B5D-D1D638871747}.Release|x64.Build.0 = Release|Any CPU
+		{58066660-3AE3-47E8-9296-B0DADF0AB30C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58066660-3AE3-47E8-9296-B0DADF0AB30C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58066660-3AE3-47E8-9296-B0DADF0AB30C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{58066660-3AE3-47E8-9296-B0DADF0AB30C}.Debug|x64.Build.0 = Debug|Any CPU
+		{58066660-3AE3-47E8-9296-B0DADF0AB30C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58066660-3AE3-47E8-9296-B0DADF0AB30C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58066660-3AE3-47E8-9296-B0DADF0AB30C}.Release|x64.ActiveCfg = Release|Any CPU
+		{58066660-3AE3-47E8-9296-B0DADF0AB30C}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -151,6 +161,7 @@ Global
 		{73D4D8AB-F704-4134-8C2A-36A6DBDB6AFC} = {F6327D40-A0B8-4865-B8B8-1DDBF98E2FDF}
 		{F4BCBD5F-2D47-471D-8896-F9514D7B1747} = {F1D247C8-5882-48DF-A0D9-4D28B78F8CF6}
 		{A3A721FD-3C02-4C6F-8ED1-DD86AEE81D45} = {F1D247C8-5882-48DF-A0D9-4D28B78F8CF6}
+		{58066660-3AE3-47E8-9296-B0DADF0AB30C} = {F1D247C8-5882-48DF-A0D9-4D28B78F8CF6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {50B4E601-DB97-49D8-B10F-A6B644078C32}

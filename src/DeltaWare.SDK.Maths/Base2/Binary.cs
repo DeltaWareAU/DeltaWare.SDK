@@ -1,7 +1,8 @@
 ﻿
 using System;
+using DeltaWare.SDK.Maths.Base2.Exceptions;
 
-namespace DeltaWare.SDK.Maths.Values.Base2
+namespace DeltaWare.SDK.Maths.Base2
 {
     public readonly struct Binary
     {
@@ -11,24 +12,46 @@ namespace DeltaWare.SDK.Maths.Values.Base2
 
         public BinaryState State { get; }
 
-        private Binary(long value, BitWidth bitWidth, BinaryState state)
+        public bool IsTwosComplementEnabled { get; }
+
+        private Binary(long value, BitWidth bitWidth, BinaryState state, bool enableTwosCompliment)
         {
             BitWidth = bitWidth;
             State = state;
+            IsTwosComplementEnabled = enableTwosCompliment;
+            _value = value;
+        }
+        
+        private Binary(int value, BitWidth bitWidth, BinaryState state, bool enableTwosCompliment)
+        {
+            BitWidth = bitWidth;
+            State = state;
+            IsTwosComplementEnabled = enableTwosCompliment;
             _value = value;
         }
 
-        public Binary(long value, BitWidth bitWidth)
+        public Binary(long value, BitWidth bitWidth, bool enableTwosCompliment = false)
         {
             BitWidth = bitWidth;
+            IsTwosComplementEnabled = value < 0 || enableTwosCompliment;
             _value = value;
 
             State = DoesValueFit(_value, BitWidth) ? BinaryState.Valid : BinaryState.Error;
         }
 
-        public Binary(BitWidth bitWidth)
+        public Binary(int value, BitWidth bitWidth, bool enableTwosCompliment = false)
         {
             BitWidth = bitWidth;
+            IsTwosComplementEnabled = value < 0 || enableTwosCompliment;
+            _value = value;
+
+            State = DoesValueFit(_value, BitWidth) ? BinaryState.Valid : BinaryState.Error;
+        }
+
+        public Binary(BitWidth bitWidth, bool enableTwosCompliment = false)
+        {
+            BitWidth = bitWidth;
+            IsTwosComplementEnabled = enableTwosCompliment;
 
             _value = 0;
 
@@ -45,24 +68,34 @@ namespace DeltaWare.SDK.Maths.Values.Base2
             return new Binary(0, BitWidth.One);
         }
 
+        public static Binary Null(BitWidth bitWidth)
+        {
+            return new Binary(0, bitWidth, BinaryState.Null, false);
+        }
+
+        public Binary SetState(BinaryState state)
+        {
+            return new Binary(_value, BitWidth, state, IsTwosComplementEnabled);
+        }
+
         public Binary MakeValid()
         {
-            return new Binary(_value, BitWidth, BinaryState.Valid);
+            return SetState(BinaryState.Valid);
         }
 
         public Binary MakeNull()
         {
-            return new Binary(_value, BitWidth, BinaryState.Null);
-        }
-
-        public static Binary Null(BitWidth bitWidth)
-        {
-            return new Binary(0, bitWidth, BinaryState.Null);
+            return SetState(BinaryState.Null);
         }
 
         public Binary MakeError()
         {
-            return new Binary(_value, BitWidth, BinaryState.Error);
+            return SetState(BinaryState.Error);
+        }
+
+        public Binary MakeOverflow()
+        {
+            return SetState(BinaryState.Overflow);
         }
 
         #region Operators
@@ -75,7 +108,7 @@ namespace DeltaWare.SDK.Maths.Values.Base2
         /// <returns>A new <see cref="Binary"/> containing the results of the operation.</returns>
         public static Binary operator +(Binary valueLeft, Binary valueRight)
         {
-            return TruncateBinary(valueLeft._value + valueRight._value, valueLeft.BitWidth);
+            return TruncateBinary(valueLeft._value + valueRight._value, valueLeft.BitWidth, valueLeft.IsTwosComplementEnabled);
         }
 
         /// <summary>
@@ -86,7 +119,7 @@ namespace DeltaWare.SDK.Maths.Values.Base2
         /// <returns>A new <see cref="Binary"/> containing the results of the operation.</returns>
         public static Binary operator -(Binary valueLeft, Binary valueRight)
         {
-            return TruncateBinary(valueLeft._value - valueRight._value, valueLeft.BitWidth);
+            return TruncateBinary(valueLeft._value - valueRight._value, valueLeft.BitWidth, valueLeft.IsTwosComplementEnabled);
         }
 
         /// <summary>
@@ -97,7 +130,7 @@ namespace DeltaWare.SDK.Maths.Values.Base2
         /// <returns>A new <see cref="Binary"/> containing the results of the operation.</returns>
         public static Binary operator /(Binary valueLeft, Binary valueRight)
         {
-            return TruncateBinary(valueLeft._value / valueRight._value, valueLeft.BitWidth);
+            return TruncateBinary(valueLeft._value / valueRight._value, valueLeft.BitWidth, valueLeft.IsTwosComplementEnabled);
         }
 
         /// <summary>
@@ -108,7 +141,7 @@ namespace DeltaWare.SDK.Maths.Values.Base2
         /// <returns>A new <see cref="Binary"/> containing the results of the operation.</returns>
         public static Binary operator *(Binary valueLeft, Binary valueRight)
         {
-            return TruncateBinary(valueLeft._value * valueRight._value, valueLeft.BitWidth);
+            return TruncateBinary(valueLeft._value * valueRight._value, valueLeft.BitWidth, valueLeft.IsTwosComplementEnabled);
         }
 
         /// <summary>
@@ -119,7 +152,7 @@ namespace DeltaWare.SDK.Maths.Values.Base2
         /// <returns>A new <see cref="Binary"/> containing the results of the operation.</returns>
         public static Binary operator &(Binary valueLeft, Binary valueRight)
         {
-            return new Binary(valueLeft._value & valueRight._value, valueLeft.BitWidth, BinaryState.Valid);
+            return new Binary(valueLeft._value & valueRight._value, valueLeft.BitWidth, BinaryState.Valid, valueLeft.IsTwosComplementEnabled);
         }
 
         /// <summary>
@@ -130,7 +163,7 @@ namespace DeltaWare.SDK.Maths.Values.Base2
         /// <returns>A new <see cref="Binary"/> containing the results of the operation.</returns>
         public static Binary operator |(Binary valueLeft, Binary valueRight)
         {
-            return new Binary(valueLeft._value | valueRight._value, valueLeft.BitWidth, BinaryState.Valid);
+            return new Binary(valueLeft._value | valueRight._value, valueLeft.BitWidth, BinaryState.Valid, valueLeft.IsTwosComplementEnabled);
         }
 
         /// <summary>
@@ -141,7 +174,7 @@ namespace DeltaWare.SDK.Maths.Values.Base2
         /// <returns>A new <see cref="Binary"/> containing the results of the operation.</returns>
         public static Binary operator ^(Binary valueLeft, Binary valueRight)
         {
-            return new Binary(valueLeft._value ^ valueRight._value, valueLeft.BitWidth, BinaryState.Valid);
+            return new Binary(valueLeft._value ^ valueRight._value, valueLeft.BitWidth, BinaryState.Valid, valueLeft.IsTwosComplementEnabled);
         }
 
         /// <summary>
@@ -152,7 +185,7 @@ namespace DeltaWare.SDK.Maths.Values.Base2
         /// <returns>A new <see cref="Binary"/> containing the results of the operation.</returns>
         public static Binary operator >>(Binary valueLeft, int valueRight)
         {
-            return new Binary(valueLeft._value >> valueRight, valueLeft.BitWidth, BinaryState.Valid);
+            return new Binary(valueLeft._value >> valueRight, valueLeft.BitWidth, BinaryState.Valid, valueLeft.IsTwosComplementEnabled);
         }
 
         /// <summary>
@@ -163,12 +196,12 @@ namespace DeltaWare.SDK.Maths.Values.Base2
         /// <returns>A new <see cref="Binary"/> containing the results of the operation.</returns>
         public static Binary operator <<(Binary valueLeft, int valueRight)
         {
-            return new Binary(valueLeft._value << valueRight, valueLeft.BitWidth, BinaryState.Valid);
+            return new Binary(valueLeft._value << valueRight, valueLeft.BitWidth, BinaryState.Valid, valueLeft.IsTwosComplementEnabled);
         }
 
         public static Binary operator ~(Binary binary)
         {
-            return new Binary(~binary._value, binary.BitWidth, BinaryState.Valid);
+            return new Binary(~binary._value, binary.BitWidth, BinaryState.Valid, binary.IsTwosComplementEnabled);
         }
 
         public static bool operator ==(Binary valueLeft, Binary valueRight)
@@ -209,7 +242,7 @@ namespace DeltaWare.SDK.Maths.Values.Base2
         /// <returns>A new <see cref="Binary"/> containing the results of the operation.</returns>
         public static Binary operator +(Binary valueLeft, long valueRight)
         {
-            return TruncateBinary(valueLeft._value + valueRight, valueLeft.BitWidth);
+            return TruncateBinary(valueLeft._value + valueRight, valueLeft.BitWidth, valueLeft.IsTwosComplementEnabled);
         }
 
         /// <summary>
@@ -220,7 +253,7 @@ namespace DeltaWare.SDK.Maths.Values.Base2
         /// <returns>A new <see cref="Binary"/> containing the results of the operation.</returns>
         public static Binary operator -(Binary valueLeft, long valueRight)
         {
-            return TruncateBinary(valueLeft._value - valueRight, valueLeft.BitWidth);
+            return TruncateBinary(valueLeft._value - valueRight, valueLeft.BitWidth, valueLeft.IsTwosComplementEnabled);
         }
 
         /// <summary>
@@ -231,7 +264,7 @@ namespace DeltaWare.SDK.Maths.Values.Base2
         /// <returns>A new <see cref="Binary"/> containing the results of the operation.</returns>
         public static Binary operator /(Binary valueLeft, long valueRight)
         {
-            return TruncateBinary(valueLeft._value / valueRight, valueLeft.BitWidth);
+            return TruncateBinary(valueLeft._value / valueRight, valueLeft.BitWidth, valueLeft.IsTwosComplementEnabled);
         }
 
         /// <summary>
@@ -242,7 +275,7 @@ namespace DeltaWare.SDK.Maths.Values.Base2
         /// <returns>A new <see cref="Binary"/> containing the results of the operation.</returns>
         public static Binary operator *(Binary valueLeft, long valueRight)
         {
-            return TruncateBinary(valueLeft._value * valueRight, valueLeft.BitWidth);
+            return TruncateBinary(valueLeft._value * valueRight, valueLeft.BitWidth, valueLeft.IsTwosComplementEnabled);
         }
 
         /// <summary>
@@ -253,7 +286,7 @@ namespace DeltaWare.SDK.Maths.Values.Base2
         /// <returns>A new <see cref="Binary"/> containing the results of the operation.</returns>
         public static Binary operator &(Binary valueLeft, long valueRight)
         {
-            return new Binary(valueLeft._value & valueRight, valueLeft.BitWidth, BinaryState.Valid);
+            return new Binary(valueLeft._value & valueRight, valueLeft.BitWidth, BinaryState.Valid, valueLeft.IsTwosComplementEnabled);
         }
 
         /// <summary>
@@ -264,7 +297,7 @@ namespace DeltaWare.SDK.Maths.Values.Base2
         /// <returns>A new <see cref="Binary"/> containing the results of the operation.</returns>
         public static Binary operator |(Binary valueLeft, long valueRight)
         {
-            return new Binary(valueLeft._value | valueRight, valueLeft.BitWidth, BinaryState.Valid);
+            return new Binary(valueLeft._value | valueRight, valueLeft.BitWidth, BinaryState.Valid, valueLeft.IsTwosComplementEnabled);
         }
 
         /// <summary>
@@ -275,7 +308,7 @@ namespace DeltaWare.SDK.Maths.Values.Base2
         /// <returns>A new <see cref="Binary"/> containing the results of the operation.</returns>
         public static Binary operator ^(Binary valueLeft, long valueRight)
         {
-            return new Binary(valueLeft._value ^ valueRight, valueLeft.BitWidth, BinaryState.Valid);
+            return new Binary(valueLeft._value ^ valueRight, valueLeft.BitWidth, BinaryState.Valid, valueLeft.IsTwosComplementEnabled);
         }
 
         public static bool operator ==(Binary valueLeft, long valueRight)
@@ -312,54 +345,59 @@ namespace DeltaWare.SDK.Maths.Values.Base2
 
         #region Static Methods
 
-        public static bool DoesValueFit(long value, BitWidth bitWidth)
+        public static bool DoesValueFit(long value, BitWidth bitWidth, bool isTwosComplementEnabled = false)
         {
-            if (value >= 0 && value <= BitWidth.MaxSizePositive[bitWidth.ToInt()])
+            if (isTwosComplementEnabled)
             {
-                return true;
+                if (value >= 0 && value <= BitWidth.MaxSizePositive[bitWidth.ToInt()])
+                {
+                    return true;
+                }
+
+                return value < 0 && value >= BitWidth.MaxSizeNegative[bitWidth.ToInt()];
             }
 
-            return value >= BitWidth.MaxSizeNegative[bitWidth.ToInt()];
+            if (value < 0)
+            {
+                throw BinaryException.NegativeValueWithoutTwosCompliment();
+            }
+
+            return value <= BitWidth.MaxSizePositive[bitWidth.ToInt() + 1];
         }
 
         public static bool DoesValueFit(Binary binary, BitWidth bitWidth)
         {
-            if (binary >= 0 && binary <= BitWidth.MaxSizePositive[bitWidth.ToInt()])
-            {
-                return true;
-            }
-
-            return binary >= BitWidth.MaxSizeNegative[bitWidth.ToInt()];
+            return DoesValueFit(binary._value, bitWidth, binary.IsTwosComplementEnabled);
         }
 
-        public static Binary TruncateBinary(long value, BitWidth bitWidth)
+        public static Binary TruncateBinary(long value, BitWidth bitWidth, bool isTwosComplementEnabled = false)
         {
-            if (DoesValueFit(value, bitWidth))
+            if (DoesValueFit(value, bitWidth, isTwosComplementEnabled))
             {
-                return new Binary(value, bitWidth);
+                return new Binary(value, bitWidth, isTwosComplementEnabled);
             }
 
-            if (value >= 0)
+            if (isTwosComplementEnabled)
             {
-                return new Binary(value - BitWidth.MaxSizePositive[bitWidth.ToInt()], bitWidth);
+                if (value >= 0)
+                {
+                    return new Binary(value - BitWidth.MaxSizePositive[bitWidth.ToInt()], bitWidth, BinaryState.Overflow, true);
+                }
+
+                return new Binary(value + BitWidth.MaxSizeNegative[bitWidth.ToInt()], bitWidth, BinaryState.Overflow, true);
             }
 
-            return new Binary(value + BitWidth.MaxSizeNegative[bitWidth.ToInt()], bitWidth);
+            if (value < 0)
+            {
+                throw BinaryException.NegativeValueWithoutTwosCompliment();
+            }
+
+            return new Binary(value - BitWidth.MaxSizePositive[bitWidth.ToInt() + 1], bitWidth, BinaryState.Overflow, false);
         }
 
         public static Binary TruncateBinary(Binary binary, BitWidth bitWidth)
         {
-            if (DoesValueFit(binary, bitWidth))
-            {
-                return binary;
-            }
-
-            if (binary >= 0)
-            {
-                return binary - BitWidth.MaxSizePositive[bitWidth.ToInt()];
-            }
-
-            return binary + BitWidth.MaxSizeNegative[bitWidth.ToInt()];
+            return TruncateBinary(binary._value, bitWidth, binary.IsTwosComplementEnabled);
         }
 
         #endregion

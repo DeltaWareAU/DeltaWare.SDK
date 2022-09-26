@@ -1,4 +1,6 @@
-﻿namespace DeltaWare.SDK.Maths.Values.Base2
+﻿using DeltaWare.SDK.Maths.Base2.Exceptions;
+
+namespace DeltaWare.SDK.Maths.Base2
 {
     public readonly struct BitWidth
     {

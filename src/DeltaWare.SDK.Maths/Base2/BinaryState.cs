@@ -1,9 +1,10 @@
-﻿namespace DeltaWare.SDK.Maths.Values.Base2
+﻿namespace DeltaWare.SDK.Maths.Base2
 {
     public enum BinaryState
     {
         Error,
         Null,
-        Valid
+        Valid,
+        Overflow
     }
 }
