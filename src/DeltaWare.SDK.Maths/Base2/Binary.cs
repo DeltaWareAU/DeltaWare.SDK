@@ -1,6 +1,6 @@
 ﻿
-using System;
 using DeltaWare.SDK.Maths.Base2.Exceptions;
+using System;
 
 namespace DeltaWare.SDK.Maths.Base2
 {
@@ -21,7 +21,7 @@ namespace DeltaWare.SDK.Maths.Base2
             IsTwosComplementEnabled = enableTwosCompliment;
             _value = value;
         }
-        
+
         private Binary(int value, BitWidth bitWidth, BinaryState state, bool enableTwosCompliment)
         {
             BitWidth = bitWidth;
@@ -71,6 +71,11 @@ namespace DeltaWare.SDK.Maths.Base2
         public static Binary Null(BitWidth bitWidth)
         {
             return new Binary(0, bitWidth, BinaryState.Null, false);
+        }
+
+        public static Binary Error(BitWidth bitWidth)
+        {
+            return new Binary(0, bitWidth, BinaryState.Error, false);
         }
 
         public Binary SetState(BinaryState state)
@@ -201,27 +206,31 @@ namespace DeltaWare.SDK.Maths.Base2
 
         public static Binary operator ~(Binary binary)
         {
-            return new Binary(~binary._value, binary.BitWidth, BinaryState.Valid, binary.IsTwosComplementEnabled);
+            long maxValue = BitWidth.MaxSizePositive[binary.BitWidth.ToInt() + 1];
+
+            long invertedValue = maxValue - binary._value;
+
+            return new Binary(invertedValue, binary.BitWidth, BinaryState.Valid, binary.IsTwosComplementEnabled);
         }
 
         public static bool operator ==(Binary valueLeft, Binary valueRight)
         {
-            return valueLeft._value == valueRight._value;
+            return valueLeft.State == valueRight.State && valueLeft._value == valueRight._value;
         }
 
         public static bool operator !=(Binary valueLeft, Binary valueRight)
         {
-            return valueLeft._value != valueRight._value;
+            return valueLeft.State == valueRight.State && valueLeft._value != valueRight._value;
         }
 
         public static bool operator >=(Binary valueLeft, Binary valueRight)
         {
-            return valueLeft._value >= valueRight._value;
+            return valueLeft.State == valueRight.State && valueLeft._value >= valueRight._value;
         }
 
         public static bool operator <=(Binary valueLeft, Binary valueRight)
         {
-            return valueLeft._value <= valueRight._value;
+            return valueLeft.State == valueRight.State && valueLeft._value <= valueRight._value;
         }
 
         public static bool operator >(Binary valueLeft, Binary valueRight)
@@ -397,7 +406,27 @@ namespace DeltaWare.SDK.Maths.Base2
 
         public static Binary TruncateBinary(Binary binary, BitWidth bitWidth)
         {
-            return TruncateBinary(binary._value, bitWidth, binary.IsTwosComplementEnabled);
+            if (DoesValueFit(binary._value, bitWidth, binary.IsTwosComplementEnabled))
+            {
+                return new Binary(binary._value, bitWidth, binary.State, binary.IsTwosComplementEnabled);
+            }
+
+            if (binary.IsTwosComplementEnabled)
+            {
+                if (binary._value >= 0)
+                {
+                    return new Binary(binary._value - BitWidth.MaxSizePositive[bitWidth.ToInt()], bitWidth, binary.State, true);
+                }
+
+                return new Binary(binary._value + BitWidth.MaxSizeNegative[bitWidth.ToInt()], bitWidth, binary.State, true);
+            }
+
+            if (binary._value < 0)
+            {
+                throw BinaryException.NegativeValueWithoutTwosCompliment();
+            }
+
+            return new Binary(binary._value - BitWidth.MaxSizePositive[bitWidth.ToInt() + 1], bitWidth, binary.State, false);
         }
 
         #endregion
@@ -419,7 +448,7 @@ namespace DeltaWare.SDK.Maths.Base2
             return HashCode.Combine(_value, BitWidth, (int)State);
         }
 
-        public new string ToString()
+        public override string ToString()
         {
             string value = Convert.ToString(_value, 2);
 
@@ -443,6 +472,22 @@ namespace DeltaWare.SDK.Maths.Base2
         public long ToInt64()
         {
             return _value;
+        }
+
+        public string ToHexadecimal()
+        {
+            string value = Convert.ToString(_value, 4);
+
+            int base2Length = value.Length * 4;
+
+            if (value.Length * 4 < BitWidth.ToInt())
+            {
+                int newLength = base2Length - BitWidth.ToInt();
+
+                value = value.PadLeft(newLength, '0');
+            }
+
+            return $"0x{value}";
         }
 
         #endregion

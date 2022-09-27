@@ -2,7 +2,7 @@
 
 namespace DeltaWare.SDK.Maths.Base2.Exceptions
 {
-    public class BinaryException: Exception
+    public class BinaryException : Exception
     {
         private BinaryException(string message, Exception? innerException = null) : base(message, innerException)
         {
