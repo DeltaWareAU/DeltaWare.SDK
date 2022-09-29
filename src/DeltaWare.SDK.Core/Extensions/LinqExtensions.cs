@@ -27,14 +27,12 @@ namespace System.Linq
             return source;
         }
 
-        public static T[] ForEach<T>(this T[] source, Action<T> action)
+        public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
             foreach (T t in source)
             {
                 action.Invoke(t);
             }
-
-            return source;
         }
 
         public static IEnumerable<T> Is<T>(this IEnumerable<object> source) where T : class
