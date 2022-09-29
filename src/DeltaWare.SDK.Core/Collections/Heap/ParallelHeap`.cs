@@ -37,6 +37,11 @@ namespace DeltaWare.SDK.Core.Collections.Heap
         {
             DisposeInternalHeapWriter();
 
+            if (_heapReaderQueue.Count > 0)
+            {
+                throw new AccessViolationException();
+            }
+
             int allocation = Math.DivRem(Count, totalThreads, out int remainder);
 
             _internalHeapReaders = new InternalHeapReader<T>[totalThreads];
@@ -45,17 +50,22 @@ namespace DeltaWare.SDK.Core.Collections.Heap
 
             for (int i = 0; i < totalThreads; i++)
             {
+                InternalHeapReader<T> heapReader;
+
                 if (i == 0)
                 {
-                    _internalHeapReaders[i] = new InternalHeapReader<T>(_internalHeap, 0, allocation + remainder, heapAllocations);
+                    heapReader = new InternalHeapReader<T>(_internalHeap, 0, allocation + remainder, heapAllocations);
                 }
                 else
                 {
-                    _internalHeapReaders[i] = new InternalHeapReader<T>(_internalHeap, (allocation * i) + remainder, allocation, heapAllocations);
+                    heapReader = new InternalHeapReader<T>(_internalHeap, (allocation * i) + remainder, allocation, heapAllocations);
                 }
+
+                _internalHeapReaders[i] = heapReader;
+                _heapReaderQueue.Enqueue(heapReader);
             }
 
-            _heapReaderQueue = new ConcurrentQueue<InternalHeapReader<T>>(_internalHeapReaders);
+            //_heapReaderQueue = new ConcurrentQueue<InternalHeapReader<T>>(_internalHeapReaders);
 
             ThreadLocal<IHeapReader<T>> threadLocalizedWriter = new ThreadLocal<IHeapReader<T>>(GetNextReader);
 
@@ -75,14 +85,16 @@ namespace DeltaWare.SDK.Core.Collections.Heap
         public IHeapWriter<T> CreateWriter(int totalThreads)
         {
             DisposeInternalHeapReader();
-
+            
             int offsetMultiplier = Math.DivRem(Length, totalThreads, out _);
 
             _internalHeapWriters = new InternalHeapWriter<T>[totalThreads];
 
             for (int i = 0; i < totalThreads; i++)
             {
-                _internalHeapWriters[i] = new InternalHeapWriter<T>(_internalHeap, offsetMultiplier * i, offsetMultiplier);
+                InternalHeapWriter<T> heapWriter = new InternalHeapWriter<T>(_internalHeap, offsetMultiplier * i, offsetMultiplier);
+
+                _internalHeapWriters[i] = heapWriter;
             }
 
             _heapWriterQueue = new ConcurrentQueue<InternalHeapWriter<T>>(_internalHeapWriters);
