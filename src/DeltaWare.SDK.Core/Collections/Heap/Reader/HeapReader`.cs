@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 
 namespace DeltaWare.SDK.Core.Collections.Heap.Reader
 {
+    [DebuggerDisplay("Readers Allocated {_threadLocalizedWriter.Values.Count}")]
     internal sealed class HeapReader<T> : IHeapReader<T>
     {
         private readonly ThreadLocal<IHeapReader<T>> _threadLocalizedWriter;
@@ -24,7 +26,10 @@ namespace DeltaWare.SDK.Core.Collections.Heap.Reader
 
         public void Dispose()
         {
-            _threadLocalizedWriter.Value!.Dispose();
+            foreach (IHeapReader<T> heapReader in _threadLocalizedWriter.Values)
+            {
+                heapReader.Dispose();
+            }
         }
 
         public IEnumerator<T> GetEnumerator()

@@ -1,12 +1,8 @@
 ﻿namespace DeltaWare.SDK.Core.Collections.Heap.Allocation
 {
-    internal abstract class HeapAllocation<T>
+    internal abstract class HeapAllocation<T> : HeapAllocation
     {
-        private int _actorIndex = 0;
-        private int _offset = 0;
-
-
-        private HeapAllocation[]? _heapAllocations;
+        private readonly HeapAllocation[]? _heapAllocations;
 
         protected T[] HeapAccessor { get; }
 
@@ -14,23 +10,19 @@
 
         public int AllocationEnd { get; }
 
-        public int Length { get; }
-
-        protected HeapAllocation(T[] heapAccessor, int allocationStart, int length)
+        protected HeapAllocation(T[] heapAccessor, int allocationStart, int length) : base(length)
         {
             HeapAccessor = heapAccessor;
             AllocationStart = allocationStart;
             AllocationEnd = allocationStart + length;
-            Length = length;
             _heapAllocations = null;
-        }        
-        
-        protected HeapAllocation(T[] heapAccessor, int allocationStart, int length, HeapAllocation[] heapAllocations)
+        }
+
+        protected HeapAllocation(T[] heapAccessor, int allocationStart, int length, HeapAllocation[] heapAllocations) : base(length)
         {
             HeapAccessor = heapAccessor;
             AllocationStart = allocationStart;
             AllocationEnd = allocationStart + length;
-            Length = length;
             _heapAllocations = heapAllocations;
         }
 
@@ -50,7 +42,7 @@
 
             return WithHeapAllocations(position);
         }
-        
+
         private int WithHeapAllocations(int position)
         {
             int offset = 0;

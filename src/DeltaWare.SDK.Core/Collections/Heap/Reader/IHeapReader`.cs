@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DeltaWare.SDK.Core.Collections.Heap.Reader
 {
-    public interface IHeapReader<T>: IDisposable, IEnumerable<T>
+    public interface IHeapReader<T> : IDisposable, IEnumerable<T>
     {
         int Length { get; }
 

@@ -1,52 +1,84 @@
-﻿using System;
+﻿using DeltaWare.SDK.Core.Collections.Heap.Exceptions;
+using DeltaWare.SDK.Core.Collections.Heap.Reader;
+using DeltaWare.SDK.Core.Collections.Heap.Writer;
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using DeltaWare.SDK.Core.Collections.Heap.Allocation;
-using DeltaWare.SDK.Core.Collections.Heap.Reader;
-using DeltaWare.SDK.Core.Collections.Heap.Writer;
 
 namespace DeltaWare.SDK.Core.Collections.Heap
 {
-    public class ParallelHeap<T> : IEnumerable<T>, IDisposable
+    /// <summary>
+    /// An Extremely High Performance Thread Safe Parallel Collection.
+    /// </summary>
+    /// <typeparam name="T">The Type Stored in the Collection</typeparam>
+    public class ParallelHeap<T> : IEnumerable<T>
     {
-        private ConcurrentQueue<InternalHeapReader<T>> _heapReaderQueue = new();
-        private ConcurrentQueue<InternalHeapWriter<T>> _heapWriterQueue = new();
+        private readonly ConcurrentQueue<InternalHeapReader<T>> _heapReaderQueue = new();
+        private readonly ConcurrentQueue<InternalHeapWriter<T>> _heapWriterQueue = new();
 
         private InternalHeapWriter<T>[] _internalHeapWriters = Array.Empty<InternalHeapWriter<T>>();
         private InternalHeapReader<T>[] _internalHeapReaders = Array.Empty<InternalHeapReader<T>>();
 
         private readonly T[] _internalHeap;
 
-        public int Length { get; }
+        public int Length => _internalHeap.Length;
 
         public int Count => _internalHeapWriters.Sum(w => w.Count);
 
         public int ActiveWriters => _internalHeapWriters.Length;
 
+        public int ActiveReaders => _internalHeapReaders.Length;
+
         public ParallelHeap(int length)
         {
-            Length = length;
+            _internalHeap = new T[length];
+        }
 
-            _internalHeap = new T[Length];
+        public void Reset()
+        {
+            _internalHeapReaders = Array.Empty<InternalHeapReader<T>>();
+            _internalHeapWriters = Array.Empty<InternalHeapWriter<T>>();
         }
 
         public IHeapReader<T> CreateReader(int totalThreads)
         {
-            DisposeInternalHeapWriter();
-
             if (_heapReaderQueue.Count > 0)
             {
-                throw new AccessViolationException();
+                throw HeapAccessViolationException.UnAllocatedReaders();
             }
 
+            InitializeInternalHeapReaders(totalThreads);
+
+            return BuildHeapReader();
+        }
+
+        public IHeapWriter<T> CreateWriter(int totalThreads)
+        {
+            if (_heapReaderQueue.Count > 0)
+            {
+                throw HeapAccessViolationException.UnAllocatedReaders();
+            }
+
+            if (_heapWriterQueue.Count > 0)
+            {
+                _heapWriterQueue.Clear();
+            }
+
+            InitializeInternalHeapWriters(totalThreads);
+
+            return BuildHeapWriter();
+        }
+
+        #region Heap Reader
+
+        private void InitializeInternalHeapReaders(int totalThreads)
+        {
             int allocation = Math.DivRem(Count, totalThreads, out int remainder);
 
             _internalHeapReaders = new InternalHeapReader<T>[totalThreads];
-
-            HeapAllocation[] heapAllocations = _internalHeapWriters.Select(w => new HeapAllocation(w.Length, w.Count)).ToArray();
 
             for (int i = 0; i < totalThreads; i++)
             {
@@ -54,20 +86,21 @@ namespace DeltaWare.SDK.Core.Collections.Heap
 
                 if (i == 0)
                 {
-                    heapReader = new InternalHeapReader<T>(_internalHeap, 0, allocation + remainder, heapAllocations);
+                    heapReader = new InternalHeapReader<T>(_internalHeap, 0, allocation + remainder, _internalHeapWriters);
                 }
                 else
                 {
-                    heapReader = new InternalHeapReader<T>(_internalHeap, (allocation * i) + remainder, allocation, heapAllocations);
+                    heapReader = new InternalHeapReader<T>(_internalHeap, (allocation * i) + remainder, allocation, _internalHeapWriters);
                 }
 
                 _internalHeapReaders[i] = heapReader;
                 _heapReaderQueue.Enqueue(heapReader);
             }
+        }
 
-            //_heapReaderQueue = new ConcurrentQueue<InternalHeapReader<T>>(_internalHeapReaders);
-
-            ThreadLocal<IHeapReader<T>> threadLocalizedWriter = new ThreadLocal<IHeapReader<T>>(GetNextReader);
+        private IHeapReader<T> BuildHeapReader()
+        {
+            ThreadLocal<IHeapReader<T>> threadLocalizedWriter = new ThreadLocal<IHeapReader<T>>(GetNextReader, true);
 
             return new HeapReader<T>(threadLocalizedWriter);
 
@@ -78,14 +111,16 @@ namespace DeltaWare.SDK.Core.Collections.Heap
                     return value;
                 }
 
-                throw new ArgumentNullException();
+                throw HeapAccessViolationException.UnexpectedThread(Thread.CurrentThread);
             }
         }
 
-        public IHeapWriter<T> CreateWriter(int totalThreads)
+        #endregion
+
+        #region Heap Writers
+
+        private void InitializeInternalHeapWriters(int totalThreads)
         {
-            DisposeInternalHeapReader();
-            
             int offsetMultiplier = Math.DivRem(Length, totalThreads, out _);
 
             _internalHeapWriters = new InternalHeapWriter<T>[totalThreads];
@@ -95,14 +130,16 @@ namespace DeltaWare.SDK.Core.Collections.Heap
                 InternalHeapWriter<T> heapWriter = new InternalHeapWriter<T>(_internalHeap, offsetMultiplier * i, offsetMultiplier);
 
                 _internalHeapWriters[i] = heapWriter;
+                _heapWriterQueue.Enqueue(heapWriter);
             }
+        }
 
-            _heapWriterQueue = new ConcurrentQueue<InternalHeapWriter<T>>(_internalHeapWriters);
-
-            ThreadLocal<IHeapWriter<T>> threadLocalizedWriter = new ThreadLocal<IHeapWriter<T>>(GetWriter);
+        private IHeapWriter<T> BuildHeapWriter()
+        {
+            ThreadLocal<IHeapWriter<T>> threadLocalizedWriter = new ThreadLocal<IHeapWriter<T>>(GetWriter, true);
 
             return new HeapWriter<T>(threadLocalizedWriter);
-            
+
             IHeapWriter<T> GetWriter()
             {
                 if (_heapWriterQueue.TryDequeue(out InternalHeapWriter<T> writer))
@@ -110,88 +147,25 @@ namespace DeltaWare.SDK.Core.Collections.Heap
                     return writer;
                 }
 
-                throw new ArgumentNullException();
+                throw HeapAccessViolationException.UnexpectedThread(Thread.CurrentThread);
             }
         }
 
-        private bool TryCalculateHeapIndex(int index, out int actualIndex)
-        {
-            int actorIndex = 0;
-            int offset = 0;
-
-            do
-            {
-                if (index < _internalHeapWriters[actorIndex].Count)
-                {
-                    actualIndex = index + offset;
-
-                    return true;
-                }
-
-                index -= _internalHeapWriters[actorIndex].Count;
-
-                if (index < 0)
-                {
-                    actualIndex = -1;
-
-                    return false;
-                }
-
-                offset += _internalHeapWriters[actorIndex].Length;
-
-                actorIndex++;
-
-                if (actorIndex == _internalHeapWriters.Length)
-                {
-                    actualIndex = -1;
-
-                    return false;
-                }
-            }
-            while (actorIndex < _internalHeapWriters.Length);
-
-            actualIndex = -1;
-
-            return false;
-        }
+        #endregion
 
         public IEnumerator<T> GetEnumerator()
         {
-            int index = 0;
+            using IHeapReader<T> reader = CreateReader(1);
 
-            while (TryCalculateHeapIndex(index, out int heapIndex))
+            while (reader.TryRead(out T value))
             {
-                index++;
-
-                yield return _internalHeap[heapIndex];
+                yield return value;
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
-        }
-
-        public void Dispose()
-        {
-            DisposeInternalHeapWriter();
-            DisposeInternalHeapReader();
-        }
-
-        private void DisposeInternalHeapWriter()
-        {
-            foreach (InternalHeapWriter<T> heapWriter in _internalHeapWriters)
-            {
-                heapWriter?.Dispose();
-            }
-        }
-
-        private void DisposeInternalHeapReader()
-        {
-            foreach (InternalHeapReader<T> heapReader in _internalHeapReaders)
-            {
-                heapReader?.Dispose();
-            }
         }
     }
 }

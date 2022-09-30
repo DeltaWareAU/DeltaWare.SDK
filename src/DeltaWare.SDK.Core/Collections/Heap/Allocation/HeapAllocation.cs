@@ -4,12 +4,11 @@
     {
         public int Length { get; }
 
-        public int Count { get; }
+        public int Count { get; protected set; }
 
-        public HeapAllocation(int length, int count)
+        public HeapAllocation(int length)
         {
             Length = length;
-            Count = count;
         }
     }
 }
