@@ -1,8 +1,11 @@
-﻿namespace DeltaWare.SDK.Core.Collections.Heap.Allocation
+﻿using System;
+using System.Reflection.Metadata.Ecma335;
+
+namespace DeltaWare.SDK.Core.Collections.Heap.Allocation
 {
     internal abstract class HeapAllocation<T> : HeapAllocation
     {
-        private readonly HeapAllocation[]? _heapAllocations;
+        private readonly HeapAllocation[] _heapAllocations;
 
         protected T[] HeapAccessor { get; }
 
@@ -15,7 +18,7 @@
             HeapAccessor = heapAccessor;
             AllocationStart = allocationStart;
             AllocationEnd = allocationStart + length;
-            _heapAllocations = null;
+            _heapAllocations = Array.Empty<HeapAllocation>();
         }
 
         protected HeapAllocation(T[] heapAccessor, int allocationStart, int length, HeapAllocation[] heapAllocations) : base(length)
@@ -25,7 +28,7 @@
             AllocationEnd = allocationStart + length;
             _heapAllocations = heapAllocations;
         }
-
+        
         protected int GetAllocatedHeapIndex(int position)
         {
             position += AllocationStart;
@@ -35,7 +38,7 @@
                 return -1;
             }
 
-            if (_heapAllocations is null)
+            if (_heapAllocations.Length == 0)
             {
                 return position;
             }
@@ -46,27 +49,27 @@
         private int WithHeapAllocations(int position)
         {
             int offset = 0;
-            int actorIndex = 0;
+            int heapIndex = 0;
 
             do
             {
-                if (position < _heapAllocations[actorIndex].Count)
+                if (position < _heapAllocations[heapIndex].Count)
                 {
                     return position + offset;
                 }
 
-                position -= _heapAllocations[actorIndex].Count;
+                position -= _heapAllocations[heapIndex].Count;
 
                 if (position < 0)
                 {
                     return -1;
                 }
 
-                offset += _heapAllocations[actorIndex].Length;
+                offset += _heapAllocations[heapIndex].Length;
 
-                actorIndex++;
+                heapIndex++;
             }
-            while (actorIndex < _heapAllocations.Length);
+            while (heapIndex < _heapAllocations.Length);
 
             return -1;
         }

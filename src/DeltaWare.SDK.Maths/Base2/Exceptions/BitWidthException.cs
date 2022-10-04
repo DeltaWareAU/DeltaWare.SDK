@@ -4,7 +4,7 @@ namespace DeltaWare.SDK.Maths.Base2.Exceptions
 {
     public sealed class BitWidthException : Exception
     {
-        private BitWidthException(string message, Exception? innerException = null) : base(message, innerException)
+        public BitWidthException(string? message = null, Exception? innerException = null) : base(message, innerException)
         {
         }
 

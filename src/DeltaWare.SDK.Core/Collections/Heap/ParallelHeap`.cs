@@ -39,6 +39,18 @@ namespace DeltaWare.SDK.Core.Collections.Heap
 
         public void Reset()
         {
+            foreach (InternalHeapReader<T> heapReader in _internalHeapReaders)
+            {
+                heapReader.Dispose();
+            }
+
+            foreach (InternalHeapWriter<T> heapWriter in _internalHeapWriters)
+            {
+                heapWriter.Dispose();
+            }
+
+            _heapReaderQueue.Clear();
+            _heapWriterQueue.Clear();
             _internalHeapReaders = Array.Empty<InternalHeapReader<T>>();
             _internalHeapWriters = Array.Empty<InternalHeapWriter<T>>();
         }
