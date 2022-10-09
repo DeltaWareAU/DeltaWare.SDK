@@ -66,6 +66,17 @@ namespace DeltaWare.SDK.Maths.Base2
         public static Binary False()
         {
             return new Binary(0, BitWidth.One);
+
+            /* Unmerged change from project 'DeltaWare.SDK.Maths (net5.0)'
+            Before:
+                    }
+
+                    public static Binary Null(BitWidth bitWidth)
+            After:
+                    }
+
+                    public static Binary Null(BitWidth bitWidth)
+            */
         }
 
         public static Binary Null(BitWidth bitWidth)

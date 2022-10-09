@@ -14,7 +14,7 @@ namespace DeltaWare.SDK.Core.Collections.Heap
     /// An Extremely High Performance Thread Safe Parallel Collection.
     /// </summary>
     /// <typeparam name="T">The Type Stored in the Collection</typeparam>
-    public class ParallelHeap<T> : IEnumerable<T>
+    public sealed class ParallelHeap<T> : IEnumerable<T>
     {
         private readonly ConcurrentQueue<InternalHeapReader<T>> _heapReaderQueue = new();
         private readonly ConcurrentQueue<InternalHeapWriter<T>> _heapWriterQueue = new();

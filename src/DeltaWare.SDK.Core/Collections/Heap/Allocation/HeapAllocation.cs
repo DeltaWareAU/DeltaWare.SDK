@@ -1,14 +1,20 @@
 ﻿namespace DeltaWare.SDK.Core.Collections.Heap.Allocation
 {
-    internal class HeapAllocation
+    public class HeapAllocation
     {
         public int Length { get; }
 
-        public int Count { get; protected set; }
+        public int AllocationStart { get; }
 
-        public HeapAllocation(int length)
+        public int AllocationEnd { get; }
+
+        public int Position { get; protected set; }
+
+        public HeapAllocation(int allocationStart, int length)
         {
             Length = length;
+            AllocationStart = allocationStart;
+            AllocationEnd = allocationStart + length;
         }
     }
 }

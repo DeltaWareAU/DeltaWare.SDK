@@ -20,5 +20,10 @@ namespace DeltaWare.SDK.Core.Collections.Heap.Exceptions
         {
             return new UnallocatedHeapAccessException("A HeapWriter has Attempted to Write to an Unallocated Heap Index.");
         }
+
+        public static UnallocatedHeapAccessException UnallocatedReadAccess(int index)
+        {
+            return new UnallocatedHeapAccessException($"A HeapReader has Attempted to Read from an Allocated Heap Index[{index}].");
+        }
     }
 }

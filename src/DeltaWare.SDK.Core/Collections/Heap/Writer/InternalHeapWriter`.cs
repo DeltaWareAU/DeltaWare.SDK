@@ -8,6 +8,8 @@ namespace DeltaWare.SDK.Core.Collections.Heap.Writer
     [DebuggerDisplay("Length:{Length} Count:{Count} - AllocationStart:{AllocationStart} - AllocationEnd:{AllocationEnd}")]
     internal sealed class InternalHeapWriter<T> : HeapAllocation<T>, IHeapWriter<T>
     {
+        public int Count { get; private set; }
+
         public InternalHeapWriter(T[] heapAccessor, int allocationStart, int length) : base(heapAccessor, allocationStart, length)
         {
         }
@@ -19,14 +21,17 @@ namespace DeltaWare.SDK.Core.Collections.Heap.Writer
                 throw new ObjectDisposedException("InternalHeapWriter");
             }
 
-            int index = GetAllocatedHeapIndex(Count);
-
-            if (index < 0)
+            if (!TryGetAllocatedHeapIndex(out int index))
             {
                 throw UnallocatedHeapAccessException.UnallocatedWriteAccess();
             }
 
             Count++;
+
+            if (value == null)
+            {
+                throw new ArgumentNullException();
+            }
 
             HeapAccessor[index] = value;
         }

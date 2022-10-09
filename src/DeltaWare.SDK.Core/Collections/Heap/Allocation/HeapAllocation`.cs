@@ -1,77 +1,78 @@
 ﻿using System;
-using System.Reflection.Metadata.Ecma335;
 
 namespace DeltaWare.SDK.Core.Collections.Heap.Allocation
 {
-    internal abstract class HeapAllocation<T> : HeapAllocation
+    public abstract class HeapAllocation<T> : HeapAllocation
     {
         private readonly HeapAllocation[] _heapAllocations;
 
         protected T[] HeapAccessor { get; }
 
-        public int AllocationStart { get; }
-
-        public int AllocationEnd { get; }
-
-        protected HeapAllocation(T[] heapAccessor, int allocationStart, int length) : base(length)
+        protected HeapAllocation(T[] heapAccessor, int allocationStart, int length) : base(allocationStart, length)
         {
             HeapAccessor = heapAccessor;
-            AllocationStart = allocationStart;
-            AllocationEnd = allocationStart + length;
+            Position = AllocationStart;
             _heapAllocations = Array.Empty<HeapAllocation>();
         }
 
-        protected HeapAllocation(T[] heapAccessor, int allocationStart, int length, HeapAllocation[] heapAllocations) : base(length)
+        protected HeapAllocation(T[] heapAccessor, int allocationStart, int length, HeapAllocation[] heapAllocations) : base(allocationStart, length)
         {
             HeapAccessor = heapAccessor;
-            AllocationStart = allocationStart;
-            AllocationEnd = allocationStart + length;
+            Position = AllocationStart;
             _heapAllocations = heapAllocations;
         }
-        
-        protected int GetAllocatedHeapIndex(int position)
+
+        protected bool TryGetAllocatedHeapIndex(out int index)
         {
-            position += AllocationStart;
-
-            if (position > AllocationEnd)
+            if (Position >= AllocationEnd)
             {
-                return -1;
+                index = -1;
+
+                return false;
             }
 
-            if (_heapAllocations.Length == 0)
+            if (_heapAllocations.Length != 0)
             {
-                return position;
+                bool result = WithHeapAllocations(out index);
+
+                Position++;
+
+                return result;
             }
 
-            return WithHeapAllocations(position);
+            index = Position;
+
+            Position++;
+
+            return true;
         }
 
-        private int WithHeapAllocations(int position)
-        {
-            int offset = 0;
-            int heapIndex = 0;
+        private int _heapIndex;
 
+        private int _offset;
+
+        private bool WithHeapAllocations(out int value)
+        {
             do
             {
-                if (position < _heapAllocations[heapIndex].Count)
+                int index = Position + _offset;
+
+                if (index < _heapAllocations[_heapIndex].Position)
                 {
-                    return position + offset;
+                    value = index;
+
+                    return true;
                 }
 
-                position -= _heapAllocations[heapIndex].Count;
+                _offset = _heapAllocations[_heapIndex].AllocationEnd - Position;
 
-                if (position < 0)
-                {
-                    return -1;
-                }
-
-                offset += _heapAllocations[heapIndex].Length;
-
-                heapIndex++;
+                _heapIndex++;
             }
-            while (heapIndex < _heapAllocations.Length);
+            while (_heapIndex < _heapAllocations.Length);
 
-            return -1;
+            value = -1;
+
+            return false;
         }
     }
 }
