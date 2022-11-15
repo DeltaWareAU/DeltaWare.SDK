@@ -1,16 +1,16 @@
-﻿using DeltaWare.SDK.Core.Collections.Heap.Allocation;
-using DeltaWare.SDK.Core.Collections.Heap.Exceptions;
+﻿using DeltaWare.SDK.Core.Collections.Parallel.Allocation;
+using DeltaWare.SDK.Core.Collections.Parallel.Exceptions;
 using System;
 using System.Diagnostics;
 
-namespace DeltaWare.SDK.Core.Collections.Heap.Writer
+namespace DeltaWare.SDK.Core.Collections.Parallel.Writer
 {
     [DebuggerDisplay("Length:{Length} Count:{Count} - AllocationStart:{AllocationStart} - AllocationEnd:{AllocationEnd}")]
-    internal sealed class InternalHeapWriter<T> : HeapAllocation<T>, IHeapWriter<T>
+    internal sealed class InternalArrayWriter<T> : ArrayAllocation<T>, IArrayWriter<T>
     {
         public int Count { get; private set; }
 
-        public InternalHeapWriter(T[] heapAccessor, int allocationStart, int length) : base(heapAccessor, allocationStart, length)
+        public InternalArrayWriter(T[] arrayAccessor, int allocationStart, int length) : base(arrayAccessor, allocationStart, length)
         {
         }
 
@@ -18,12 +18,12 @@ namespace DeltaWare.SDK.Core.Collections.Heap.Writer
         {
             if (_disposed)
             {
-                throw new ObjectDisposedException("InternalHeapWriter");
+                throw new ObjectDisposedException("InternalArrayWriter");
             }
 
-            if (!TryGetAllocatedHeapIndex(out int index))
+            if (!TryGetAllocatedIndex(out int index))
             {
-                throw UnallocatedHeapAccessException.UnallocatedWriteAccess();
+                throw ParallelArrayExceptions.WriterOutOfRangeException();
             }
 
             Count++;
@@ -33,7 +33,7 @@ namespace DeltaWare.SDK.Core.Collections.Heap.Writer
                 throw new ArgumentNullException();
             }
 
-            HeapAccessor[index] = value;
+            ArrayAccessor[index] = value;
         }
 
         private bool _disposed;

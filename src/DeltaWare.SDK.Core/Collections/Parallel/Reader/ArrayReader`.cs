@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 
-namespace DeltaWare.SDK.Core.Collections.Heap.Reader
+namespace DeltaWare.SDK.Core.Collections.Parallel.Reader
 {
     [DebuggerDisplay("Readers Allocated {_threadLocalizedWriter.Values.Count}")]
-    internal sealed class HeapReader<T> : IHeapReader<T>
+    internal sealed class ArrayReader<T> : IArrayReader<T>
     {
-        private readonly ThreadLocal<IHeapReader<T>> _threadLocalizedWriter;
+        private readonly ThreadLocal<IArrayReader<T>> _threadLocalizedWriter;
 
-        public HeapReader(ThreadLocal<IHeapReader<T>> threadLocalizedWriter)
+        public ArrayReader(ThreadLocal<IArrayReader<T>> threadLocalizedWriter)
         {
             _threadLocalizedWriter = threadLocalizedWriter;
         }
@@ -26,9 +26,9 @@ namespace DeltaWare.SDK.Core.Collections.Heap.Reader
 
         public void Dispose()
         {
-            foreach (IHeapReader<T> heapReader in _threadLocalizedWriter.Values)
+            foreach (IArrayReader<T> arrayReader in _threadLocalizedWriter.Values)
             {
-                heapReader.Dispose();
+                arrayReader.Dispose();
             }
         }
 

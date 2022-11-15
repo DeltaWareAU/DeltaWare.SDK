@@ -1,6 +1,6 @@
-﻿namespace DeltaWare.SDK.Core.Collections.Heap.Allocation
+﻿namespace DeltaWare.SDK.Core.Collections.Parallel.Allocation
 {
-    public class HeapAllocation
+    public class ArrayAllocation
     {
         public int Length { get; }
 
@@ -10,7 +10,7 @@
 
         public int Position { get; protected set; }
 
-        public HeapAllocation(int allocationStart, int length)
+        public ArrayAllocation(int allocationStart, int length)
         {
             Length = length;
             AllocationStart = allocationStart;

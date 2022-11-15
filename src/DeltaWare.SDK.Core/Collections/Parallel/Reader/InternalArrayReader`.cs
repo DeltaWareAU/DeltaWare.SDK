@@ -1,16 +1,16 @@
-﻿using DeltaWare.SDK.Core.Collections.Heap.Allocation;
-using DeltaWare.SDK.Core.Collections.Heap.Exceptions;
+﻿using DeltaWare.SDK.Core.Collections.Parallel.Allocation;
+using DeltaWare.SDK.Core.Collections.Parallel.Exceptions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace DeltaWare.SDK.Core.Collections.Heap.Reader
+namespace DeltaWare.SDK.Core.Collections.Parallel.Reader
 {
     [DebuggerDisplay("Length:{Length} Position:{Position} - AllocationStart:{AllocationStart} - AllocationEnd:{AllocationEnd}")]
-    internal sealed class InternalHeapReader<T> : HeapAllocation<T>, IHeapReader<T>
+    internal sealed class InternalArrayReader<T> : ArrayAllocation<T>, IArrayReader<T>
     {
-        public InternalHeapReader(T[] heapAccessor, int allocationStart, int length, HeapAllocation[] heapAllocations) : base(heapAccessor, allocationStart, length, heapAllocations)
+        public InternalArrayReader(T[] arrayAccessor, int allocationStart, int length, ArrayAllocation[] arrayAllocations) : base(arrayAccessor, allocationStart, length, arrayAllocations)
         {
         }
 
@@ -18,21 +18,21 @@ namespace DeltaWare.SDK.Core.Collections.Heap.Reader
         {
             if (_disposed)
             {
-                throw new ObjectDisposedException("InternalHeapWriter");
+                throw new ObjectDisposedException("InternalArrayWriter");
             }
 
-            if (!TryGetAllocatedHeapIndex(out int index))
+            if (!TryGetAllocatedIndex(out int index))
             {
                 value = default;
 
                 return false;
             }
 
-            value = HeapAccessor[index];
+            value = ArrayAccessor[index];
 
             if (value == null)
             {
-                throw UnallocatedHeapAccessException.UnallocatedReadAccess(index);
+                throw ParallelArrayExceptions.UnallocatedReadAccess(index);
             }
 
             return true;

@@ -1,14 +1,14 @@
 ﻿using System.Diagnostics;
 using System.Threading;
 
-namespace DeltaWare.SDK.Core.Collections.Heap.Writer
+namespace DeltaWare.SDK.Core.Collections.Parallel.Writer
 {
     [DebuggerDisplay("Writers Allocated {_threadLocalizedWriter.Values.Count}")]
-    internal sealed class HeapWriter<T> : IHeapWriter<T>
+    internal sealed class ArrayWriter<T> : IArrayWriter<T>
     {
-        private readonly ThreadLocal<IHeapWriter<T>> _threadLocalizedWriter;
+        private readonly ThreadLocal<IArrayWriter<T>> _threadLocalizedWriter;
 
-        public HeapWriter(ThreadLocal<IHeapWriter<T>> threadLocalizedWriter)
+        public ArrayWriter(ThreadLocal<IArrayWriter<T>> threadLocalizedWriter)
         {
             _threadLocalizedWriter = threadLocalizedWriter;
         }
@@ -22,9 +22,9 @@ namespace DeltaWare.SDK.Core.Collections.Heap.Writer
 
         public void Dispose()
         {
-            foreach (IHeapWriter<T> heapReader in _threadLocalizedWriter.Values)
+            foreach (IArrayWriter<T> arrayWriter in _threadLocalizedWriter.Values)
             {
-                heapReader.Dispose();
+                arrayWriter.Dispose();
             }
         }
     }

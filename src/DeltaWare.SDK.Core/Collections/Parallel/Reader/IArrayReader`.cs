@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DeltaWare.SDK.Core.Collections.Heap.Reader
+namespace DeltaWare.SDK.Core.Collections.Parallel.Reader
 {
-    public interface IHeapReader<T> : IDisposable, IEnumerable<T>
+    public interface IArrayReader<T> : IDisposable, IEnumerable<T>
     {
         int Length { get; }
 
