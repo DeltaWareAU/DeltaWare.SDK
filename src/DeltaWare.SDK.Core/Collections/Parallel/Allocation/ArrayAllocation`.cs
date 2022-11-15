@@ -47,7 +47,7 @@ namespace DeltaWare.SDK.Core.Collections.Parallel.Allocation
             return true;
         }
 
-        private int _arrayIndex;
+        private int _allocationIndex;
 
         private int _offset;
 
@@ -55,20 +55,20 @@ namespace DeltaWare.SDK.Core.Collections.Parallel.Allocation
         {
             do
             {
-                int index = Position + _offset;
+                int arrayIndex = Position + _offset;
 
-                if (index < _arrayAllocations[_arrayIndex].Position)
+                if (arrayIndex < _arrayAllocations[_allocationIndex].Position)
                 {
-                    value = index;
+                    value = arrayIndex;
 
                     return true;
                 }
 
-                _offset = _arrayAllocations[_arrayIndex].AllocationEnd - Position;
+                _offset = _arrayAllocations[_allocationIndex].AllocationEnd - Position;
 
-                _arrayIndex++;
+                _allocationIndex++;
             }
-            while (_arrayIndex < _arrayAllocations.Length);
+            while (_allocationIndex < _arrayAllocations.Length);
 
             value = -1;
 

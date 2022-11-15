@@ -75,7 +75,7 @@ namespace DeltaWare.SDK.Core.Tests.Collections.Heap
     {
         public ArrayAllocationWrapper(int allocationStart, int length, int position) : base(allocationStart, length)
         {
-            Position = position;
+            Position = allocationStart + position;
         }
     }
 }
