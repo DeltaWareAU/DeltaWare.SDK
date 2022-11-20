@@ -25,7 +25,8 @@ namespace DeltaWare.SDK.Extensions.EntityFrameworkCore.Helpers
                 [typeof(decimal)] = SqlDbType.Money,
                 [typeof(float)] = SqlDbType.Real,
                 [typeof(double)] = SqlDbType.Float,
-                [typeof(TimeSpan)] = SqlDbType.Time
+                [typeof(TimeSpan)] = SqlDbType.Time,
+                [typeof(Guid)] = SqlDbType.UniqueIdentifier
             };
         }
 
@@ -38,7 +39,7 @@ namespace DeltaWare.SDK.Extensions.EntityFrameworkCore.Helpers
                 return TypeMap[giveType];
             }
 
-            throw new ArgumentException($"{giveType.Name} is not a supported type");
+            throw new ArgumentException($"{giveType.Name} is not a supported type, if the type you would like to use is not supported please use the ParameterBuilder instead.");
         }
 
         public static SqlDbType GetSqlDbType<T>()
