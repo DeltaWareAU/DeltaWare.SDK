@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace DeltaWare.SDK.EntityFrameworkCore.Parameters
+namespace DeltaWare.SDK.Extensions.EntityFrameworkCore.SqlServer.Parameters
 {
     public interface ISqlParameterBuilder
     {

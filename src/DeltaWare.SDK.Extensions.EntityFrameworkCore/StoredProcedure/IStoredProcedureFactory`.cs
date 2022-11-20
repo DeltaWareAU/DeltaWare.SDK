@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace DeltaWare.SDK.EntityFrameworkCore.StoredProcedure
+namespace DeltaWare.SDK.Extensions.EntityFrameworkCore.StoredProcedure
 {
     public interface IStoredProcedureFactory<out TEntity> : IStoredProcedureExecuter<TEntity> where TEntity : class
     {

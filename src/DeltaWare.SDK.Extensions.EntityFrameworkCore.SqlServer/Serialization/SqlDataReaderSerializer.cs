@@ -1,6 +1,4 @@
-﻿using DeltaWare.SDK.Core.Helpers;
-using Microsoft.Data.SqlClient;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,8 +6,10 @@ using System.Data.Common;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using DeltaWare.SDK.Core.Helpers;
+using Microsoft.Data.SqlClient;
 
-namespace DeltaWare.SDK.EntityFrameworkCore.Serialization
+namespace DeltaWare.SDK.Extensions.EntityFrameworkCore.SqlServer.Serialization
 {
     public class SqlDataReaderSerializer : ISqlDataReaderSerializer
     {

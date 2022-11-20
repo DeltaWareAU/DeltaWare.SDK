@@ -1,18 +1,18 @@
-﻿using DeltaWare.SDK.Core.Helpers;
-using DeltaWare.SDK.Core.Validators;
-using DeltaWare.SDK.EntityFrameworkCore.Helpers;
-using DeltaWare.SDK.EntityFrameworkCore.Parameters;
-using DeltaWare.SDK.EntityFrameworkCore.Serialization;
-using DeltaWare.SDK.EntityFrameworkCore.StoredProcedure.Options;
-using Microsoft.Data.SqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using DeltaWare.SDK.Core.Helpers;
+using DeltaWare.SDK.Core.Validators;
+using DeltaWare.SDK.Extensions.EntityFrameworkCore.Helpers;
+using DeltaWare.SDK.Extensions.EntityFrameworkCore.SqlServer.Parameters;
+using DeltaWare.SDK.Extensions.EntityFrameworkCore.SqlServer.Serialization;
+using DeltaWare.SDK.Extensions.EntityFrameworkCore.SqlServer.StoredProcedure.Options;
+using Microsoft.Data.SqlClient;
 
-namespace DeltaWare.SDK.EntityFrameworkCore.StoredProcedure
+namespace DeltaWare.SDK.Extensions.EntityFrameworkCore.SqlServer.StoredProcedure
 {
     internal class SqlStoredProcedureFactory : ISqlStoredProcedureFactory
     {

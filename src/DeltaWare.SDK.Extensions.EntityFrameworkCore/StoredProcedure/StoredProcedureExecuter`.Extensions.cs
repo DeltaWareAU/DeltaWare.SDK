@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
-namespace DeltaWare.SDK.EntityFrameworkCore.StoredProcedure
+namespace DeltaWare.SDK.Extensions.EntityFrameworkCore.StoredProcedure
 {
     public static class StoredProcedureExecuterExtensions
     {

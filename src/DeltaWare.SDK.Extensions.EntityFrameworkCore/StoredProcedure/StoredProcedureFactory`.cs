@@ -1,13 +1,13 @@
-﻿using DeltaWare.SDK.Core.Validators;
-using DeltaWare.SDK.Serialization.Types;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using DeltaWare.SDK.Core.Validators;
+using DeltaWare.SDK.Serialization.Types;
+using Microsoft.EntityFrameworkCore;
 
-namespace DeltaWare.SDK.EntityFrameworkCore.StoredProcedure
+namespace DeltaWare.SDK.Extensions.EntityFrameworkCore.StoredProcedure
 {
     internal class StoredProcedureFactory<TEntity> : IStoredProcedureFactory<TEntity> where TEntity : class
     {

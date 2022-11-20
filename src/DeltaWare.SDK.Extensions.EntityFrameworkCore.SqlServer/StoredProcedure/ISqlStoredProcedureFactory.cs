@@ -1,8 +1,8 @@
-﻿using DeltaWare.SDK.EntityFrameworkCore.Parameters;
-using System;
+﻿using System;
 using System.Linq.Expressions;
+using DeltaWare.SDK.Extensions.EntityFrameworkCore.SqlServer.Parameters;
 
-namespace DeltaWare.SDK.EntityFrameworkCore.StoredProcedure
+namespace DeltaWare.SDK.Extensions.EntityFrameworkCore.SqlServer.StoredProcedure
 {
     public interface ISqlStoredProcedureFactory : ISqlStoredProcedureExecuter
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 
-namespace DeltaWare.SDK.EntityFrameworkCore.Helpers
+namespace DeltaWare.SDK.Extensions.EntityFrameworkCore.Helpers
 {
     public static class SqlHelper
     {

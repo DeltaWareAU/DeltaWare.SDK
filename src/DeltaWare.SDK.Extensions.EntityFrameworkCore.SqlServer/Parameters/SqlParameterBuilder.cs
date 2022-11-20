@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
 
-namespace DeltaWare.SDK.EntityFrameworkCore.Parameters
+namespace DeltaWare.SDK.Extensions.EntityFrameworkCore.SqlServer.Parameters
 {
     internal class SqlParameterBuilder : ISqlParameterBuilder
     {

@@ -1,13 +1,13 @@
 ﻿using DeltaWare.SDK.Core.Validators;
-using DeltaWare.SDK.EntityFrameworkCore.StoredProcedure;
-using DeltaWare.SDK.EntityFrameworkCore.StoredProcedure.Options;
 using Microsoft.Data.SqlClient;
 using System;
+using DeltaWare.SDK.Extensions.EntityFrameworkCore.SqlServer.StoredProcedure;
+using DeltaWare.SDK.Extensions.EntityFrameworkCore.SqlServer.StoredProcedure.Options;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.EntityFrameworkCore
 {
-    public static class DbContextExtensions
+    public static partial class SqlDbContext
     {
         /// <summary>
         /// Runs the specified SQL Stored Procedure.

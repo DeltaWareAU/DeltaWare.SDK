@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace DeltaWare.SDK.EntityFrameworkCore.StoredProcedure
+namespace DeltaWare.SDK.Extensions.EntityFrameworkCore.SqlServer.StoredProcedure
 {
     public interface ISqlStoredProcedureExecuter
     {

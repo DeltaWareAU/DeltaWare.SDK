@@ -1,8 +1,8 @@
-﻿using Microsoft.Data.SqlClient;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 
-namespace DeltaWare.SDK.EntityFrameworkCore.Serialization
+namespace DeltaWare.SDK.Extensions.EntityFrameworkCore.SqlServer.Serialization
 {
     public interface ISqlDataReaderSerializer
     {

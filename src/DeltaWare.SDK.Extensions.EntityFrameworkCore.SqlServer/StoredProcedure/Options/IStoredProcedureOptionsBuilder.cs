@@ -1,4 +1,4 @@
-﻿namespace DeltaWare.SDK.EntityFrameworkCore.StoredProcedure.Options
+﻿namespace DeltaWare.SDK.Extensions.EntityFrameworkCore.SqlServer.StoredProcedure.Options
 {
     public interface IStoredProcedureOptionsBuilder
     {
