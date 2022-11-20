@@ -33,7 +33,7 @@ namespace DeltaWare.SDK.Extensions.EntityFrameworkCore.SqlServer.Serialization
 
                 columnToPropertyMap = BuildColumnToPropertyMap(reader.GetColumnSchema(), type);
 
-                return DeserializeRowAsync(reader, type, columnToPropertyMap);
+                return await DeserializeRowAsync(reader, type, columnToPropertyMap);
             }
 
             type = type.GetGenericArguments().First();
