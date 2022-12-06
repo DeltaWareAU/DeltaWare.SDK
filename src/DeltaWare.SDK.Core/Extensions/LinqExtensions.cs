@@ -17,16 +17,6 @@ namespace System.Linq
             return source;
         }
 
-        public static T[] ForEach<T>(this T[] source, Func<T, T> action)
-        {
-            for (int i = 0; i < source.Length; i++)
-            {
-                source[i] = action.Invoke(source[i]);
-            }
-
-            return source;
-        }
-
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
         {
             foreach (T t in source)

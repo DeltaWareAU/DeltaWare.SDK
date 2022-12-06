@@ -2,6 +2,12 @@
 {
     public static class ConsoleLoadingBar
     {
+        private const char LoadedChar = '▓';
+
+        private const char HalfLoadedChar = '▒';
+
+        private const char BlankingChar = '░';
+
         private static void RenderLoadingBar(int index, int length, int charWidth)
         {
             double percentage = (100f * index + 1) / length;
@@ -14,7 +20,7 @@
 
             if (index + 1 == length)
             {
-                loadingBar = new string('▓', charWidth);
+                loadingBar = new string(LoadedChar, charWidth);
             }
             else
             {
@@ -34,16 +40,17 @@
                     loaded = (int)(currentLength);
                 }
 
-                loadingBar = new string('▓', loaded);
+                loadingBar = new string(LoadedChar, loaded);
 
                 if (half && loadingBar.Length != charWidth)
                 {
-                    loadingBar += '▒';
+                    loadingBar += HalfLoadedChar;
                 }
 
-                loadingBar = loadingBar.PadRight(charWidth, '░');
+                loadingBar = loadingBar.PadRight(charWidth, BlankingChar);
             }
 
+            System.Console.OutputEncoding = System.Text.Encoding.Default;
             System.Console.Write($"{loadingBar}\r");
         }
 
